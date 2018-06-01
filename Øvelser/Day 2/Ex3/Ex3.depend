@@ -196,18 +196,33 @@
 	"stm32f30x_conf.h"
 	<stdio.h>
 
-1527845451 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\ansi.c
+1527850024 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\ansi.c
+	"ansi.h"
 
-1527847034 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\main.c
+1527850863 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\main.c
 	"stm32f30x_conf.h"
 	"30010_io.h"
 	"ansi.h"
 	"string.h"
+	"lut.h"
+	"vectortrig.h"
 
-1527845450 m:\github\programmingproject30010\øvelser\day 2\ex3\inc\ansi.h
+1527850067 m:\github\programmingproject30010\øvelser\day 2\ex3\inc\ansi.h
+	<stdio.h>
 
 1527845451 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\startup_stm32f30x.s
 
 1527845451 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\system_stm32f30x.c
 	"stm32f30x.h"
+
+1527848550 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\lut.c
+	"lut.h"
+
+1527848550 m:\github\programmingproject30010\øvelser\day 2\ex3\inc\lut.h
+
+1527850809 m:\github\programmingproject30010\øvelser\day 2\ex3\inc\vectortrig.h
+	"lut.h"
+
+1527851036 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\vectortrig.c
+	"vectortrig.h"
 

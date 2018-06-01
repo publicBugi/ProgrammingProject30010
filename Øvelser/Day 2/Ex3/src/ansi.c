@@ -1,3 +1,4 @@
+#include "ansi.h"
 #define ESC 0x1B
 
 // Rydder terminal
@@ -67,7 +68,7 @@ void bgcolor(int background) {
  	              way comming back.
    Hint:        Use resetbgcolor(); clrscr(); to force HyperTerminal into gray text on black background.
 
-    Value      Color      
+    Value      Color
     ------------------
       0        Black
       1        Red
@@ -94,5 +95,5 @@ void color(int foreground, int background) {
 
 void resetbgcolor() {
 // gray on black text, no underline, no blink, no reverse
-  printf("%c[m", ESC);  
+  printf("%c[m", ESC);
 }

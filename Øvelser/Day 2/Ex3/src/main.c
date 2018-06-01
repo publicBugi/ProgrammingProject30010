@@ -16,7 +16,8 @@
 #include "30010_io.h"
 #include "ansi.h"
 #include "string.h"
-
+#include "lut.h"
+#include "vectortrig.h"
 
 
 int ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, char style){
@@ -92,8 +93,10 @@ int main(void)
          clrscr();
 
 
+
    // printf("test\n");
-ShowWindow(10, 10, 100, 30, "kddfgdfdgdfg",1, 1);
+    ShowWindow(10, 10, 100, 30, "kddfgdfdgdfg",1, 1);
+    getsin(45);
 
         while(1){}
 }
