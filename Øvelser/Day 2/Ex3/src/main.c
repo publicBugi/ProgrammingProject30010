@@ -17,44 +17,7 @@
 #include "ansi.h"
 #include "string.h"
 
-// Rydder terminal
-void clrscr(){
-    // Ryd terminal.
-    printf("%c[%s", ESC, "2J");
 
-    // Hjemposition for cursor.
-    printf("%c[%s", ESC, "H");
-}
-
-// Rydder til enden af linjen
-void clreol(){
-    // Rydder til enden af linjen
-    printf("%c[%s", ESC, "K");
-}
-
-// Går til linje X og Y
-void gotoXY(uint8_t X, uint8_t Y){
-
-    printf("%c[%d;%dH", ESC, Y+1, X+1);
-}
-
-// Underline
-void SetUnderLine(char on){
-    printf("%c[%dm", ESC, (on == 1 ? 4 : 24));
-
-}
-
-// Blink
-void SetBlink(char on){
-    printf("%c[%dm", ESC, (on == 1 ? 5 : 25));
-
-}
-
-// Blink
-void SetReverse(char on){
-    printf("%c[%dm", ESC, (on == 1 ? 7 : 27));
-
-}
 
 int ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, char style){
     int i;
@@ -87,7 +50,7 @@ int ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, c
     // Skift farve.
     bgcolor(color);
 
-    // Title på vindue.
+    // Title pï¿½ vindue.
     for (i=0; i < (x2-x1) - 4 ; i++) {
         printf("%c", (i < strlen(text) ? text[i] : 32));
     }
@@ -106,12 +69,12 @@ int ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, c
 
         printf("%c", Vertical);
 
-        // Gå til enden.
+        // Gï¿½ til enden.
         gotoXY(x2-1,i);
 
         printf("%c", Vertical);
 
-        // Gå til næste linje.
+        // Gï¿½ til nï¿½ste linje.
         gotoXY(x1,i+1);
     }
 

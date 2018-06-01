@@ -1,5 +1,44 @@
 #define ESC 0x1B
 
+// Rydder terminal
+void clrscr(){
+    // Ryd terminal.
+    printf("%c[%s", ESC, "2J");
+
+    // Hjemposition for cursor.
+    printf("%c[%s", ESC, "H");
+}
+
+// Rydder til enden af linjen
+void clreol(){
+    // Rydder til enden af linjen
+    printf("%c[%s", ESC, "K");
+}
+
+// G�r til linje X og Y
+void gotoXY(uint8_t X, uint8_t Y){
+
+    printf("%c[%d;%dH", ESC, Y+1, X+1);
+}
+
+// Underline
+void SetUnderLine(char on){
+    printf("%c[%dm", ESC, (on == 1 ? 4 : 24));
+
+}
+
+// Blink
+void SetBlink(char on){
+    printf("%c[%dm", ESC, (on == 1 ? 5 : 25));
+
+}
+
+// Blink
+void SetReverse(char on){
+    printf("%c[%dm", ESC, (on == 1 ? 7 : 27));
+
+}
+
 void fgcolor(int foreground) {
 /*  Value      foreground     Value     foreground
     ------------------------------------------------
@@ -51,6 +90,7 @@ void color(int foreground, int background) {
 	}
   printf("%c[%d;%d;%dm", ESC, type, foreground+30, background+40);
 }
+
 
 void resetbgcolor() {
 // gray on black text, no underline, no blink, no reverse
