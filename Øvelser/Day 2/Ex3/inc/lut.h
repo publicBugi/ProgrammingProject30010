@@ -4,7 +4,6 @@
 //	(comments, kudos, flames to daytshen@hotmail.com)
 //
 // =====================================================================
-
 #ifndef LUT_H
 #define LUT_H
 

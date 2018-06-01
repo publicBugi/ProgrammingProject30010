@@ -96,7 +96,11 @@ int main(void)
 
    // printf("test\n");
     ShowWindow(10, 10, 100, 30, "kddfgdfdgdfg",1, 1);
-    getsin(45);
+struct    vector_t vec;
+    initVector(&vec);
+    rotateVector(&vec, 462);
+    rotateVector(&vec, 462);
+
 
         while(1){}
 }
