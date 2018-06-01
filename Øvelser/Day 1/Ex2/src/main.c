@@ -130,7 +130,7 @@ int main(void)
 
 
    // printf("test\n");
-ShowWindow(5, 12, 100, 30, "kddfgdfdgdfg",1, 1);
+ShowWindow(10, 10, 100, 30, "kddfgdfdgdfg",1, 0);
 
         while(1){}
 }

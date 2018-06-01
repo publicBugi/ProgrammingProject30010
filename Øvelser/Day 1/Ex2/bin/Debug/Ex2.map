@@ -4304,7 +4304,7 @@ OUTPUT(bin\Debug\Ex2.elf elf32-littlearm)
  .debug_line    0x00001ef6       0xbb obj\debug\src\startup_stm32f30x.o
  .debug_line    0x00001fb1      0x493 obj\debug\src\system_stm32f30x.o
 
-.debug_str      0x00000000    0x5753c
+.debug_str      0x00000000    0x57570
  .debug_str     0x00000000    0x52be4 obj\debug\spl\src\stm32f30x_rcc.o
                               0x52da0 (size before relaxing)
  .debug_str     0x00052be4      0x81e obj\debug\spl\src\stm32f30x_usart.o
@@ -4313,9 +4313,9 @@ OUTPUT(bin\Debug\Ex2.elf elf32-littlearm)
                               0x564dd (size before relaxing)
  .debug_str     0x00057363       0x46 obj\debug\src\ansi.o
                                0x2525 (size before relaxing)
- .debug_str     0x000573a9       0xb3 obj\debug\src\main.o
-                              0x55eb6 (size before relaxing)
- .debug_str     0x0005745c       0xe0 obj\debug\src\system_stm32f30x.o
+ .debug_str     0x000573a9       0xe7 obj\debug\src\main.o
+                              0x55edf (size before relaxing)
+ .debug_str     0x00057490       0xe0 obj\debug\src\system_stm32f30x.o
                               0x52432 (size before relaxing)
 
 .debug_frame    0x00000000     0x1a28
