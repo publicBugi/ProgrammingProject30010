@@ -15,92 +15,43 @@
 #define ESC 0x1B
 #include "30010_io.h"
 #include "ansi.h"
-#include "string.h"
 #include "lut.h"
 #include "vectortrig.h"
 
-
-int ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, char style){
-    int i;
-    char UpLeft = (style == 1) ? 201 : 218;
-    char LeftTitle = (style == 1) ? 185 : 180;
-    char RightTitle = (style == 1) ? 204 : 195;
-    char Vertical = (style == 1) ? 186 : 179;
-    char UpRight = (style == 1) ? 187 : 191;
-    char Horizontal = (style == 1) ? 205 : 196;
-    char DownLeft = (style == 1) ? 200 : 192;
-    char DownRight = (style == 1) ? 188 : 217;
-
-    // Ryd terminal.
-    clrscr();
-
-    // Skift farve.
-    fgcolor(15);
-    bgcolor(0);
-
-    if ((x2-x1) - 4 < 1) {
-        printf("Fejl");
-        return 0;
-    }
-
-    gotoXY(x1,y1);
-
-    printf("%c", UpLeft);
-    printf("%c", LeftTitle);
-
-    // Skift farve.
-    bgcolor(color);
-
-    // Title p� vindue.
-    for (i=0; i < (x2-x1) - 4 ; i++) {
-        printf("%c", (i < strlen(text) ? text[i] : 32));
-    }
-
-    // Skift farve.
-    fgcolor(15);
-    bgcolor(0);
-
-    printf("%c", RightTitle);
-    printf("%c", UpRight);
-
-    gotoXY(x1,y1+1);
-
-    // Sidelinjer.
-    for (i=y1 + 1; i < y2; i++) {
-
-        printf("%c", Vertical);
-
-        // G� til enden.
-        gotoXY(x2-1,i);
-
-        printf("%c", Vertical);
-
-        // G� til n�ste linje.
-        gotoXY(x1,i+1);
-    }
-
-    // Bundlinje.
-    printf("%c", DownLeft);
-    for (i=0; i < (x2-x1) - 2; i++) {
-        printf("%c", Horizontal);
-    }
-    printf("%c", DownRight);
-}
-
 int main(void)
     {
-         init_usb_uart( 9600 ); // Initialize USB serial at 9600 baud
-         clrscr();
+    //init_usb_uart(9600);
+    init_usb_uart(115200); // Initialize USB serial at 9600 baud
+    clrscr();
+
+    int c, d;
+    struct ball_t ball;
+    initBall(&ball, 1, 1, 1, 1);
+    while(1){
+        clrscr();
+        drawBox(10, 10, 100, 50);
+        drawBox(30,25, 70, 30);
+        drawBall(&ball);
+        updateBall(&ball, 0);
+        for (c = 1; c <= 32767; c++)
+            for (d = 1; d <= 50; d++)
+            {}
+    }
 
 
+    /*ShowWindow(10, 10, 100, 30, "kddfgdfdgdfg",1, 1);
+    struct vector_t vec;
+    initVector(&vec, 1, 1);
+    gotoXY(0,0);
+    printVector(&vec);
+    rotateVector(&vec, 256);
+    translateVector(&vec, 1, 1);
+    gotoXY(0,1);
+    printVector(&vec);
+    rotateVector(&vec, 256);
+    translateVector(&vec, 1, 1);
+    gotoXY(0,2);
+    printVector(&vec);*/
 
-   // printf("test\n");
-    ShowWindow(10, 10, 100, 30, "kddfgdfdgdfg",1, 1);
-struct    vector_t vec;
-    initVector(&vec);
-    rotateVector(&vec, 462);
-    rotateVector(&vec, 462);
-
-
-        while(1){}
+    while(1){}
 }

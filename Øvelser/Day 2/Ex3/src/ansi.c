@@ -22,6 +22,22 @@ void gotoXY(uint8_t X, uint8_t Y){
     printf("%c[%d;%dH", ESC, Y+1, X+1);
 }
 
+void CursorUp(char n) {
+    printf("\033[%cA\b", n);
+}
+
+void CursorDown(char n) {
+    printf("\033[%cB\b", n);
+}
+
+void CursorRight(char n) {
+    printf("\033[%cC\b", n);
+}
+
+void CursorLeft(char n) {
+    printf("\033[%cD\b", n);
+}
+
 // Underline
 void SetUnderLine(char on){
     printf("%c[%dm", ESC, (on == 1 ? 4 : 24));
@@ -92,8 +108,107 @@ void color(int foreground, int background) {
   printf("%c[%d;%d;%dm", ESC, type, foreground+30, background+40);
 }
 
-
 void resetbgcolor() {
 // gray on black text, no underline, no blink, no reverse
   printf("%c[m", ESC);
+}
+
+void ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, char style){
+    int i;
+    char UpLeft = (style == 1) ? 201 : 218;
+    char LeftTitle = (style == 1) ? 185 : 180;
+    char RightTitle = (style == 1) ? 204 : 195;
+    char Vertical = (style == 1) ? 186 : 179;
+    char UpRight = (style == 1) ? 187 : 191;
+    char Horizontal = (style == 1) ? 205 : 196;
+    char DownLeft = (style == 1) ? 200 : 192;
+    char DownRight = (style == 1) ? 188 : 217;
+
+    // Ryd terminal.
+    //clrscr();
+
+    // Skift farve.
+    fgcolor(15);
+    bgcolor(0);
+
+    if ((x2-x1) - 4 < 1) {
+        printf("Fejl");
+    }
+    else {
+    gotoXY(x1,y1);
+
+    printf("%c", UpLeft);
+    printf("%c", LeftTitle);
+
+    // Skift farve.
+    bgcolor(color);
+
+    // Title p� vindue.
+    for (i=0; i < (x2-x1) - 4 ; i++) {
+        printf("%c", (i < strlen(text) ? text[i] : 32));
+    }
+
+    // Skift farve.
+    fgcolor(15);
+    bgcolor(0);
+
+    printf("%c", RightTitle);
+    printf("%c", UpRight);
+
+    gotoXY(x1,y1+1);
+
+    // Sidelinjer.
+    for (i=y1 + 1; i < y2; i++) {
+
+        printf("%c", Vertical);
+
+        // G� til enden.
+        gotoXY(x2-1,i);
+
+        printf("%c", Vertical);
+
+        // G� til n�ste linje.
+        gotoXY(x1,i+1);
+    }
+
+    // Bundlinje.
+    printf("%c", DownLeft);
+    for (i=0; i < (x2-x1) - 2; i++) {
+        printf("%c", Horizontal);
+    }
+    printf("%c", DownRight);
+    }
+}
+
+void drawBox(char x1, char y1, char x2, char y2) {
+
+    char UpLeft = 201;
+    char Vertical = 186;
+    char UpRight = 187;
+    char Horizontal = 205;
+    char DownLeft = 200;
+    char DownRight = 188;
+
+    int i;
+    gotoXY(x1, y1);
+    putchar(UpLeft);// Upper left corner
+        for(i=x1+1; i < x2; i++){
+        putchar(Horizontal);
+    }
+    putchar(UpRight);
+    for(i=y1+1; i < y2; i++){
+        gotoXY(x1,i);
+        putchar(Vertical);
+    }
+    for(i=y1+1; i < y2; i++){
+        gotoXY(x2,i);
+        putchar(Vertical);
+    }
+    gotoXY(x1,y2);
+    putchar(DownLeft);
+    for(i=x1+1; i < x2; i++){
+        putchar(Horizontal);
+    }
+    putchar(DownRight);
+
 }
