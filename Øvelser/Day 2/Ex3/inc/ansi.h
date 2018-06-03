@@ -3,7 +3,7 @@
 
 #ifndef _ANSI_H_
 #define _ANSI_H_
-
+#include "vectortrig.h"
 void clrscr();
 void clreol();
 void gotoXY(uint8_t X, uint8_t Y);
@@ -19,5 +19,6 @@ void bgcolor(int background);
 void color(int foreground, int background);
 void resetbgcolor();
 void ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, char style);
-void drawBox(char x1, char y1, char x2, char y2);
+void initBox(struct box_t *box, char x1, char y1, char x2, char y2);
+void drawBox(struct box_t *box);
 #endif /* _ANSI_H_ */

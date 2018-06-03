@@ -180,7 +180,14 @@ void ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, 
     }
 }
 
-void drawBox(char x1, char y1, char x2, char y2) {
+void initBox(struct box_t *box, char x1, char y1, char x2, char y2){
+    box->x1 = x1;
+    box->y1 = y1;
+    box->x2 = x2;
+    box->y2 = y2;
+}
+
+void drawBox(struct box_t *box) {
 
     char UpLeft = 201;
     char Vertical = 186;
@@ -190,25 +197,24 @@ void drawBox(char x1, char y1, char x2, char y2) {
     char DownRight = 188;
 
     int i;
-    gotoXY(x1, y1);
+    gotoXY(box->x1, box->y1);
     putchar(UpLeft);// Upper left corner
-        for(i=x1+1; i < x2; i++){
+        for(i=box->x1+1; i < box->x2; i++){
         putchar(Horizontal);
     }
     putchar(UpRight);
-    for(i=y1+1; i < y2; i++){
-        gotoXY(x1,i);
+    for(i=box->y1+1; i < box->y2; i++){
+        gotoXY(box->x1,i);
         putchar(Vertical);
     }
-    for(i=y1+1; i < y2; i++){
-        gotoXY(x2,i);
+    for(i=box->y1+1; i < box->y2; i++){
+        gotoXY(box->x2,i);
         putchar(Vertical);
     }
-    gotoXY(x1,y2);
+    gotoXY(box->x1,box->y2);
     putchar(DownLeft);
-    for(i=x1+1; i < x2; i++){
+    for(i=box->x1+1; i < box->x2; i++){
         putchar(Horizontal);
     }
     putchar(DownRight);
-
 }

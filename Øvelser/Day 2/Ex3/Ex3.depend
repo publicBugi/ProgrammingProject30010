@@ -227,7 +227,7 @@
 1527866504 source:m:\github\programmingproject30010\øvelser\day 2\ex3\src\vectortrig.c
 	"vectortrig.h"
 
-1527981318 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\main.c
+1528043823 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\main.c
 	"stm32f30x_conf.h"
 	"30010_io.h"
 	"ansi.h"
@@ -351,13 +351,14 @@
 	"stm32f30x_conf.h"
 	<stdio.h>
 
-1527953624 c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\inc\ansi.h
+1528038575 c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\inc\ansi.h
 	<stdio.h>
 	"string.h"
+	"vectortrig.h"
 
 1527947591 c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\inc\lut.h
 
-1527980522 c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\inc\vectortrig.h
+1528038536 c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\inc\vectortrig.h
 	"lut.h"
 	<stdio.h>
 	"ansi.h"
@@ -442,7 +443,7 @@
 1527947591 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\30010_io.c
 	"30010_io.h"
 
-1527977594 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\ansi.c
+1528034912 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\ansi.c
 	"ansi.h"
 
 1527947591 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\lut.c
@@ -453,6 +454,9 @@
 1527947591 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\system_stm32f30x.c
 	"stm32f30x.h"
 
-1527980912 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\vectortrig.c
+1528042383 source:c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\vectortrig.c
+	"vectortrig.h"
+
+1528034711 c:\users\bugi\documents\30010\programmingproject30010\øvelser\day 2\ex3\src\vectortrig.c
 	"vectortrig.h"
 

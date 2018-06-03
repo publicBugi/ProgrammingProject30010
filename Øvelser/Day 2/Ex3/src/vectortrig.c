@@ -13,18 +13,21 @@ int32_t expand(int32_t i){
 
 // Return Index within 0 - 512 Range.
 int getIndex(int index){
-    return index & 0x1FF;
+    int temp;
+    temp = index & 0x1FF;
+    return temp;
 }
 
 // Return Sine of Index in LUT.c. (Circle with 512 Steps)
 int32_t getSin(int index) {
-    return (int32_t)SIN[getIndex(index)];
-
+    int32_t temp = (int32_t)SIN[getIndex(index)];
+    return temp;
 }
 
 // Return Cosine of Index in LUT.c. (Circle with 512 Steps)
 int32_t getCos(int index) {
-    return (int32_t)SIN[getIndex(index+128)];
+    int32_t temp = (int32_t)SIN[getIndex(index+128)];
+    return temp;
 }
 
 // Prints signed 16.16 Fixed point number. Input 18.14 Number.
@@ -82,11 +85,48 @@ void updateBall(struct ball_t *ball, int32_t k) {
     ball->PosVec.y = ball->PosVec.y + (ball->VelVec.y >> k);
 }
 
-int32_t To2d14(int natval, int decval) {
-    return ((int32_t) natval << 14)  + decval;
-}
-
 void drawBall(struct ball_t *ball){
     gotoXY(ball->PosVec.x >> 14, ball->PosVec.y >> 14);
     putchar(111);
+}
+
+int CollisionDetect(struct ball_t *ball, struct box_t *box){
+    char returnval = 0;
+    if ((ball->PosVec.x >> 14) == box->x1) {
+            returnval = 1;
+            if (ball->VelVec.y > 0){
+                    rotateVector(&ball->VelVec, -128);
+            }
+            else{
+                    rotateVector(&ball->VelVec, 128);
+            }
+    }
+    else if((ball->PosVec.x >> 14) == box->x2){
+            returnval = 1;
+            if (ball->VelVec.y > 0){
+                    rotateVector(&ball->VelVec, 128);
+            }
+            else{
+                    rotateVector(&ball->VelVec, -128);
+            }
+    }
+    if ((ball->PosVec.y >> 14) == box->y1) {
+            returnval = 1;
+            if (ball->VelVec.x > 0){
+                    rotateVector(&ball->VelVec, 128);
+            }
+            else{
+                    rotateVector(&ball->VelVec, -128);
+            }
+    }
+    else if ((ball->PosVec.y >> 14) == box->y2) {
+            returnval = 1;
+            if (ball->VelVec.x > 0){
+                    rotateVector(&ball->VelVec, -128);
+            }
+            else{
+                    rotateVector(&ball->VelVec, 128);
+            }
+    }
+    return returnval;
 }
