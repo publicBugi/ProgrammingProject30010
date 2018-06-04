@@ -4403,16 +4403,16 @@ OUTPUT(bin\Debug\Ex3.elf elf32-littlearm)
  .comment       0x0000006e       0x6f obj\debug\src\system_stm32f30x.o
  .comment       0x0000006e       0x6f obj\debug\src\vectortrig.o
 
-.debug_info     0x00000000     0x48d7
+.debug_info     0x00000000     0x48c0
  .debug_info    0x00000000      0xad4 obj\debug\spl\src\stm32f30x_rcc.o
  .debug_info    0x00000ad4      0xecc obj\debug\spl\src\stm32f30x_usart.o
  .debug_info    0x000019a0      0xf04 obj\debug\src\30010_io.o
  .debug_info    0x000028a4      0xcd9 obj\debug\src\ansi.o
  .debug_info    0x0000357d       0x5c obj\debug\src\lut.o
  .debug_info    0x000035d9      0x195 obj\debug\src\main.o
- .debug_info    0x0000376e       0x88 obj\debug\src\startup_stm32f30x.o
- .debug_info    0x000037f6      0x470 obj\debug\src\system_stm32f30x.o
- .debug_info    0x00003c66      0xc71 obj\debug\src\vectortrig.o
+ .debug_info    0x0000376e       0x71 obj\debug\src\startup_stm32f30x.o
+ .debug_info    0x000037df      0x470 obj\debug\src\system_stm32f30x.o
+ .debug_info    0x00003c4f      0xc71 obj\debug\src\vectortrig.o
 
 .debug_abbrev   0x00000000      0xc8b
  .debug_abbrev  0x00000000      0x1ea obj\debug\spl\src\stm32f30x_rcc.o
@@ -4505,22 +4505,22 @@ OUTPUT(bin\Debug\Ex3.elf elf32-littlearm)
  .debug_line    0x000023fa      0x493 obj\debug\src\system_stm32f30x.o
  .debug_line    0x0000288d      0x444 obj\debug\src\vectortrig.o
 
-.debug_str      0x00000000    0x576ee
+.debug_str      0x00000000    0x5771f
  .debug_str     0x00000000    0x52c21 obj\debug\spl\src\stm32f30x_rcc.o
                               0x52ddd (size before relaxing)
  .debug_str     0x00052c21      0x81e obj\debug\spl\src\stm32f30x_usart.o
                               0x52cb1 (size before relaxing)
- .debug_str     0x0005343f     0x3f61 obj\debug\src\30010_io.o
-                              0x5651a (size before relaxing)
- .debug_str     0x000573a0      0x15b obj\debug\src\ansi.o
-                               0x6a60 (size before relaxing)
- .debug_str     0x000574fb        0xa obj\debug\src\lut.o
-                               0x2535 (size before relaxing)
- .debug_str     0x00057505       0x43 obj\debug\src\main.o
-                              0x55eab (size before relaxing)
- .debug_str     0x00057548       0xe0 obj\debug\src\system_stm32f30x.o
-                              0x5246f (size before relaxing)
- .debug_str     0x00057628       0xc6 obj\debug\src\vectortrig.o
+ .debug_str     0x0005343f     0x3f92 obj\debug\src\30010_io.o
+                              0x56503 (size before relaxing)
+ .debug_str     0x000573d1      0x15b obj\debug\src\ansi.o
+                               0x6a49 (size before relaxing)
+ .debug_str     0x0005752c        0xa obj\debug\src\lut.o
+                               0x251e (size before relaxing)
+ .debug_str     0x00057536       0x43 obj\debug\src\main.o
+                              0x55e94 (size before relaxing)
+ .debug_str     0x00057579       0xe0 obj\debug\src\system_stm32f30x.o
+                              0x52458 (size before relaxing)
+ .debug_str     0x00057659       0xc6 obj\debug\src\vectortrig.o
                                0x6a39 (size before relaxing)
 
 .debug_frame    0x00000000     0x1d4c
