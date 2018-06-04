@@ -1,5 +1,5 @@
 #include "lut.h"
-#include <stdio.h>
+#include "30010_io.h"
 #include "ansi.h"
 
 #ifndef _VECTORTRIG_H_

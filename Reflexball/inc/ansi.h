@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "30010_io.h"
 #include "string.h"
 
 #ifndef _ANSI_H_

@@ -207,6 +207,9 @@
 		<Unit filename="src\system_stm32f30x.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\vectortrig.c">
 			<Option compilerVar="CC" />
 		</Unit>
