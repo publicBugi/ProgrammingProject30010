@@ -3,6 +3,7 @@
 
 #include "stm32f30x_conf.h"
 
-void IniJoy();
 
+void Ini();
+void SetLed(char R, char G, char B);
 #endif

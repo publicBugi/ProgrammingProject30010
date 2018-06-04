@@ -19,23 +19,64 @@
 //#include "vectortrig.h"
 #include "GPIO.h"
 
+int binary_conversion(int num)
+{
+    if (num == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return (num % 2) + 10 * binary_conversion(num / 2);
+    }
+}
+
 int main(void)
     {
-    //init_usb_uart(9600);
+    uint16_t old;
+    int JoyInput;
+    int c = 0;
     init_usb_uart(9600); // Initialize USB serial at 115200 baud
    // clrscr();
 
+    // Initialisering.
+    Ini();
 
-    IniJoy();
+
 
     while (1) {
 
-        uint16_t Up = GPIOA->IDR & (0x0001 << 4);
-        uint16_t Down = GPIOB->IDR & (0x0001 << 0);
-        uint16_t Right = GPIOC->IDR & (0x0001 << 1);
-        uint16_t Left = GPIOC->IDR & (0x0001 << 0);
-        uint16_t Center = GPIOC->IDR & (0x0001 << 0);
-        printf("Up: %d, Down: %d, Left: %d, Right: %d, Center: %d\n", Up, Down, Right, Left, Center);
+    // Læs joystik indgange.
+    JoyInput = readJoystick();
+        if (JoyInput == 4) {
+          SetLed(1, 0, 0);
+        }
+
+        if (JoyInput == 1) {
+          SetLed(0, 1, 0);
+        }
+
+        if (JoyInput == 8) {
+          SetLed(0, 0, 1);
+        }
+
+        if (JoyInput == 16) {
+          SetLed(1, 1, 1);
+        }
+
+        if (JoyInput == 2) {
+          SetLed(0, 0, 0);
+        }
+    // Hvis ændring i joystik indgange.
+    if (JoyInput != old) {
+
+
+
+        printf("%02d: %08d\n",c, binary_conversion(JoyInput));
+        old = JoyInput;
+        c++;
+       }
+
 
     }
 
