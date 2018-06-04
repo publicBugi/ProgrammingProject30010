@@ -76,8 +76,8 @@ void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32
     ball->VelVec.x = Vx << 14;
     ball->VelVec.y = Vy << 14;
 
-    /*initVector(ball->PosVec, int32_t XPos, int32_t YPos);
-    initVector(ball->VelVec, int32_t Vx, int32_t Vy);*/
+    /*initVector(&ball->PosVec, int32_t XPos, int32_t YPos);
+    initVector(&ball->VelVec, int32_t Vx, int32_t Vy);*/
 }
 
 void updateBall(struct ball_t *ball, int32_t k) {

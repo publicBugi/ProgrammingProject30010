@@ -12,7 +12,6 @@
 
 **********************************************************************/
 #include "stm32f30x_conf.h"
-#define ESC 0x1B
 #include "30010_io.h"
 #include "ansi.h"
 #include "lut.h"
