@@ -1,6 +1,6 @@
 #include "GPIO.h"
 
-void Ini() {
+void initGPIO() {
     // Aktivere klokken for GPIO port A
     RCC->AHBENR |= RCC_AHBPeriph_GPIOA;
 
@@ -9,12 +9,12 @@ void Ini() {
 
      // Aktivere klokken for GPIO port C.
     RCC->AHBENR |= RCC_AHBPeriph_GPIOC;
-    IniJoy();
+    initJoystick();
 
-    IniLED();
+    initLED();
 }
 
-void IniJoy() {
+void initJoystick() {
 
 
     // PA4: Ryder register.
@@ -44,7 +44,7 @@ void IniJoy() {
 
 }
 
-void IniLED() {
+void initLED() {
 
     // PA9: Ryder register.
     GPIOA->OSPEEDR &= ~((0x00000003) << (9 * 2));

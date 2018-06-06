@@ -20,6 +20,8 @@
 #include "vectortrig.h"
 #include "GPIO.h"
 
+#define SIZE_OF_ARRAY(_array) (sizeof(_array) / sizeof(_array[0]))
+
 int binary_conversion(int num)
 {
     if (num == 0)
@@ -67,6 +69,24 @@ void TIM2_IRQHandler(void) {
 	}
 
 
+void getSerialInput(char* input){
+    int i;
+    for (i=0; i < 6; i++) {
+        input[i] = 0x00;
+    }
+    for (i=0; i < 6; i++) {
+        char inputchar = uart_getc();
+        if (inputchar == 0x0D ) {
+            break;
+        }
+        else {
+        input[i] = inputchar;
+        }
+    }
+
+}
+
+
 int main(void)
     {
     RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
@@ -80,11 +100,11 @@ int main(void)
     //uint16_t old;
     int JoyInput;
     //int c = 0;
-    init_usb_uart(9600); // Initialize USB serial at 115200 baud
+    init_usb_uart(115200); // Initialize USB serial at 115200 baud
    // clrscr();
-
+    char input[7];
     // Initialisering.
-    Ini();
+    initGPIO();
     initTime(&clk);
     // Update PuTTy everytime 2nd digit changes.
 
@@ -100,13 +120,47 @@ int main(void)
         if (clk.change == 1) {
             clk.change = 0;
             gotoXY(1,1);
-            printf("%02d:%02d:%02d:%02d", clk.time_hour, clk.time_min % 60, clk.time_sec % 60, clk.time_hseconds % 100);
+            printf("%02d:%02d:%02d:%02lu", clk.time_hour, clk.time_min % 60, clk.time_sec % 60, clk.time_hseconds % 100);
         }
         gotoXY(1,2);
-        printf("%02d:%02d:%02d:%02d", splitTime1.time_hour, splitTime1.time_min % 60, splitTime1.time_sec % 60, splitTime1.time_hseconds % 100);
+        printf("%02d:%02d:%02d:%02lu", splitTime1.time_hour, splitTime1.time_min % 60, splitTime1.time_sec % 60, splitTime1.time_hseconds % 100);
         gotoXY(1,3);
-        printf("%02d:%02d:%02d:%02d", splitTime2.time_hour, splitTime2.time_min % 60, splitTime2.time_sec % 60, splitTime2.time_hseconds % 100);
-        JoyInput = readJoystick();
+        printf("%02d:%02d:%02d:%02lu", splitTime2.time_hour, splitTime2.time_min % 60, splitTime2.time_sec % 60, splitTime2.time_hseconds % 100);
+        gotoXY(9,9);
+
+        getSerialInput(input);
+        gotoXY(10,10);
+        if (strcmp(input, "start")==0) {
+            TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+        }
+        else if (strcmp(input, "split1") == 0) {
+                    __disable_irq();
+                    splitTime1 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "split2") == 0) {
+                    __disable_irq();
+                    splitTime2 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "reset") == 0) {
+                    TIM2->CR1 = 0x00000000;
+                    initTime(&clk);
+        }
+       else if (strcmp(input, "help") == 0) {
+                    printf("sdgajsgkljsgajhsdglkj");
+       }
+        else if (strcmp(input, "") == 0) {
+
+       }
+        else {
+                    printf("start : start/stop timer\nsplit1 : split timer to slot 1\nsplit 2 : ");
+        }
+
+
+
+        // JoyTimeCtrl();
+        /*JoyInput = readJoystick();
         if (JoyInput != prevJoystick) {	// Has Joystick changed?
             prevJoystick = JoyInput;
             switch (JoyInput) {				// What did it change to?
@@ -129,7 +183,7 @@ int main(void)
                     initTime(&clk);
                     break;
             }
-        }
+        }*/
 
     }
 
