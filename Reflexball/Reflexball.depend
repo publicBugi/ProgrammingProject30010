@@ -478,7 +478,7 @@
 1528275086 source:\\dtu-storage.win.dtu.dk\s173933\github\programmingproject30010\reflexball\src\vectortrig.c
 	"vectortrig.h"
 
-1528279325 source:\\dtu-storage.win.dtu.dk\s173933\github\programmingproject30010\reflexball\src\main.c
+1528291995 source:\\dtu-storage.win.dtu.dk\s173933\github\programmingproject30010\reflexball\src\main.c
 	"stm32f30x_conf.h"
 	"stm32f30x.h"
 	"30010_io.h"
@@ -486,4 +486,15 @@
 	"lut.h"
 	"vectortrig.h"
 	"GPIO.h"
+	"LCD.h"
+
+1528292155 source:\\dtu-storage.win.dtu.dk\s173933\github\programmingproject30010\reflexball\src\lcd.c
+	"LCD.h"
+	"charset.h"
+	"string.h"
+
+1528291921 \\dtu-storage.win.dtu.dk\s173933\github\programmingproject30010\reflexball\inc\lcd.h
+	"30010_io.h"
+
+1528281917 \\dtu-storage.win.dtu.dk\s173933\github\programmingproject30010\reflexball\inc\charset.h
 

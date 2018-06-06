@@ -12,15 +12,17 @@
 
 **********************************************************************/
 #include "stm32f30x_conf.h"
-#define ESC 0x1B
 #include "stm32f30x.h"
 #include "30010_io.h"
 #include "ansi.h"
 #include "lut.h"
 #include "vectortrig.h"
 #include "GPIO.h"
+#include "LCD.h"
+//#include "charset.h"
 
-#define SIZE_OF_ARRAY(_array) (sizeof(_array) / sizeof(_array[0]))
+#define ESC 0x1B
+
 
 int binary_conversion(int num)
 {
@@ -42,6 +44,7 @@ struct time {
 	char change;
 };
 
+
 void initTime(volatile struct time *clk) {
 	clk->time_hseconds = 0;
 	clk->time_sec = 0;
@@ -59,7 +62,6 @@ void incrementTime(volatile struct time *clk) {
 }
 
 volatile struct time clk;
-
 
 
 void TIM2_IRQHandler(void) {
@@ -94,6 +96,8 @@ int main(void)
     TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
     TIM2->PSC = 0x00000000;					// Preset = 0;
 
+    uint16_t CountInterrupt = 0;
+
     TIM2->DIER |= 0x0001;					// Timer 2 Interrupts Enabled
     NVIC_SetPriority(TIM2_IRQn, 0);
     NVIC_EnableIRQ(TIM2_IRQn);
@@ -107,9 +111,34 @@ int main(void)
     initGPIO();
     initTime(&clk);
     // Update PuTTy everytime 2nd digit changes.
+    char Graph[512]; //Graph = Graph[0]
+    struct LCDDataLine LineData;
 
+    ClearLineData(&LineData);
 
+    initLCD();
+    memset(Graph, 0x00, 512);
 
+    lcd_update(Graph, &LineData);
+
+    LCDWrite(&LineData, "Hordur", 0);
+    LCDWrite(&LineData, "Sebastian Frederik", 2);
+
+    while(1) {
+
+        if (clk.change == 1) {
+            CountInterrupt ++;
+            clk.change = 0;
+        }
+
+        if (CountInterrupt == 20) {
+            lcd_update(Graph, &LineData);
+            CountInterrupt = 0;
+        }
+
+    }
+
+    /*
     int prevJoystick = 0;
     struct time splitTime1;
     struct time splitTime2;
@@ -156,7 +185,7 @@ int main(void)
         else {
                     printf("start : start/stop timer\nsplit1 : split timer to slot 1\nsplit 2 : ");
         }
-
+*/
 
 
         // JoyTimeCtrl();
@@ -183,10 +212,10 @@ int main(void)
                     initTime(&clk);
                     break;
             }
-        }*/
+        }
 
     }
-
+*/
     /*while (1) {
 
     // Læs joystik indgange.
