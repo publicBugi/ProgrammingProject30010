@@ -75,7 +75,6 @@ void ClearLineData(struct LCDDataLine *LineData) {
 
 void Shift(struct LCDDataLine *LineData, uint8_t Line) {
     int FirstElement = LineData->Data[Line][0];
-
     for (int i = 0; i < 127; i++){
         LineData->Data[Line][i] = LineData->Data[Line][i+1];
     }
@@ -92,10 +91,10 @@ void Shift(struct LCDDataLine *LineData, uint8_t Line) {
 //}
 
 void lcd_update(char *Graph, struct LCDDataLine *LineData) {
-    Shift(LineData, 0);
-    Shift(LineData, 1);
-    Shift(LineData, 2);
-    Shift(LineData, 3);
+    //Shift(LineData, 0);
+    //Shift(LineData, 1);
+    //Shift(LineData, 2);
+    //Shift(LineData, 3);
     CollectGraph(Graph, LineData);
     lcd_push_buffer(Graph);
 

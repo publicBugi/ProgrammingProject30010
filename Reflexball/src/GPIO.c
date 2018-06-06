@@ -149,39 +149,37 @@ void initAnalog() {
     GPIOA->MODER |= ((0x00000001) << (1 * 2));
 	// PA1: CLear pull reg / Set no pull.
     GPIOA->PUPDR &= ~((0x00000003) << (1 * 2));
-    
-    RCC->CFG2 &= CC_CFGR2_ADCPRE12;
+
+    RCC->CFGR2 &= ~RCC_CFGR2_ADCPRE12;
     RCC->CFGR2 |= RCC_CFGR2_ADCPRE12_DIV6;
     RCC->AHBENR |= RCC_AHBPeriph_ADC12;
-    
+
     ADC1->CR = 0x0000000;
     ADC1->CFGR &= 0xFDFFC007;
     ADC1->SQR1 &= ~ADC_SQR1_L;
-    
+
     ADC1->CR |= 0x10000000;
 	for(int i = 0; i < 1000; i++) {}
-	
+
 	ADC1->CR |= 0x80000000;
 	while (!(ADC1->CR & 0x80000000));
 	for (int i = 0; i < 100; i++) {}
-	
+
 	ADC1->CR |= 0x00000001;
-	while(!(ADC1->ISR & 0x00000001));    
+	while(!(ADC1->ISR & 0x00000001));
 }
 
 uint16_t readAnalog(char channel) {
 	uint16_t analogVal= 0;
 	switch (channel) {
-		case 1;
+		case 1:
 		ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_1Cycles5);
 		break;
-		case 2;
+		case 2:
 		ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_1Cycles5);
 		break;
-		uint16_t aVal = ADC_GetConversionalValue(ADC1);
-		return aVal;
 	}
-	ADC_STartConversion(ADC1);
+	ADC_StartConversion(ADC1);
 	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
 	analogVal = ADC_GetConversionValue(ADC1);
 	return analogVal;
@@ -200,4 +198,4 @@ uint8_t readJoystick() {
 // printf("%02ld", readAnalog(1));
 // char str[7];
 // sprintf(str, "%02ld", readAnalog(1));
-// 
+//

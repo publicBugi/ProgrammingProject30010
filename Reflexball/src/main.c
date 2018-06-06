@@ -110,6 +110,7 @@ int main(void)
     // Initialisering.
     initGPIO();
     initTime(&clk);
+    initAnalog();
     // Update PuTTy everytime 2nd digit changes.
     char Graph[512]; //Graph = Graph[0]
     struct LCDDataLine LineData;
@@ -122,21 +123,30 @@ int main(void)
     lcd_update(Graph, &LineData);
 
     LCDWrite(&LineData, "Hordur", 0);
-    LCDWrite(&LineData, "Sebastian Frederik", 2);
+    LCDWrite(&LineData, "Sebastian Frederik", 1);
+
+    printf("%02ld", readAnalog(1));
+    char str1[7];
+    char str2[7];
+
 
     while(1) {
-
         if (clk.change == 1) {
             CountInterrupt ++;
             clk.change = 0;
         }
 
         if (CountInterrupt == 20) {
+            sprintf(str1, "%04ld", readAnalog(1));
+            sprintf(str2, "%04ld", readAnalog(2));
+            LCDWrite(&LineData, str1, 2);
+            LCDWrite(&LineData, str2, 3);
             lcd_update(Graph, &LineData);
             CountInterrupt = 0;
         }
 
     }
+
 
     /*
     int prevJoystick = 0;
