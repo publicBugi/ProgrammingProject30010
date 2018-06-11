@@ -34,8 +34,8 @@ void UpdateState(int *state, int *selection) {
 		
 		case 4 : // Help
 		state = 1;
-		
 	}
+	selection = 0;
 
 }
 
