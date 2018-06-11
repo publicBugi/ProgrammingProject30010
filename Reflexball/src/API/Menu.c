@@ -152,7 +152,47 @@ void PrintMenu(int state, char ASCIIArray[][][]) {
 
 }
 
-void Select() {
+void Select(int  *selection,  int  *high-light,   char  ASCIIArray[][][], int *state) {
+    if(high-light == 0){
+    bgcolor(0);
+    }
+    else{
+    bgcolor(1);
+    }
+    switch(state) {
+        case 1 :
+        switch(selection) {
+            case 1:
+                PrintOutTextArray(ASCIIArray[0][][], menuBlock1X, menuBlock1Y);
+            case 2:
+                PrintOutTextArray(ASCIIArray[1][][], menuBlock2X, menuBlock2Y);
+            case 3:
+                PrintOutTextArray(ASCIIArray[2][][], menuBlock3X, menuBlock3Y);
+        }
+        case 2:
+        switch(selection) {
+            case 1:
+                PrintOutTextArray(ASCIIArray[3][][], menuBlock1X, menuBlock1Y);
+            case 2:
+                PrintOutTextArray(ASCIIArray[4][][], menuBlock2X, menuBlock2Y);
+        }
+        case 3:
+        switch(selection) {
+            case 1:
+                PrintOutTextArray(ASCIIArray[5][][], menuBlock1X, menuBlock1Y);
+            case 2:
+                PrintOutTextArray(ASCIIArray[6][][], menuBlock2X, menuBlock2Y);
+            case 3:
+                PrintOutTextArray(ASCIIArray[7][][], menuBlock3X, menuBlock3Y);
+        }
+        case 4:
+            bgcolor(0);
+            PrintOutTextArray(ASCIIArray[8][][], menuBlock1X, menuBlock1Y);
+        }
+
+
+    }
+
 
 }
 
@@ -186,8 +226,8 @@ void UpdateState(int *state, int *selection) {
 
 }
 
-void PrintEnd() {
-
+void PrintEnd(char ASCIIEnd[][[], int titleX, titleY) {
+PrintOutTextArray(ASCIIEnd[][], titleX-10, titleY-10)
 }
 
 void UpdateHighScore() {
