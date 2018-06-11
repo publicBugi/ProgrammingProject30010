@@ -1,7 +1,7 @@
-obj\debug\src\api\30010_io.o: src\API\30010_io.c inc/30010_io.h \
- inc/stm32f30x_conf.h SPL\inc/stm32f30x_adc.h inc/stm32f30x.h \
+obj\debug\src\api\30010_io.o: src\API\30010_io.c src/30010_io.h \
+ inc\HAL/stm32f30x_conf.h SPL\inc/stm32f30x_adc.h inc\API/stm32f30x.h \
  cmsis/core_cm4.h cmsis/core_cmInstr.h cmsis/core_cmFunc.h \
- cmsis/core_cm4_simd.h inc/system_stm32f30x.h SPL\inc/stm32f30x_can.h \
+ cmsis/core_cm4_simd.h inc\HAL/system_stm32f30x.h SPL\inc/stm32f30x_can.h \
  SPL\inc/stm32f30x_crc.h SPL\inc/stm32f30x_comp.h SPL\inc/stm32f30x_dac.h \
  SPL\inc/stm32f30x_dbgmcu.h SPL\inc/stm32f30x_dma.h \
  SPL\inc/stm32f30x_exti.h SPL\inc/stm32f30x_flash.h \

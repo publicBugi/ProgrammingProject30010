@@ -94,6 +94,7 @@
 		<Unit filename="inc\API\charset.h" />
 		<Unit filename="inc\API\Game.h" />
 		<Unit filename="inc\API\lut.h" />
+		<Unit filename="inc\API\Menu.h" />
 		<Unit filename="inc\API\stm32f30x.h" />
 		<Unit filename="inc\API\vectortrig.h" />
 		<Unit filename="inc\HAL\GPIO.h" />
