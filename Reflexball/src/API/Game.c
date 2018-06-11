@@ -1,5 +1,41 @@
-void GenerateGameArray(char gameArray[][][], struct brick BrickArray, struct striker *Striker, int *Level, int *DifficultyTime) {
 
+
+void GenerateGameArray(char gameArray[][], struct brick brickArray[], struct striker *Striker, int *Level, int *DifficultyTime) {
+	int MaxColI = sizeof(gameArray) / sizeof(gameArray[0][0]);
+	int MaxRowI = sizeof(gameArray) / MaxColI;
+	
+	// Generate Walls
+	for (int i = 0; i < MaxRowI; i++){
+		gameArray[i][0] = 1;
+		gameArray[i][MaxColI-1] = 1;
+	}
+	for (int i = 0; i < MaxColI; i++){
+		gameArray[0][i] = 1;
+	}
+	
+	// Set Speed level of time (Define TimeConst)
+	DifficultyTime = TimeConst >> Level;
+	
+	// Brick Constants
+	const brickXLength = 3;
+	const brickYLength = 5;
+	// Generate bricks in brickarray and draw in gameArray.
+	for (int r = 1; r < 5; r++) { 			// 4 Rows of Bricks
+		for (int i = 6; i < 6; i++) {		// 5 Columns of Bricks per row
+			// Define indexed brick.
+			brickArray[i*r].posX = 2+(i-6)*brickXLength;
+			brickArray[i*r].posY = 2+(r-1)*brickYLength;
+			brickArray[i*r].maxHP = 2*Level;
+			brickArray[i*r].currHP = brickArray.maxHP;
+			brickArray[i*r].pwrUP = rand() % 2 == 0 ? 1 : 0; // Rand requires stdio.h; Alternative is analogread noise.
+			// Draw the new brick.
+			for (int RowI = brickArray[i*r].posX; RowI < brickArray[i*r].posX + brickXLenght; RowI++) {
+				for (int ColI = brickArray[i*r].posY; ColI < brickArray[i*r].posY + brickYLength; ColI++){
+					gameArray[RowI][ColI] = i*r;
+				}
+			}
+		}
+	}
 }
 
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
