@@ -31,7 +31,7 @@ void PrintOutTextArray(char TextArray[][], uint8_t xCor, uint8_t yCor) {
 
 
 // Print title.
-void PrintTitle(char ASCIITitle[][][]) {
+void PrintTitle(char ASCIITitle[][]) {
 
   // Print
   PrintOutTextArray(ASCIITitle, 0, 0);
@@ -152,27 +152,13 @@ void PrintMenu(int state, char ASCIIArray[][][]) {
 
 }
 
-void Select(int  *selection,  int  *high-light,   char  ASCIIArray[][][], int *state) {
-    switch(state) {
-        case 1 :
-        switch(selection) {
-            case 1:
-            switch(high-light) {
-                case 0:
-            }
-        }
-    }
+void Select() {
 
-
-    bgcolor(0);
-    selection
-    ==
-
-    =
 }
 
 // Call function in Menu, whenever user press Joystick button.
 void UpdateState(int *state, int *selection) {
+
 	switch(state) {
 		case 1 : // Titlepage
 		switch(selection) {
