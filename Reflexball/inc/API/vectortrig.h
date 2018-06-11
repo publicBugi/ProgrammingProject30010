@@ -22,8 +22,4 @@ void initVector(struct vector_t *v, int32_t x, int32_t y);
 void printVector(struct vector_t *v);
 void rotateVector(struct vector_t *v, int index);
 void translateVector(struct vector_t *v, int32_t x, int32_t y);
-void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy);
-void updateBall(struct ball_t *ball, int32_t k);
-void drawBall(struct ball_t *ball);
-int CollisionDetect(struct ball_t *ball, struct box_t *box);
  #endif
