@@ -109,7 +109,7 @@ int main(void)   {
           // ClearData(&ASCIIArray);
         ASCIIArray[0][0][0] = 'h';
         ASCIIArray[1][0][0] = 'g';
-        ASCIIArray[2][0][0] = 'k';
+        ASCIIArray[2][0][0] = 'o';
 
         PrintMenu(1,ASCIIArray);
         ClearMenuLines(0,50);
@@ -251,7 +251,7 @@ int main(void)   {
 */
     /*while (1) {
 
-    // Læs joystik indgange.
+    // Lï¿½s joystik indgange.
     JoyInput = readJoystick();
         if (JoyInput == 4) {
           SetLed(1, 0, 0);
@@ -272,7 +272,7 @@ int main(void)   {
         if (JoyInput == 2) {
           SetLed(0, 0, 0);
         }
-    // Hvis ændring i joystik indgange.
+    // Hvis ï¿½ndring i joystik indgange.
     if (JoyInput != old) {
 
 
