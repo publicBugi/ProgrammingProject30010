@@ -152,8 +152,23 @@ void PrintMenu(int state, char ASCIIArray[][][]) {
 
 }
 
-void Select() {
+void Select(int  *selection,  int  *high-light,   char  ASCIIArray[][][], int *state) {
+    switch(state) {
+        case 1 :
+        switch(selection) {
+            case 1:
+            switch(high-light) {
+                case 0:
+            }
+        }
+    }
 
+
+    bgcolor(0);
+    selection
+    ==
+
+    =
 }
 
 // Call function in Menu, whenever user press Joystick button.
