@@ -131,8 +131,8 @@ void UpdateState(int *state, int *selection) {
 
 }
 
-void PrintEnd(char ASCIIEnd, int titleX, title Y) {
-
+void PrintEnd(char ASCIIEnd[][[], int titleX, titleY) {
+PrintOutTextArray(ASCIIEnd[][], titleX-10, titleY-10)
 }
 
 void UpdateHighScore() {
