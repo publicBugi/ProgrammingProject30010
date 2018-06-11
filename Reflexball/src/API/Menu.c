@@ -1,13 +1,13 @@
 
 
 // Print text fra 2D array.
-void PrintOutTextArray(char TextArray[][]) {
-//  int total = sizeof(TextArray);
-  //int col = sizeof(TextArray[0]);
-//  int row = total / col;
+void PrintOutTextArray(char TextArray[][], uint8_t xCor, uint8_t yCor) {
 
   int MaxColI = sizeof(TextArray) / sizeof(ASCIITitle[0][0]);
   int MaxRowI = sizeof(TextArray) / MaxColI;
+
+  // Move cursor to (xCor,yCor)
+  gotoXY(xCor,yCor);
 
   // Run trough columns.
   for (int RowI = 0; RowI < MaxRowI; RowI++) {
@@ -20,36 +20,135 @@ void PrintOutTextArray(char TextArray[][]) {
 
     }
 
+    yCor++;
+
+    // Go to new row.
+    gotoXY(xCor, yCor);
+
+
   }
 }
 
 
 // Print title.
-void PrintTitle(char ASCIITitle[][], uint8_t titleX, uint8_t titleY) {
-
-  // Move cursor to (titleX,titleY)
-  gotoXY(titleX,titleY);
+void PrintTitle(char ASCIITitle[][][]) {
 
   // Print
-  PrintOutTextArray(ASCIITitle);
+  PrintOutTextArray(ASCIITitle, 0, 0);
+
+}
+
+// Print main menu.
+void PrintMainMenu(char ASCIIArray[][][]){
+
+  x = 10;
+  y = 10;
+
+  // ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2. Player", "Initial","Score"]
+
+  // Print text from ASCIIArray.
+  for (int i = 0; i <= 2; i++) {
+
+    // Print text.
+    PrintOutTextArray(ASCIIArray[i],x,y);
+
+    y += 20;
+
+  }
+
+}
+
+// Player menu.
+void PrintPlayerMenu(char ASCIIArray[][][]){
+  x = 10;
+  y = 10;
+
+  // Print text from ASCIIArray.
+  for (int i = 3; i <= 4; i++) {
+
+    // Print text.
+    PrintOutTextArray(ASCIIArray[i],x,y);
+
+    y += 20;
+
+  }
+
+
+}
+
+// Score menu.
+void PrintScoreMenu(char ASCIIArray[][][]){
+
+  x = 10;
+  y = 10;
+
+
+  // Run through ASCIIArray.
+  for (int i = 5; i <= 10; i=i+2) {
+    // Print 'inital' text.
+    PrintOutTextArray(ASCIIArray[i], x, y);
+
+    x += 20;
+
+    // Print 'score' text.
+    PrintOutTextArray(ASCIIArray[i+1], x, y);
+
+  }
+
+    y += 20;
+
+  }
+
+
+}
+// Help menu.
+void PrintHelp(char ASCIIArray[][][]){
+  printf("HELP YOUR SELF! :)");
+
+
+}
+
+// Clear Menu Lines.
+void ClearMenuLines(uint8_t LineFrom, uint8_t LineTo) {
+
+  for (int i = LineFrom; i <= LineTo; i++) {
+
+    // Goto XY.
+    gotoXY(i,0);
+
+    // Clear to the end of the line.
+    clreol();
+  }
+
+
 
 }
 
 // Print the menu options.
 void PrintMenu(int state, char ASCIIArray[][][]) {
-  char From, To;
-// ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2. Player", "Initial","Score"]
+
+  // ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2 Player", "Initial 1","Score 1", "Initial 2","Score 2", "Initial 3","Score 3"]
+
+
   switch(state) {
 
-      case 1: // Play menu
-        From = 0;
-        To = 2;
+    case 1: // Main menu.
+    ClearMenuLines(20,30);
+    PrintMainMenu(ASCIIArray[][][]);
 
-      case 2: // Highscore menu
-        From = 3;
-        To = 4;
+    case 2: // Play menu.
+    ClearMenuLines(20,30);
+    PrintPlayerMenu(ASCIIArray[][][]);
+
+    case 3: // Highscore menu.
+    ClearMenuLines(20,30);
+    PrintScoreMenu(ASCIIArray[][][]);
+
+    case 4: // Help.
+    ClearMenuLines(20,30);
+    PrintScoreMenu(ASCIIArray[][][]);
+
   }
-
 
 }
 
@@ -80,10 +179,7 @@ void UpdateState(int *state, int *selection) {
 
 		case 4 : // Help
 		state = 1;
-<<<<<<< HEAD
-=======
 
->>>>>>> 4e56135388d833871008f07a167ccd6ef89dbce4
 	}
 	selection = 0;
 
