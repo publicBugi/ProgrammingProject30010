@@ -80,8 +80,12 @@ void UpdateState(int *state, int *selection) {
 
 		case 4 : // Help
 		state = 1;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4e56135388d833871008f07a167ccd6ef89dbce4
 	}
+	selection = 0;
 
 }
 
