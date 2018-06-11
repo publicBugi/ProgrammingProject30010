@@ -1,5 +1,23 @@
-void PrintTitle(){
 
+// Print title.
+void PrintTitle(char ASCIITitle[][], uint8_t titleX, uint8_t titleY) {
+  
+  // Move cursor to (titleX,titleY)
+  gotoXY(titleX,titleY);
+
+  //size_t NumberOfElements = sizeof(ASCIITitle)/sizeof(ASCIITitle[0]);
+
+  // Run trough columns.
+  for (int RowI = 0; RowI < 5; RowI++) {
+
+    // Run trough rows.
+    for (int ColI = 0; ColI < 9; ColI++) {
+
+      // Print out char of title.
+      printf("%c", ASCIITitle[RowI][ColI]);
+
+    }
+  }
 
 }
 
@@ -18,10 +36,10 @@ void UpdateState(int *state, int *selection) {
 		switch(selection) {
 			case 1 : // Play
 			state = 2;
-			
+
 			case 2 : // Highscore
 			state = 3;
-			
+
 			case 3 : // Help
 			state = 4;
 		}
@@ -31,9 +49,13 @@ void UpdateState(int *state, int *selection) {
 		*/
 		case 3 : // Highscore
 		state = 1;
-		
+
 		case 4 : // Help
 		state = 1;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4e56135388d833871008f07a167ccd6ef89dbce4
 	}
 	selection = 0;
 
