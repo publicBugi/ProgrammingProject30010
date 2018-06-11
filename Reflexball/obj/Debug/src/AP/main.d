@@ -13,4 +13,4 @@ obj\debug\src\ap\main.o: src\AP\main.c inc\HAL/stm32f30x_conf.h \
  SPL\inc/stm32f30x_wwdg.h SPL\inc/stm32f30x_misc.h src/30010_io.h \
  inc\API/ansi.h inc\API/30010_io.h inc\API/vectortrig.h inc\API/lut.h \
  inc\API/ansi.h inc\API/lut.h inc\API/vectortrig.h inc\HAL/GPIO.h \
- inc\HAL/stm32f30x_conf.h inc\HAL/LCD.h
+ inc\HAL/stm32f30x_conf.h inc\HAL/LCD.h inc\API/Menu.h

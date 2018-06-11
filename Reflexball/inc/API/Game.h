@@ -1,6 +1,7 @@
 
 #ifndef _GAME_H_
 #define _GAME_H_
+
 struct ball_n {
     struct vector_t Position, NextPosition, DirectVector;
 };

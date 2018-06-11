@@ -1,11 +1,12 @@
-
+#include "Menu.h"
 
 // Print text fra 2D array.
-void PrintOutTextArray(char TextArray[][], uint8_t xCor, uint8_t yCor) {
+void PrintOutTextArray(char TEXTARRAYTYPE, uint8_t xCor, uint8_t yCor) {
 
-  int MaxColI = sizeof(TextArray) / sizeof(ASCIITitle[0][0]);
-  int MaxRowI = sizeof(TextArray) / MaxColI;
-
+  //int MaxRowI = sizeof(TextArray) / sizeof(TextArray[0][0]);
+  //int MaxColI = sizeof(TextArray) / MaxRowI;
+  int MaxRowI = 5;
+int MaxColI = 9;
   // Move cursor to (xCor,yCor)
   gotoXY(xCor,yCor);
 
@@ -31,20 +32,19 @@ void PrintOutTextArray(char TextArray[][], uint8_t xCor, uint8_t yCor) {
 
 
 // Print title.
-void PrintTitle(char ASCIITitle[][]) {
+void PrintTitle(char TITLEASCIIARRAYTYPE) {
 
   // Print
-  PrintOutTextArray(ASCIITitle, 0, 0);
+  PrintOutTextArray(ASCIITitleArray, 0, 0);
 
 }
 
 // Print main menu.
-void PrintMainMenu(char ASCIIArray[][][]){
+void PrintMainMenu(char ASCIIARRAYTYPE){
 
-  x = 10;
-  y = 10;
+  int x = 0;
+  int y = 0;
 
-  // ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2. Player", "Initial","Score"]
 
   // Print text from ASCIIArray.
   for (int i = 0; i <= 2; i++) {
@@ -52,16 +52,16 @@ void PrintMainMenu(char ASCIIArray[][][]){
     // Print text.
     PrintOutTextArray(ASCIIArray[i],x,y);
 
-    y += 20;
+    y += 5;
 
   }
 
 }
 
 // Player menu.
-void PrintPlayerMenu(char ASCIIArray[][][]){
-  x = 10;
-  y = 10;
+void PrintPlayerMenu(char ASCIIARRAYTYPE){
+  int x = 10;
+  int y = 10;
 
   // Print text from ASCIIArray.
   for (int i = 3; i <= 4; i++) {
@@ -77,10 +77,10 @@ void PrintPlayerMenu(char ASCIIArray[][][]){
 }
 
 // Score menu.
-void PrintScoreMenu(char ASCIIArray[][][]){
+void PrintScoreMenu(char ASCIIARRAYTYPE){
 
-  x = 10;
-  y = 10;
+  int x = 10;
+  int y = 10;
 
 
   // Run through ASCIIArray.
@@ -97,12 +97,12 @@ void PrintScoreMenu(char ASCIIArray[][][]){
 
     y += 20;
 
-  }
+
 
 
 }
 // Help menu.
-void PrintHelp(char ASCIIArray[][][]){
+void PrintHelp(char ASCIIARRAYTYPE){
   printf("HELP YOUR SELF! :)");
 
 
@@ -114,7 +114,7 @@ void ClearMenuLines(uint8_t LineFrom, uint8_t LineTo) {
   for (int i = LineFrom; i <= LineTo; i++) {
 
     // Goto XY.
-    gotoXY(i,0);
+    gotoXY(0,i);
 
     // Clear to the end of the line.
     clreol();
@@ -125,7 +125,7 @@ void ClearMenuLines(uint8_t LineFrom, uint8_t LineTo) {
 }
 
 // Print the menu options.
-void PrintMenu(int state, char ASCIIArray[][][]) {
+void PrintMenu(int state, char ASCIIARRAYTYPE) {
 
   // ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2 Player", "Initial 1","Score 1", "Initial 2","Score 2", "Initial 3","Score 3"]
 
@@ -133,27 +133,28 @@ void PrintMenu(int state, char ASCIIArray[][][]) {
   switch(state) {
 
     case 1: // Main menu.
-    ClearMenuLines(20,30);
-    PrintMainMenu(ASCIIArray[][][]);
+    ClearMenuLines(0,30);
+    PrintMainMenu(ASCIIArray);
+    break;
 
     case 2: // Play menu.
     ClearMenuLines(20,30);
-    PrintPlayerMenu(ASCIIArray[][][]);
-
+    PrintPlayerMenu(ASCIIArray);
+    break;
     case 3: // Highscore menu.
     ClearMenuLines(20,30);
-    PrintScoreMenu(ASCIIArray[][][]);
-
+    PrintScoreMenu(ASCIIArray);
+    break;
     case 4: // Help.
     ClearMenuLines(20,30);
-    PrintScoreMenu(ASCIIArray[][][]);
-
+    PrintScoreMenu(ASCIIArray);
+    break;
   }
 
 }
 
-void Select(int  *selection,  int  *high-light,   char  ASCIIArray[][][], int *state) {
-    if(high-light == 0){
+void Select(int  selection,  int  *highlight,   char  ASCIIARRAYTYPE, int state) {
+    if(highlight == 0){
     bgcolor(0);
     }
     else{
@@ -191,13 +192,10 @@ void Select(int  *selection,  int  *high-light,   char  ASCIIArray[][][], int *s
         }
 
 
-    }
-
-
 }
 
 // Call function in Menu, whenever user press Joystick button.
-void UpdateState(int *state, int *selection) {
+void UpdateState(int state, int selection) {
 
 	switch(state) {
 		case 1 : // Titlepage
@@ -226,8 +224,8 @@ void UpdateState(int *state, int *selection) {
 
 }
 
-void PrintEnd(char ASCIIEnd, int titleX, titleY) {
-PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10)
+void PrintEnd(char ASCIIEnd, int titleX, int titleY) {
+PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10);
 }
 
 void UpdateHighScore() {

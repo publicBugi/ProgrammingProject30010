@@ -19,6 +19,7 @@
 #include "vectortrig.h"
 #include "GPIO.h"
 #include "LCD.h"
+#include "Menu.h"
 //#include "charset.h"
 
 #define ESC 0x1B
@@ -88,14 +89,31 @@ void getSerialInput(char* input){
 
 }
 
+void ClearData(char *ASCIIARRAYTYPE) {
+
+    for (int i=0; i<12; i++) {
+        for (int j=0; j<5; j++) {
+            for (int g=0; g<9; g++) {
+            ASCIIArray[i][j][g] = ' ';
+            }
+        }
+    }
+
+}
 
 int main(void)   {
-        char ASCIITitle[9][9];
+        char ASCIIARRAYTYPE;
 
          init_usb_uart(115200); // Initialize USB serial at 115200 baud
-        ASCIITitle[0][0] = 'k';
+          clrscr();
+          // ClearData(&ASCIIArray);
+        ASCIIArray[0][0][0] = 'h';
+        ASCIIArray[1][0][0] = 'g';
+        ASCIIArray[2][0][0] = 'k';
 
-    PrintTitle(ASCIITitle);
+        PrintMenu(1,ASCIIArray);
+        ClearMenuLines(0,50);
+   // PrintTitle(ASCIITitleArray);
 //    RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
 //    TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
 //    TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.

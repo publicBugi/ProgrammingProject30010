@@ -1,1 +1,1 @@
-obj\debug\src\api\lut.o: src\API\lut.c inc/lut.h
+obj\debug\src\api\lut.o: src\API\lut.c inc\API/lut.h
