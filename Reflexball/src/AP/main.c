@@ -89,63 +89,68 @@ void getSerialInput(char* input){
 }
 
 
-int main(void)
-    {
-    RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
-    TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
-    TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
-    TIM2->PSC = 0x00000000;					// Preset = 0;
+int main(void)   {
+        char ASCIITitle[9][9];
 
-    uint16_t CountInterrupt = 0;
+         init_usb_uart(115200); // Initialize USB serial at 115200 baud
+        ASCIITitle[0][0] = 'k';
 
-    TIM2->DIER |= 0x0001;					// Timer 2 Interrupts Enabled
-    NVIC_SetPriority(TIM2_IRQn, 0);
-    NVIC_EnableIRQ(TIM2_IRQn);
-    //uint16_t old;
-    int JoyInput;
-    //int c = 0;
-    init_usb_uart(115200); // Initialize USB serial at 115200 baud
-   // clrscr();
-    char input[7];
-    // Initialisering.
-    initGPIO();
-    initTime(&clk);
-    initAnalog();
-    // Update PuTTy everytime 2nd digit changes.
-    char Graph[512]; //Graph = Graph[0]
-    struct LCDDataLine LineData;
-
-    ClearLineData(&LineData);
-
-    initLCD();
-    memset(Graph, 0x00, 512);
-
-    lcd_update(Graph, &LineData);
-
-    LCDWrite(&LineData, "Hordur", 0);
-    LCDWrite(&LineData, "Sebastian Frederik", 1);
-
-    printf("%02ld", readAnalog(1));
-    char str1[7];
-    char str2[7];
-
-
-    while(1) {
-        if (clk.change == 1) {
-            CountInterrupt ++;
-            clk.change = 0;
-        }
-
-        if (CountInterrupt == 20) {
-            sprintf(str1, "%04ld", readAnalog(1));
-            sprintf(str2, "%04ld", readAnalog(2));
-            LCDWrite(&LineData, str1, 2);
-            LCDWrite(&LineData, str2, 3);
-            lcd_update(Graph, &LineData);
-            CountInterrupt = 0;
-        }
-
-    }
+    PrintTitle(ASCIITitle);
+//    RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
+//    TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
+//    TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
+//    TIM2->PSC = 0x00000000;					// Preset = 0;
+//
+//    uint16_t CountInterrupt = 0;
+//
+//    TIM2->DIER |= 0x0001;					// Timer 2 Interrupts Enabled
+//    NVIC_SetPriority(TIM2_IRQn, 0);
+//    NVIC_EnableIRQ(TIM2_IRQn);
+//    //uint16_t old;
+//    int JoyInput;
+//    //int c = 0;
+//    init_usb_uart(115200); // Initialize USB serial at 115200 baud
+//   // clrscr();
+//    char input[7];
+//    // Initialisering.
+//    initGPIO();
+//    initTime(&clk);
+//    initAnalog();
+//    // Update PuTTy everytime 2nd digit changes.
+//    char Graph[512]; //Graph = Graph[0]
+//    struct LCDDataLine LineData;
+//
+//    ClearLineData(&LineData);
+//
+//    initLCD();
+//    memset(Graph, 0x00, 512);
+//
+//    lcd_update(Graph, &LineData);
+//
+//    LCDWrite(&LineData, "Hordur", 0);
+//    LCDWrite(&LineData, "Sebastian Frederik", 1);
+//
+//    printf("%02ld", readAnalog(1));
+//    char str1[7];
+//    char str2[7];
+//
+//
+//    while(1) {
+//        if (clk.change == 1) {
+//            CountInterrupt ++;
+//            clk.change = 0;
+//        }
+//
+//        if (CountInterrupt == 20) {
+//            sprintf(str1, "%04ld", readAnalog(1));
+//            sprintf(str2, "%04ld", readAnalog(2));
+//            LCDWrite(&LineData, str1, 2);
+//            LCDWrite(&LineData, str2, 3);
+//            lcd_update(Graph, &LineData);
+//            CountInterrupt = 0;
+//        }
+//
+//    }
 
 
     /*

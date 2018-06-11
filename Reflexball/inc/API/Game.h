@@ -15,12 +15,12 @@ struct brick {
     int posX, posY, MaxHP, pwrUP, CurrentHP ;
 };
 
-void GenerateGameArray(char gameArray[][][], struct brick BrickArray, struct striker *Striker, int *Level, int *DifficultyTime);
-void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy);
-void updateBall(struct ball_t *ball, int32_t k);
+void GenerateGameArray();//char gameArray[][][], struct brick BrickArray, struct striker *Striker, int *Level, int *DifficultyTime
+void initBall();//struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy
+void updateBall();//struct ball_t *ball, int32_t k)
 void drawBall(struct ball_t *ball);
 void CountDown();
-int CollisionDetect(struct ball_t *ball, struct box_t *box);
+int CollisionDetect();//struct ball_t *ball, struct box_t *box
 void UpdateBallAngle();
 void UpdateBallSpeed();
 void SpawnPowerup();
