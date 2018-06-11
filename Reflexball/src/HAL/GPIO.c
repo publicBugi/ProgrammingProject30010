@@ -1,5 +1,35 @@
 #include "GPIO.h"
 
+
+
+uint8_t readJoystick() {
+
+
+}
+
+uint8_t ReadGyro(){
+
+
+
+}
+
+void UpdateLCD() {
+
+}
+
+void UpdateRGB() {
+
+}
+
+void BuzzerSound() {
+
+}
+
+void Potentiometer() {
+
+}
+
+
 void initGPIO() {
     // Aktivere klokken for GPIO port A
     RCC->AHBENR |= RCC_AHBPeriph_GPIOA;
@@ -185,7 +215,7 @@ uint16_t readAnalog(char channel) {
 	return analogVal;
 }
 
-uint8_t readJoystick() {
+uint8_t readJoystick2() {
         uint16_t Up = (GPIOA->IDR & (0x0001 << 4)) >> 4;
         uint16_t Down = (GPIOB->IDR & (0x0001 << 0)) << 1;
         uint16_t Left = (GPIOC->IDR & (0x0001 << 1)) << 1;

@@ -10,9 +10,7 @@ struct vector_t  {
 
 };
 
-struct ball_t {
-    struct vector_t PosVec, VelVec;
-};
+
 
 struct box_t {
     char x1, y1, x2, y2;
