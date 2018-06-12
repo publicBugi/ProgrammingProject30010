@@ -69,6 +69,3 @@ void translateVector(struct vector_t *v, int32_t x, int32_t y) {
     v->x += x << 14;
     v->y += y << 14;
 }
-
-
-

@@ -1,7 +1,7 @@
-
+/*
 // Print title.
 void PrintTitle(char ASCIITitle[][], uint8_t titleX, uint8_t titleY) {
-  
+
   // Move cursor to (titleX,titleY)
   gotoXY(titleX,titleY);
 
@@ -46,16 +46,12 @@ void UpdateState(int *state, int *selection) {
 		/*
 		* case 2 :
 		* Next state = Game State?
-		*/
+		*//*
 		case 3 : // Highscore
 		state = 1;
 
 		case 4 : // Help
 		state = 1;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4e56135388d833871008f07a167ccd6ef89dbce4
 	}
 	selection = 0;
 
@@ -68,3 +64,4 @@ void PrintEnd() {
 void UpdateHighScore() {
 
 }
+*/

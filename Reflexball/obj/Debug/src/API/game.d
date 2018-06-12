@@ -1,4 +1,5 @@
-obj\debug\src\ap\main.o: src\AP\main.c inc\HAL/stm32f30x_conf.h \
+obj\debug\src\api\game.o: src\API\Game.c inc\API/vectortrig.h \
+ inc\API/lut.h inc\API/30010_io.h inc\HAL/stm32f30x_conf.h \
  SPL\inc/stm32f30x_adc.h inc\API/stm32f30x.h cmsis/core_cm4.h \
  cmsis/core_cmInstr.h cmsis/core_cmFunc.h cmsis/core_cm4_simd.h \
  inc\HAL/system_stm32f30x.h SPL\inc/stm32f30x_can.h \
@@ -10,7 +11,5 @@ obj\debug\src\ap\main.o: src\AP\main.c inc\HAL/stm32f30x_conf.h \
  SPL\inc/stm32f30x_opamp.h SPL\inc/stm32f30x_pwr.h \
  SPL\inc/stm32f30x_rcc.h SPL\inc/stm32f30x_rtc.h SPL\inc/stm32f30x_spi.h \
  SPL\inc/stm32f30x_tim.h SPL\inc/stm32f30x_usart.h \
- SPL\inc/stm32f30x_wwdg.h SPL\inc/stm32f30x_misc.h src/30010_io.h \
- inc\API/ansi.h inc\API/30010_io.h inc\API/vectortrig.h inc\API/lut.h \
- inc\API/ansi.h inc\API/lut.h inc\API/vectortrig.h inc\HAL/GPIO.h \
- inc\HAL/stm32f30x_conf.h inc\HAL/LCD.h inc\API/Game.h
+ SPL\inc/stm32f30x_wwdg.h SPL\inc/stm32f30x_misc.h inc\API/ansi.h \
+ inc\API/vectortrig.h inc\API/Game.h

@@ -19,6 +19,7 @@
 #include "vectortrig.h"
 #include "GPIO.h"
 #include "LCD.h"
+#include "Game.h"
 //#include "charset.h"
 
 #define ESC 0x1B
@@ -91,7 +92,7 @@ void initInterrupt(){
     TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
     TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
     TIM2->PSC = 0x00000000;					// Preset = 0;
-    
+
     TIM2->DIER |= 0x0001;					// Timer 2 Interrupts Enabled
     NVIC_SetPriority(TIM2_IRQn, 0);
     NVIC_EnableIRQ(TIM2_IRQn);
@@ -99,50 +100,51 @@ void initInterrupt(){
 
 int main(void)
     {
-    
-    
 
-    
+
+
+
 	init_usb_uart(115200); // Initialize USB serial at 115200 baud
 	clrscr();
-	
+
 	initGPIO();
     initTime(&clk);
     initAnalog();
 	initInterrupt();
     initLCD();
- 
+
     char Graph[512]; //Graph = Graph[0]
     struct LCDDataLine LineData;
     memset(Graph, 0x00, 512);
 	ClearLineData(&LineData);
 	lcd_update(Graph, &LineData);
-    
+
     LCDWrite(&LineData, "Hordur", 0);
     LCDWrite(&LineData, "Sebastian Frederik", 1);
 
-    printf("%02ld", readAnalog(1));
-    char str1[7];
-    char str2[7];
-    
-    int JoyInput;
-    
-    char input[7];
-    uint16_t InterruptBall = 0;
-    uint16_t InterruptGame = 0;
+    printf("%02d", readAnalog(1));
+    //char str1[7];
+    //char str2[7];
 
-	struct ball_n ball;
+    //int JoyInput;
+
+    //char input[7];
+    //uint16_t InterruptBall = 0;
+    //uint16_t InterruptGame = 0;
+
+	struct ball_t ball;
 	struct striker_t striker;
-	struct brick brickArray[256];
+	struct brick_t brickArray[256];
 	char gameArray[256][256];
 	int level;
 	int DifficultyTime;
-	
-	initGameArray(gameArray[][], brickArray[], *Striker, *level, *DifficultyTime);
-	initBall(*ball);
-	
+
+	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime);
+	initBall(&ball, 1, 1, 1, 1);
+
 	for (int i = 0; i < 256; i++){
 		for (int r = 0; r < 256; r++){
+            gotoXY(i,r);
 			printf("%c", gameArray[i][r]);
 		}
 	}
@@ -152,7 +154,7 @@ int main(void)
             CountInterrupt ++;
             clk.change = 0;
         }
-        
+
         if (CountInterrupt == 20) {
             sprintf(str1, "%04ld", readAnalog(1));
             sprintf(str2, "%04ld", readAnalog(2));
@@ -161,10 +163,10 @@ int main(void)
             lcd_update(Graph, &LineData);
             CountInterrupt = 0;
         }
-        
-        
 
-    } 
+
+
+    }
 	*/
 
     /*
