@@ -11,4 +11,5 @@ obj\debug\src\api\menu.o: src\API\Menu.c inc\API/Menu.h inc\API/ansi.h \
  SPL\inc/stm32f30x_pwr.h SPL\inc/stm32f30x_rcc.h SPL\inc/stm32f30x_rtc.h \
  SPL\inc/stm32f30x_spi.h SPL\inc/stm32f30x_tim.h \
  SPL\inc/stm32f30x_usart.h SPL\inc/stm32f30x_wwdg.h \
- SPL\inc/stm32f30x_misc.h inc\API/vectortrig.h inc\API/lut.h
+ SPL\inc/stm32f30x_misc.h inc\API/vectortrig.h inc\API/lut.h \
+ inc\API/charset.h

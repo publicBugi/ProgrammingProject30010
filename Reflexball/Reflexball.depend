@@ -1040,7 +1040,7 @@
 
 1528275086 source:m:\github\programmingproject30010\reflexball\src\startup_stm32f30x.s
 
-1528731680 source:m:\github\programmingproject30010\reflexball\src\ap\main.c
+1528802408 source:m:\github\programmingproject30010\reflexball\src\ap\main.c
 	"stm32f30x_conf.h"
 	"stm32f30x.h"
 	"30010_io.h"
@@ -1071,7 +1071,7 @@
 
 1528728541 m:\github\programmingproject30010\reflexball\inc\api\lut.h
 
-1528728541 m:\github\programmingproject30010\reflexball\inc\hal\gpio.h
+1528786696 m:\github\programmingproject30010\reflexball\inc\hal\gpio.h
 	"stm32f30x_conf.h"
 
 1528728541 m:\github\programmingproject30010\reflexball\inc\hal\lcd.h
@@ -1091,7 +1091,7 @@
 1528728551 source:m:\github\programmingproject30010\reflexball\src\api\vectortrig.c
 	"vectortrig.h"
 
-1528728551 source:m:\github\programmingproject30010\reflexball\src\hal\gpio.c
+1528795727 source:m:\github\programmingproject30010\reflexball\src\hal\gpio.c
 	"GPIO.h"
 
 1528728552 source:m:\github\programmingproject30010\reflexball\src\hal\lcd.c
@@ -1099,16 +1099,26 @@
 	"charset.h"
 	"string.h"
 
-1528728540 m:\github\programmingproject30010\reflexball\inc\api\charset.h
+1528794510 m:\github\programmingproject30010\reflexball\inc\api\charset.h
 
 1528728552 source:m:\github\programmingproject30010\reflexball\src\hal\system_stm32f30x.c
 	"stm32f30x.h"
 
 1528728552 source:m:\github\programmingproject30010\reflexball\src\hal\timer.c
 
-1528731584 source:m:\github\programmingproject30010\reflexball\src\api\menu.c
+1528802221 source:m:\github\programmingproject30010\reflexball\src\api\menu.c
 	"Menu.h"
 
-1528731666 m:\github\programmingproject30010\reflexball\inc\api\menu.h
+1528802540 m:\github\programmingproject30010\reflexball\inc\api\menu.h
 	"ansi.h"
+	"charset.h"
+
+1528797113 source:m:\github\programmingproject30010\reflexball\src\hal\hdinitializering.c
+	"HDInitializering.h"
+
+1528786704 m:\github\programmingproject30010\reflexball\inc\hal\hdinitializering.h
+	"30010_io.h"
+
+1528794496 source:m:\github\programmingproject30010\reflexball\src\api\charset.c
+	"charset.h"
 
