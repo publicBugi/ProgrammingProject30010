@@ -41,7 +41,7 @@ struct time {
 	uint8_t time_sec;
 	uint8_t time_min;
 	uint8_t time_hour;
-	char change;
+	uint8_t change;
 };
 
 
@@ -56,13 +56,12 @@ void initTime(volatile struct time *clk) {
 void incrementTime(volatile struct time *clk) {
     ++clk->time_hseconds;
 	clk->time_sec = (clk->time_hseconds / 100);
-	clk->change = 1;
 	clk->time_min = (clk->time_sec / 60);
 	clk->time_hour = clk->time_min / 60;
+	clk->change = 1;
 }
 
 volatile struct time clk;
-
 
 void TIM2_IRQHandler(void) {
 	// Interrupt function!
@@ -85,57 +84,75 @@ void getSerialInput(char* input){
         input[i] = inputchar;
         }
     }
-
 }
 
-
-int main(void)
-    {
-    RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
+void initInterrupt(){
+	RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
     TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
     TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
     TIM2->PSC = 0x00000000;					// Preset = 0;
-
-    uint16_t CountInterrupt = 0;
-
+    
     TIM2->DIER |= 0x0001;					// Timer 2 Interrupts Enabled
     NVIC_SetPriority(TIM2_IRQn, 0);
     NVIC_EnableIRQ(TIM2_IRQn);
-    //uint16_t old;
-    int JoyInput;
-    //int c = 0;
-    init_usb_uart(115200); // Initialize USB serial at 115200 baud
-   // clrscr();
-    char input[7];
-    // Initialisering.
-    initGPIO();
+}
+
+int main(void)
+    {
+    
+    
+
+    
+	init_usb_uart(115200); // Initialize USB serial at 115200 baud
+	clrscr();
+	
+	initGPIO();
     initTime(&clk);
     initAnalog();
-    // Update PuTTy everytime 2nd digit changes.
+	initInterrupt();
+    initLCD();
+ 
     char Graph[512]; //Graph = Graph[0]
     struct LCDDataLine LineData;
-
-    ClearLineData(&LineData);
-
-    initLCD();
     memset(Graph, 0x00, 512);
-
-    lcd_update(Graph, &LineData);
-
+	ClearLineData(&LineData);
+	lcd_update(Graph, &LineData);
+    
     LCDWrite(&LineData, "Hordur", 0);
     LCDWrite(&LineData, "Sebastian Frederik", 1);
 
     printf("%02ld", readAnalog(1));
     char str1[7];
     char str2[7];
+    
+    int JoyInput;
+    
+    char input[7];
+    uint16_t InterruptBall = 0;
+    uint16_t InterruptGame = 0;
 
-
+	struct ball_n ball;
+	struct striker_t striker;
+	struct brick brickArray[256];
+	char gameArray[256][256];
+	int level;
+	int DifficultyTime;
+	
+	initGameArray(gameArray[][], brickArray[], *Striker, *level, *DifficultyTime);
+	initBall(*ball);
+	
+	for (int i = 0; i < 256; i++){
+		for (int r = 0; r < 256; r++){
+			printf("%c", gameArray[i][r]);
+		}
+	}
+	/*
     while(1) {
         if (clk.change == 1) {
             CountInterrupt ++;
             clk.change = 0;
         }
-
+        
         if (CountInterrupt == 20) {
             sprintf(str1, "%04ld", readAnalog(1));
             sprintf(str2, "%04ld", readAnalog(2));
@@ -144,9 +161,11 @@ int main(void)
             lcd_update(Graph, &LineData);
             CountInterrupt = 0;
         }
+        
+        
 
-    }
-
+    } 
+	*/
 
     /*
     int prevJoystick = 0;
