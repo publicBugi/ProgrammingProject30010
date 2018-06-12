@@ -1,6 +1,6 @@
 #include "GPIO.h"
 
-
+/*
 
 uint8_t readJoystick() {
 
@@ -28,7 +28,7 @@ void BuzzerSound() {
 void Potentiometer() {
 
 }
-
+*/
 
 void initGPIO() {
     // Aktivere klokken for GPIO port A

@@ -11,6 +11,9 @@
    ID:                 $Id:  $
 
 **********************************************************************/
+
+
+
 #include "stm32f30x_conf.h"
 #include "stm32f30x.h"
 #include "30010_io.h"
@@ -24,6 +27,8 @@
 
 #define ESC 0x1B
 
+#define putHeight 50
+#define putWidth 200
 
 int binary_conversion(int num)
 {
@@ -101,55 +106,60 @@ void initInterrupt(){
 int main(void)
     {
 	init_usb_uart(115200); // Initialize USB serial at 115200 baud
-	clrscr();
 
 	initGPIO();
+
     initTime(&clk);
+
     initAnalog();
+
 	initInterrupt();
+
     initLCD();
 
-    char Graph[512]; //Graph = Graph[0]
-    struct LCDDataLine LineData;
-    memset(Graph, 0x00, 512);
-	ClearLineData(&LineData);
-	lcd_update(Graph, &LineData);
+    //char Graph[512]; //Graph = Graph[0]
+    //struct LCDDataLine LineData;
+    //memset(Graph, 0x00, 512);
+	//ClearLineData(&LineData);
+	//lcd_update(Graph, &LineData);
 
-    LCDWrite(&LineData, "Hordur", 0);
-    LCDWrite(&LineData, "Sebastian Frederik", 1);
+    //LCDWrite(&LineData, "Hordur", 0);
+    //LCDWrite(&LineData, "Sebastian Frederik", 1);
 
     char str1[7];
     char str2[7];
 
-    //int JoyInput;
+    int JoyInput;
 
-    //char input[7];
+    char input[7];
     uint16_t LCDTimeCnt = 0;
     uint16_t BallTimeCnt = 0;
     uint16_t StrikerTimeCnt = 0;
-    //uint16_t InterruptGame = 0;
+    uint16_t InterruptGame = 0;
 
 	struct ball_t ball;
 	struct striker_t striker;
 	struct brick_t brickArray[256];
-	char gameArray[256][256];
+	char gameArray[putHeight][putWidth] = { { } };
 	int level = 1;
 	int DifficultyTime;
 
 	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime);
 	initBall(&ball, 1, 1, 1, 1);
 
-	for (int i = 0; i < 256; i++){
-		for (int r = 0; r < 256; r++){
-            gotoXY(i,r);
-			printf("%c", gameArray[i][r]);
+	for (int i = 0; i < putHeight; i++){
+		for (int r = 0; r < putWidth; r++){
+			printf("%d", gameArray[i][r]);
 		}
-	}
-	while(1) {
+		if (i != putHeight -1) {
+		      printf("\r\n");
+		}
+    }
+	/*while(1) {
 	    if (clk.change == 1)  { // Timer update 1/100th of a second.
 	        LCDTimeCnt++;
-	        BallTimeCnt++;
-	        StrikerTimeCnt++;
+	        //BallTimeCnt++;
+	        //StrikerTimeCnt++;
 	        clk.change = 0;
 	    }
 	    if (LCDTimeCnt == 20) {

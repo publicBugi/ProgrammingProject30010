@@ -1,7 +1,10 @@
 #include "vectortrig.h"
 #include "Game.h"
 #include <stdlib.h>
-// Game Array [PuTTyWidth] [PuTTyHeight].
+
+
+
+// Game Array [putWidth] [putHeight].
 // 0 = No Collission
 // 1 = Wall
 // 2 = Striker 1
@@ -10,10 +13,10 @@
 // 5 = Striker 4
 // 6 = Striker 5
 
-void initGameArray(char gameArray[256][256], struct brick_t brickArray[], struct striker_t *Striker, int *Level, int *DifficultyTime) {
+void initGameArray(char gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, int *Level, int *DifficultyTime) {
 	// Size of Screen
-	int MaxColI = sizeof(gameArray) / sizeof(gameArray[0][0]);
-	int MaxRowI = sizeof(gameArray) / MaxColI;
+	const int MaxColI = putWidth;
+	const int MaxRowI = putHeight;
 
 	// Generate Walls at edges
 	for (int i = 0; i < MaxRowI; i++){
@@ -54,9 +57,9 @@ void initGameArray(char gameArray[256][256], struct brick_t brickArray[], struct
 	}
 
 	// Striker Initial Position
-	Striker->currpos = 256 / 2 - 2;
+	Striker->currpos = putWidth / 2 - 2;
 	for (int i = 0; i < 5; i++){
-		gameArray[256 - 5][Striker->currpos + i] = i + 2;
+		gameArray[putHeight - 5][Striker->currpos + i] = i + 2;
 	}
 
 	Level++;
@@ -99,7 +102,7 @@ void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
 	}
 }
 
-void updateStriker(char gameArray[][256], struct striker_t *striker, uint8_t position){
+void updateStriker(char gameArray[putWidth][putHeight], struct striker_t *striker, uint8_t position){
     striker->prevpos = striker->currpos;
     striker->currpos = position;
 
