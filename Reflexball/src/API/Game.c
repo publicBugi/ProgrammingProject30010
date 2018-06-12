@@ -58,6 +58,8 @@ void initGameArray(char gameArray[256][256], struct brick_t brickArray[], struct
 	for (int i = 0; i < 5; i++){
 		gameArray[256 - 5][Striker->pos + i] = i + 2;
 	}
+
+	Level++;
 }
 
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {

@@ -100,10 +100,6 @@ void initInterrupt(){
 
 int main(void)
     {
-
-
-
-
 	init_usb_uart(115200); // Initialize USB serial at 115200 baud
 	clrscr();
 
@@ -123,12 +119,14 @@ int main(void)
     LCDWrite(&LineData, "Sebastian Frederik", 1);
 
     printf("%02d", readAnalog(1));
-    //char str1[7];
-    //char str2[7];
+    char str1[7];
+    char str2[7];
 
     //int JoyInput;
 
     //char input[7];
+    uint16_t LCDRefreshRate = 0;
+    uint16_t BallRefreshRate = 0;
     //uint16_t InterruptBall = 0;
     //uint16_t InterruptGame = 0;
 
@@ -136,7 +134,7 @@ int main(void)
 	struct striker_t striker;
 	struct brick_t brickArray[256];
 	char gameArray[256][256];
-	int level;
+	int level = 1;
 	int DifficultyTime;
 
 	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime);
@@ -148,6 +146,28 @@ int main(void)
 			printf("%c", gameArray[i][r]);
 		}
 	}
+	while(1) {
+	    if (clk.change == 1)  { // Timer update 1/100th of a second.
+	        LCDRefreshRate++;
+	        BallRefreshRate++;
+	        clk.change = 0;
+	    }
+	    if (LCDRefreshRate == 20) {
+            sprintf(str1, "%04d", readAnalog(1));
+            sprintf(str2, "%04d", readAnalog(2));
+            LCDWrite(&LineData, str1, 2);
+            LCDWrite(&LineData, str2, 3);
+            lcd_update(Graph, &LineData);
+            LCDRefreshRate = 0;
+	    }
+	    if (BallRefreshRate == DifficultyTime) {
+            drawBall(&ball);
+            updateBall(&ball, 0);
+	        BallRefreshRate = 0;
+	    }
+
+	}
+
 	/*
     while(1) {
         if (clk.change == 1) {
