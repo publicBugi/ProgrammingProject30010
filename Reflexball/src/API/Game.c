@@ -54,9 +54,9 @@ void initGameArray(char gameArray[256][256], struct brick_t brickArray[], struct
 	}
 
 	// Striker Initial Position
-	Striker->pos = 256 / 2 - 2;
+	Striker->currpos = 256 / 2 - 2;
 	for (int i = 0; i < 5; i++){
-		gameArray[256 - 5][Striker->pos + i] = i + 2;
+		gameArray[256 - 5][Striker->currpos + i] = i + 2;
 	}
 
 	Level++;
@@ -99,6 +99,24 @@ void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
 	}
 }
 
+void updateStriker(char gameArray[][256], struct striker_t *striker, uint8_t position){
+    striker->prevpos = striker->currpos;
+    striker->currpos = position;
+
+    gotoXY(256-5, striker->prevpos);
+    for (int i = 0; i < 5; i++){
+            gameArray[256-5][striker->prevpos + i] = 0;
+            putchar(32);
+    }
+
+    gotoXY(256-5, striker->currpos);
+    for (int i = 0; i < 5; i++){
+            gameArray[256-5][striker->currpos + i] = i;
+            putchar(223);
+    }
+
+
+}
 
 /*
 void CountDown(){

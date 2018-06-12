@@ -16,7 +16,8 @@ struct brick_t {
 };
 
 struct striker_t {
-	int pos;
+	int currpos;
+	int prevpos;
 };
 
 void initGameArray(char gameArray[256][256], struct brick_t brickArray[], struct striker_t *Striker, int *Level, int *DifficultyTime);

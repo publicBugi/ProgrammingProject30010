@@ -118,16 +118,15 @@ int main(void)
     LCDWrite(&LineData, "Hordur", 0);
     LCDWrite(&LineData, "Sebastian Frederik", 1);
 
-    printf("%02d", readAnalog(1));
     char str1[7];
     char str2[7];
 
     //int JoyInput;
 
     //char input[7];
-    uint16_t LCDRefreshRate = 0;
-    uint16_t BallRefreshRate = 0;
-    //uint16_t InterruptBall = 0;
+    uint16_t LCDTimeCnt = 0;
+    uint16_t BallTimeCnt = 0;
+    uint16_t StrikerTimeCnt = 0;
     //uint16_t InterruptGame = 0;
 
 	struct ball_t ball;
@@ -148,24 +147,28 @@ int main(void)
 	}
 	while(1) {
 	    if (clk.change == 1)  { // Timer update 1/100th of a second.
-	        LCDRefreshRate++;
-	        BallRefreshRate++;
+	        LCDTimeCnt++;
+	        BallTimeCnt++;
+	        StrikerTimeCnt++;
 	        clk.change = 0;
 	    }
-	    if (LCDRefreshRate == 20) {
+	    if (LCDTimeCnt == 20) {
             sprintf(str1, "%04d", readAnalog(1));
             sprintf(str2, "%04d", readAnalog(2));
             LCDWrite(&LineData, str1, 2);
             LCDWrite(&LineData, str2, 3);
             lcd_update(Graph, &LineData);
-            LCDRefreshRate = 0;
+            LCDTimeCnt = 0;
 	    }
-	    if (BallRefreshRate == DifficultyTime) {
+	    if (BallTimeCnt == DifficultyTime) {
             drawBall(&ball);
             updateBall(&ball, 0);
-	        BallRefreshRate = 0;
+	        BallTimeCnt = 0;
 	    }
-
+	    if (StrikerTimeCnt == 20){
+            updateStriker(gameArray ,&striker, readAnalog(1) >> 8);
+            StrikerTimeCnt = 0;
+	    }
 	}
 
 	/*
