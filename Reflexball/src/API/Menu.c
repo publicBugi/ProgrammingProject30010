@@ -24,27 +24,6 @@ void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowT
 
   }
 
-
-   // printf("dfg");
-   // printf("\nvalue: %c", h);
-  // Run trough columns.
-//  for (int RowI = 0; RowI < MaxRowI; RowI++) {
-//
-//    // Run trough rows.
-//    for (int ColI = 0; ColI < MaxColI; ColI++) {
-//
-//      // Print out char from text array.
-//      printf("%c", TextArray[RowI][ColI]);
-//
-//    }
-//
-//    yCor++;
-//
-//    // Go to new row.
-//    gotoXY(xCor, yCor);
-//
-//
-//  }
 }
 
 void CreateMenuText(char ASCIIARRAYTYPE, uint8_t i, char* Text) {
@@ -76,86 +55,101 @@ void CreateMenuText(char ASCIIARRAYTYPE, uint8_t i, char* Text) {
 
 }
 
+void ClearData(char ASCIIARRAYTYPE) {
+
+    for (int i=0; i<12; i++) {
+        for (int j=0; j<5; j++) {
+            for (int g=0; g<9; g++) {
+            ASCIIArray[i][j][g] = ' ';
+            }
+        }
+    }
+}
+
+
+void InitializeMenu(char ASCIIARRAYTYPE){
+
+  // Clear ASCIIArray.
+  ClearData(ASCIIArray);
+
+  // Create menu text.
+  CreateMenuText(ASCIIArray, 0, "Play");
+  CreateMenuText(ASCIIArray, 1, "Score");
+  CreateMenuText(ASCIIArray, 2, "Help");
+  CreateMenuText(ASCIIArray, 3, "1 player");
+  CreateMenuText(ASCIIArray, 4, "2 player");
+
+}
+
 
 // Print title.
 void PrintTitle(char TITLEASCIIARRAYTYPE) {
 
- // // Print
-  //PrintOutTextArray(ASCIITitleArray, 0, 0);
+ // Print
+  PrintOutTextArray(ASCIITitleArray, 5, 0, 9, 9);
 
 }
 
-// Print main menu.
-void PrintMainMenu(char ASCIIARRAYTYPE){
-
-  int x = 0;
-  int y = 0;
-
-
-  // Print text from ASCIIArray.
-  for (int i = 0; i <= 2; i++) {
-
-    // Print text.
-    PrintOutTextArray(ASCIIArray[i],x,y,5,9);
-
-    y += 5;
-
-  }
-
-}
-
-// Player menu.
-void PrintPlayerMenu(char ASCIIARRAYTYPE){
-  int x = 0;
-  int y = 0;
-
-//  // Print text from ASCIIArray.
-//  for (int i = 3; i <= 4; i++) {
+// // Print main menu.
+// void PrintMainMenu(char ASCIIARRAYTYPE){
 //
-//    // Print text.
-//   PrintOutTextArray(ASCIIArray[i],x,y, 5, 9);
+//   int x = 0;
+//   int y = 0;
 //
-//    y += 5;
 //
-//  }
-    // Select menu.
-    Select(1, 1, ASCIIArray, 2);
+//   // Print text from ASCIIArray.
+//   for (int i = 0; i <= 2; i++) {
+//
+//     // Print text.
+//     PrintOutTextArray(ASCIIArray[i],x,y,5,9);
+//
+//     y += 5;
+//
+//   }
+//
+// }
 
-    // Select menu.
-    Select(2, 0, ASCIIArray, 2);
-}
+// // Player menu.
+// void PrintPlayerMenu(char ASCIIARRAYTYPE){
+//
+//     // Select menu.
+//     Select(1, 1, ASCIIArray, 2);
+//
+//     // Select menu.
+//     Select(2, 0, ASCIIArray, 2);
+// }
 
-// Score menu.
-void PrintScoreMenu(char ASCIIARRAYTYPE){
-
-  int x = 10;
-  int y = 10;
-
-
-  // Run through ASCIIArray.
-  for (int i = 5; i <= 10; i=i+2) {
-    // Print 'inital' text.
-   // PrintOutTextArray(ASCIIArray[i], x, y);
-
-    x += 20;
-
-    // Print 'score' text.
-   // PrintOutTextArray(ASCIIArray[i+1], x, y);
-
-  }
-
-    y += 20;
-
-
-
-
-}
-// Help menu.
-void PrintHelp(char ASCIIARRAYTYPE){
-  printf("HELP YOUR SELF! :)");
-
-
-}
+// // Score menu.
+// void PrintScoreMenu(char ASCIIARRAYTYPE){
+//
+//   int x = 10;
+//   int y = 10;
+//
+//
+//   // Run through ASCIIArray.
+//   for (int i = 5; i <= 10; i=i+2) {
+//     // Print 'inital' text.
+//    // PrintOutTextArray(ASCIIArray[i], x, y);
+//
+//     x += 20;
+//
+//     // Print 'score' text.
+//    // PrintOutTextArray(ASCIIArray[i+1], x, y);
+//
+//   }
+//
+//     y += 20;
+//
+//
+//
+//
+// }
+// // Help menu.
+// void PrintHelp(char ASCIIARRAYTYPE){
+//
+//
+//
+// }
 
 // Clear menu Lines.
 void ClearLines(uint8_t LineFrom, uint8_t LineTo) {
@@ -173,8 +167,8 @@ void ClearLines(uint8_t LineFrom, uint8_t LineTo) {
 
 }
 
-// Return menu selection.
-char ChangeSelection(char Up, char SelectionIndex, char MaxSelection) {
+// Return next menu block selection number.
+char GetNextMenuBlockSelection(bool Up, char SelectionIndex, char MaxSelection) {
 
     // If count up.
     if (Up == 1) {
@@ -197,29 +191,58 @@ char ChangeSelection(char Up, char SelectionIndex, char MaxSelection) {
 }
 
 // Print the menu options.
-void PrintMenu(int state, char ASCIIARRAYTYPE) {
+void GotoMenuState(int state, char ASCIIARRAYTYPE) {
 
-  // ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2 Player", "Initial 1","Score 1", "Initial 2","Score 2", "Initial 3","Score 3"]
-
+  // Select(Selection, highlight, ASCIIArray, MenuState)
 
   switch(state) {
 
-    case 1: // Main menu.
-    ClearLines(0,30);
-    PrintMainMenu(ASCIIArray);
+     // Main menu.
+    case 1:
+      ClearLines(20,30);
+
+      // Draw and select menu block.
+      Select(1, SELECT, ASCIIArray, 1);
+
+      // Draw menu block.
+      Select(2, DESELECT, ASCIIArray, 1);
+
+      // Draw menu block.
+      Select(3, DESELECT, ASCIIArray, 1);
     break;
 
-    case 2: // Play menu.
-    ClearLines(20,30);
-    PrintPlayerMenu(ASCIIArray);
+    // Play menu.
+    case 2:
+      ClearLines(20,30);
+      // Draw and select menu block.
+      Select(1, SELECT, ASCIIArray, 2);
+
+      // Draw menu block.
+      Select(2, SELECT, ASCIIArray, 2);
     break;
-    case 3: // Highscore menu.
-    ClearLines(20,30);
-    PrintScoreMenu(ASCIIArray);
+
+    // Highscore menu.
+    case 3:
+      ClearLines(20,30);
+      //PrintScoreMenu(ASCIIArray);
     break;
-    case 4: // Help.
-    ClearLines(20,30);
-    PrintScoreMenu(ASCIIArray);
+
+    // Help.
+    case 4:
+      ClearLines(20,30);
+      printf("HELP YOUR SELF! :)");
+    break;
+
+    // 1 Player.
+    case 5:
+      ClearLines(20,30);
+    //  PrintScoreMenu(ASCIIArray);
+    break;
+    // 2 Player.
+
+    case 6:
+      ClearLines(20,30);
+    //  PrintScoreMenu(ASCIIArray);
     break;
   }
 
@@ -236,42 +259,42 @@ void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state) 
         case 1 :
         switch(selection) {
             case 1:
-                PrintOutTextArray(ASCIIArray[0], menuBlock1X, menuBlock1Y, 5, 9);
+                PrintOutTextArray(ASCIIArray[0], menuBlockX, menuBlock1Y, 5, 9);
                 break;
             case 2:
-               PrintOutTextArray(ASCIIArray[1], menuBlock2X, menuBlock2Y, 5, 9);
+               PrintOutTextArray(ASCIIArray[1], menuBlockX, menuBlock2Y, 5, 9);
                break;
             case 3:
-               PrintOutTextArray(ASCIIArray[2], menuBlock3X, menuBlock3Y, 5, 9);
+               PrintOutTextArray(ASCIIArray[2], menuBlockX, menuBlock3Y, 5, 9);
                break;
         }
         break;
         case 2:
         switch(selection) {
             case 1:
-               PrintOutTextArray(ASCIIArray[3], menuBlock1X, menuBlock1Y, 5, 9);
+               PrintOutTextArray(ASCIIArray[3], menuBlockX, menuBlock1Y, 5, 9);
                break;
             case 2:
-               PrintOutTextArray(ASCIIArray[4], menuBlock2X, menuBlock2Y, 5, 9);
+               PrintOutTextArray(ASCIIArray[4], menuBlockX, menuBlock2Y, 5, 9);
                break;
         }
         break;
         case 3:
         switch(selection) {
             case 1:
-               PrintOutTextArray(ASCIIArray[5], menuBlock1X, menuBlock1Y, 5, 9);
+               PrintOutTextArray(ASCIIArray[5], menuBlockX, menuBlock1Y, 5, 9);
                break;
             case 2:
-                PrintOutTextArray(ASCIIArray[6], menuBlock2X, menuBlock2Y, 5, 9);
+                PrintOutTextArray(ASCIIArray[6], menuBlockX, menuBlock2Y, 5, 9);
                 break;
             case 3:
-                PrintOutTextArray(ASCIIArray[7], menuBlock3X, menuBlock3Y, 5, 9);
+                PrintOutTextArray(ASCIIArray[7], menuBlockX, menuBlock3Y, 5, 9);
                 break;
         }
         break;
         case 4:
             bgcolor(0);
-            PrintOutTextArray(ASCIIArray[8], menuBlock1X, menuBlock1Y, 5, 9);
+            PrintOutTextArray(ASCIIArray[8], menuBlockX, menuBlock1Y, 5, 9);
             break;
         }
 
@@ -279,36 +302,36 @@ void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state) 
 
 }
 
-// Call function in Menu, whenever user press Joystick button.
-void UpdateState(int state, int selection) {
-
-	switch(state) {
-		case 1 : // Titlepage
-		switch(selection) {
-			case 1 : // Play
-			state = 2;
-            break;
-			case 2 : // Highscore
-			state = 3;
-            break;
-			case 3 : // Help
-			state = 4;
-			break;
-		}
-		/*
-		* case 2 :
-		* Next state = Game State?
-		*/
-		case 3 : // Highscore
-		state = 1;
-        break;
-		case 4 : // Help
-		state = 1;
-        break;
-	}
-	selection = 1;
-
-}
+// // Call function in Menu, whenever user press Joystick button.
+// void UpdateState(int state, int selection) {
+//
+// 	switch(state) {
+// 		case 1 : // Titlepage
+// 		switch(selection) {
+// 			case 1 : // Play
+// 			state = 2;
+//             break;
+// 			case 2 : // Highscore
+// 			state = 3;
+//             break;
+// 			case 3 : // Help
+// 			state = 4;
+// 			break;
+// 		}
+// 		/*
+// 		* case 2 :
+// 		* Next state = Game State?
+// 		*/
+// 		case 3 : // Highscore
+// 		state = 1;
+//         break;
+// 		case 4 : // Help
+// 		state = 1;
+//         break;
+// 	}
+// 	selection = 1;
+//
+// }
 
 void PrintEnd(char ASCIIEnd, int titleX, int titleY) {
 PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10,5, 9);

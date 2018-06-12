@@ -45,6 +45,8 @@ void HDInitialization() {
 
     // Initialization of joystick.
     InitJoystick();
-    // Change background.
+
+    // Change background to black.
     bgcolor(0);
+
 }

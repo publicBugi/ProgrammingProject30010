@@ -89,83 +89,63 @@ void getSerialInput(char* input){
 
 }
 
-void ClearData(char ASCIIARRAYTYPE) {
-
-    for (int i=0; i<12; i++) {
-        for (int j=0; j<5; j++) {
-            for (int g=0; g<9; g++) {
-            ASCIIArray[i][j][g] = ' ';
-            }
-        }
-    }
-}
-
-
 
 int main(void)   {
-        // ASCII array.
-        char ASCIIARRAYTYPE;
-
-        int JoyInput, SelectedMenu;
+        char ASCIIARRAYTYPE, ;
+        int JoyInput, SelectedMenuBlock;
         char EnableSelection = 1;
         char MenuState = 1;
 
          // Initialization of hardware.
-         HDInitialization();
+        HDInitialization();
 
         clrscr();
-        printf("kff");
-        ClearData(ASCIIArray);
-        // Create menu text
-        CreateMenuText(ASCIIArray, 0, "Play");
-        CreateMenuText(ASCIIArray, 1, "Score");
-        CreateMenuText(ASCIIArray, 2, "Help");
-        CreateMenuText(ASCIIArray, 3, "1 player");
-        CreateMenuText(ASCIIArray, 4, "2 player");
+
+        Printf("Ready\n");
+
+        // Title.
+        ASCIITitleArray[0][0] = 'C'
+
+        // Print title menu.
+        PrintTitle(ASCIITitleArray);
 
         // Print main menu.
         PrintMenu(1,ASCIIArray);
-        SelectedMenu = 1;
+
+        SelectedMenuBlock = 1;
 
         // Selected menu.
-        Select(SelectedMenu, 1, ASCIIArray, 1);
+        Select(SelectedMenuBlock, SELECT, ASCIIArray, 1);
 
         // MAIN LOOP.
         while(1){
 
-            // L�s joystik indgange.
+            // Read joystik.
             JoyInput = readJoystick();
 
             // If joystick up or down.
             if (EnableSelection && (JoyInput == 1 || JoyInput == 2)) {
-                // Up.
-                if (JoyInput == 2) {
 
-                    // Deselect previous menu.
-                    Select(SelectedMenu, 0, ASCIIArray, 1);
 
-                    // Get next menu.
-                    SelectedMenu = ChangeSelection(1, SelectedMenu, MenuDataArray[MenuState][1]);
+              // Deselect previous selected block menu.
+              Select(SelectedMenuBlock, DESELECT, ASCIIArray, MenuState);
 
-                    // Select menu.
-                    Select(SelectedMenu, 1, ASCIIArray, 1);
-                }
-                // Down
-                else if (JoyInput == 1) {
+              // Up
+              if (JoyInput == 2) {
+                // Get next menu block selection number.
+                SelectedMenu = GetNextMenuBlockSelection(UP, SelectedMenuBlock, MenuDataArray[MenuState][SelectedMenuBlock-1][0]);
+              }
+              // Down
+              else if (JoyInput == 1) {
+                // Get next menu block selection number.
+                SelectedMenu = GetNextMenuBlockSelection(DOWN, SelectedMenuBlock, MenuDataArray[MenuState][SelectedMenuBlock-1][0]);
+              }
 
-                    // Deselect previous menu.
-                    Select(SelectedMenu, 0, ASCIIArray, 1);
+              // Select block menu.
+              Select(SelectedMenuBlock, SELECT, ASCIIArray, MenuState);
 
-                    // Get next menu.
-                    SelectedMenu = ChangeSelection(0, SelectedMenu, MenuDataArray[MenuState][1]);
-
-                    // Select menu.
-                    Select(SelectedMenu, 1, ASCIIArray, 1);
-
-                }
-
-                // Disable joystick selection.
-                EnableSelection = 0;
+              // Disable joystick selection.
+              EnableSelection = 0;
             }
 
 
@@ -176,22 +156,26 @@ int main(void)   {
 
             }
 
-                        // If joystick is in neutral position.
+            // If joystick is in neutral position.
             if (EnableSelection && JoyInput == 16) {
-                    bgcolor(0);
-                    clrscr();
+
+              // Change background to black.
+              bgcolor(0);
+
+              // Clearscreen.
+              clrscr();
 
 
-                // Change menu state.
-                MenuState = MenuDataArray[MenuState][0];
+              // Get next menu state from selected menu block.
+              MenuState = MenuDataArray[MenuState][SelectedMenuBlock-1][0];
 
-                SelectedMenu = 1;
+              SelectedMenuBlock = 1;
 
-                // Change to new menu state
-                PrintMenu(MenuState, ASCIIArray);
+              // Change to new menu state
+              GotoMenuState(MenuState, ASCIIArray);
 
-                // Disable joystick selection.
-                EnableSelection = 0;
+              // Disable joystick selection.
+              EnableSelection = 0;
             }
 
         }
