@@ -89,7 +89,7 @@ void getSerialInput(char* input){
 
 }
 
-void ClearData(char *ASCIIARRAYTYPE) {
+void ClearData(char ASCIIARRAYTYPE) {
 
     for (int i=0; i<12; i++) {
         for (int j=0; j<5; j++) {
@@ -98,22 +98,117 @@ void ClearData(char *ASCIIARRAYTYPE) {
             }
         }
     }
-
 }
 
+
+
 int main(void)   {
+        // ASCII array.
         char ASCIIARRAYTYPE;
 
-         init_usb_uart(115200); // Initialize USB serial at 115200 baud
-          clrscr();
-          // ClearData(&ASCIIArray);
-        ASCIIArray[0][0][0] = 'h';
-        ASCIIArray[1][0][0] = 'g';
-        ASCIIArray[2][0][0] = 'k';
+        int JoyInput, SelectedMenu;
+        char EnableSelection = 1;
+        char MenuState = 1;
 
+         // Initialization of hardware.
+         HDInitialization();
+
+        clrscr();
+        printf("kff");
+        ClearData(ASCIIArray);
+        // Create menu text
+        CreateMenuText(ASCIIArray, 0, "Play");
+        CreateMenuText(ASCIIArray, 1, "Score");
+        CreateMenuText(ASCIIArray, 2, "Help");
+        CreateMenuText(ASCIIArray, 3, "1 player");
+        CreateMenuText(ASCIIArray, 4, "2 player");
+
+        // Print main menu.
         PrintMenu(1,ASCIIArray);
-        ClearMenuLines(0,50);
+        SelectedMenu = 1;
+
+        // Selected menu.
+        Select(SelectedMenu, 1, ASCIIArray, 1);
+
+        // MAIN LOOP.
+        while(1){
+
+            // Læs joystik indgange.
+            JoyInput = readJoystick();
+
+            // If joystick up or down.
+            if (EnableSelection && (JoyInput == 1 || JoyInput == 2)) {
+                // Up.
+                if (JoyInput == 2) {
+
+                    // Deselect previous menu.
+                    Select(SelectedMenu, 0, ASCIIArray, 1);
+
+                    // Get next menu.
+                    SelectedMenu = ChangeSelection(1, SelectedMenu, MenuDataArray[MenuState][1]);
+
+                    // Select menu.
+                    Select(SelectedMenu, 1, ASCIIArray, 1);
+                }
+                // Down
+                else if (JoyInput == 1) {
+
+                    // Deselect previous menu.
+                    Select(SelectedMenu, 0, ASCIIArray, 1);
+
+                    // Get next menu.
+                    SelectedMenu = ChangeSelection(0, SelectedMenu, MenuDataArray[MenuState][1]);
+
+                    // Select menu.
+                    Select(SelectedMenu, 1, ASCIIArray, 1);
+
+                }
+
+                // Disable joystick selection.
+                EnableSelection = 0;
+            }
+
+
+            // If joystick is in neutral position.
+            if (JoyInput == 0) {
+                // Enable joystick selection.
+                EnableSelection = 1;
+
+            }
+
+                        // If joystick is in neutral position.
+            if (EnableSelection && JoyInput == 16) {
+                    bgcolor(0);
+                    clrscr();
+
+
+                // Change menu state.
+                MenuState = MenuDataArray[MenuState][0];
+
+                SelectedMenu = 1;
+
+                // Change to new menu state
+                PrintMenu(MenuState, ASCIIArray);
+
+                // Disable joystick selection.
+                EnableSelection = 0;
+            }
+
+        }
+        //PrintOutTextArray(&ASCIIArray[1][0][0],0,10);
+
+       // PrintOutTextArray(ASCIIArray[0],0,5,5,9);
+        // PrintOutTextArray(ASCIIArray[1],0,20,5,9);
+        // PrintOutTextArray(ASCIIArray[2],0,30,5,9);
+       // ClearMenuLines(0,50);
    // PrintTitle(ASCIITitleArray);
+
+
+
+
+
+
+
 //    RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
 //    TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
 //    TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
