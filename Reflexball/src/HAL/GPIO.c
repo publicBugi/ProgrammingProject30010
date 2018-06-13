@@ -22,7 +22,11 @@ uint8_t ReadGyro(){
 void UpdateLCD(int playerHP, struct *striker, int score) {
   uint8_t tempHP;
   uint16_t tempScore;
+  strcpy(src,  char score);
+  strcpy(dest, "Score: ");
+  strcat(dest, src);
 
+  printf(dest);
   if(tempHP != playerHP){
     tempHP=playerHP;
     switch (playerHP) {

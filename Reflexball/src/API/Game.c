@@ -1,3 +1,5 @@
+#include "30010_io.h"
+
 void GenerateGameArray() {
 
 }
@@ -32,7 +34,7 @@ void drawBall() {
 //    putchar(111);
 //}
 
-void CountDown(char *numberArray[][][]){
+void CountDown(char *numberArray[]){
   // Start at 4 to make sure the first second is at least a full second
   for (int i = 4; i > 0; i--) {
     uint8_t clkSec = clk->time_sec;
