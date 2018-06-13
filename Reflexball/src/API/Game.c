@@ -125,47 +125,50 @@ void updateStriker(char gameArray[putWidth][putHeight], struct striker_t *strike
 void CountDown(){
 
 }
+int CollisionDetect() {
 
-int CollisionDetect(struct ball_t *ball, struct box_t *box){
-    char returnval = 0;
-    if ((ball->PosVec.x >> 14) == box->x1) {
-            returnval = 1;
-            if (ball->VelVec.y > 0){
-                    rotateVector(&ball->VelVec, -128);
-            }
-            else{
-                    rotateVector(&ball->VelVec, 128);
-            }
-    }
-    else if((ball->PosVec.x >> 14) == box->x2){
-            returnval = 1;
-            if (ball->VelVec.y > 0){
-                    rotateVector(&ball->VelVec, 128);
-            }
-            else{
-                    rotateVector(&ball->VelVec, -128);
-            }
-    }
-    if ((ball->PosVec.y >> 14) == box->y1) {
-            returnval = 1;
-            if (ball->VelVec.x > 0){
-                    rotateVector(&ball->VelVec, 128);
-            }
-            else{
-                    rotateVector(&ball->VelVec, -128);
-            }
-    }
-    else if ((ball->PosVec.y >> 14) == box->y2) {
-            returnval = 1;
-            if (ball->VelVec.x > 0){
-                    rotateVector(&ball->VelVec, -128);
-            }
-            else{
-                    rotateVector(&ball->VelVec, 128);
-            }
-    }
-    return returnval;
+
 }
+//int CollisionDetect(struct ball_t *ball, struct box_t *box){
+//    char returnval = 0;
+//    if ((ball->PosVec.x >> 14) == box->x1) {
+//            returnval = 1;
+//            if (ball->VelVec.y > 0){
+//                    rotateVector(&ball->VelVec, -128);
+//            }
+//            else{
+//                    rotateVector(&ball->VelVec, 128);
+//            }
+//    }
+//    else if((ball->PosVec.x >> 14) == box->x2){
+//            returnval = 1;
+//            if (ball->VelVec.y > 0){
+//                    rotateVector(&ball->VelVec, 128);
+//            }
+//            else{
+//                    rotateVector(&ball->VelVec, -128);
+//            }
+//    }
+//    if ((ball->PosVec.y >> 14) == box->y1) {
+//            returnval = 1;
+//            if (ball->VelVec.x > 0){
+//                    rotateVector(&ball->VelVec, 128);
+//            }
+//            else{
+//                    rotateVector(&ball->VelVec, -128);
+//            }
+//    }
+//    else if ((ball->PosVec.y >> 14) == box->y2) {
+//            returnval = 1;
+//            if (ball->VelVec.x > 0){
+//                    rotateVector(&ball->VelVec, -128);
+//            }
+//            else{
+//                    rotateVector(&ball->VelVec, 128);
+//            }
+//    }
+//    return returnval;
+//}
 
 void UpdateBallAngle() {
 

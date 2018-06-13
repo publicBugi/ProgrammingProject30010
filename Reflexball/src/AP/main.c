@@ -284,6 +284,126 @@ int main(void)
                     break;
                 case 4 :	// Left - Split time 1
                     __disable_irq();
+
+        if (CountInterrupt == 20) {
+            sprintf(str1, "%04ld", readAnalog(1));
+            sprintf(str2, "%04ld", readAnalog(2));
+            LCDWrite(&LineData, str1, 2);
+            LCDWrite(&LineData, str2, 3);
+            lcd_update(Graph, &LineData);
+            CountInterrupt = 0;
+        }
+
+
+
+    }
+	*/
+
+    /*
+    int prevJoystick = 0;
+    struct time splitTime1;
+    struct time splitTime2;
+    initTime(&splitTime1);
+    initTime(&splitTime2);
+    ShowWindow(0,0,14,4, "Stopwatch", 5, 1);
+    while(1) {
+        if (clk.change == 1) {
+            clk.change = 0;
+            gotoXY(1,1);
+            printf("%02d:%02d:%02d:%02lu", clk.time_hour, clk.time_min % 60, clk.time_sec % 60, clk.time_hseconds % 100);
+        }
+        gotoXY(1,2);
+        printf("%02d:%02d:%02d:%02lu", splitTime1.time_hour, splitTime1.time_min % 60, splitTime1.time_sec % 60, splitTime1.time_hseconds % 100);
+        gotoXY(1,3);
+        printf("%02d:%02d:%02d:%02lu", splitTime2.time_hour, splitTime2.time_min % 60, splitTime2.time_sec % 60, splitTime2.time_hseconds % 100);
+        gotoXY(9,9);
+
+        getSerialInput(input);
+        gotoXY(10,10);
+        if (strcmp(input, "start")==0) {
+            TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+        }
+        else if (strcmp(input, "split1") == 0) {
+                    __disable_irq();
+                    splitTime1 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "split2") == 0) {
+                    __disable_irq();
+                    splitTime2 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "reset") == 0) {
+                    TIM2->CR1 = 0x00000000;
+                    initTime(&clk);
+        }
+       else if (strcmp(input, "help") == 0) {
+                    printf("sdgajsgkljsgajhsdglkj");
+       }
+        else if (strcmp(input, "") == 0) {
+
+
+    /*
+    int prevJoystick = 0;
+    struct time splitTime1;
+    struct time splitTime2;
+    initTime(&splitTime1);
+    initTime(&splitTime2);
+    ShowWindow(0,0,14,4, "Stopwatch", 5, 1);
+    while(1) {
+        if (clk.change == 1) {
+            clk.change = 0;
+            gotoXY(1,1);
+            printf("%02d:%02d:%02d:%02lu", clk.time_hour, clk.time_min % 60, clk.time_sec % 60, clk.time_hseconds % 100);
+        }
+        gotoXY(1,2);
+        printf("%02d:%02d:%02d:%02lu", splitTime1.time_hour, splitTime1.time_min % 60, splitTime1.time_sec % 60, splitTime1.time_hseconds % 100);
+        gotoXY(1,3);
+        printf("%02d:%02d:%02d:%02lu", splitTime2.time_hour, splitTime2.time_min % 60, splitTime2.time_sec % 60, splitTime2.time_hseconds % 100);
+        gotoXY(9,9);
+
+        getSerialInput(input);
+        gotoXY(10,10);
+        if (strcmp(input, "start")==0) {
+            TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+        }
+        else if (strcmp(input, "split1") == 0) {
+                    __disable_irq();
+                    splitTime1 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "split2") == 0) {
+                    __disable_irq();
+                    splitTime2 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "reset") == 0) {
+                    TIM2->CR1 = 0x00000000;
+                    initTime(&clk);
+        }
+       else if (strcmp(input, "help") == 0) {
+                    printf("sdgajsgkljsgajhsdglkj");
+       }
+        else if (strcmp(input, "") == 0) {
+
+       }
+        else {
+                    printf("start : start/stop timer\nsplit1 : split timer to slot 1\nsplit 2 : ");
+        }
+*/
+
+
+        // JoyTimeCtrl();
+        /*JoyInput = readJoystick();
+        if (JoyInput != prevJoystick) {	// Has Joystick changed?
+            prevJoystick = JoyInput;
+            switch (JoyInput) {				// What did it change to?
+
+                case 16 : 	// Center - Start/Stop
+                    TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+                    break;
+                case 4 :	// Left - Split time 1
+                    __disable_irq();
                     splitTime1 = clk;
                     __enable_irq();
                     break;

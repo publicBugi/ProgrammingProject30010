@@ -94,9 +94,11 @@
 		<Unit filename="inc\API\charset.h" />
 		<Unit filename="inc\API\Game.h" />
 		<Unit filename="inc\API\lut.h" />
+		<Unit filename="inc\API\Menu.h" />
 		<Unit filename="inc\API\stm32f30x.h" />
 		<Unit filename="inc\API\vectortrig.h" />
 		<Unit filename="inc\HAL\GPIO.h" />
+		<Unit filename="inc\HAL\HDInitializering.h" />
 		<Unit filename="inc\HAL\LCD.h" />
 		<Unit filename="inc\HAL\stm32f30x_conf.h" />
 		<Unit filename="inc\HAL\system_stm32f30x.h" />
@@ -198,6 +200,9 @@
 		<Unit filename="src\API\ansi.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\API\charset.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\API\Game.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -211,6 +216,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\GPIO.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\HDInitializering.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\LCD.c">

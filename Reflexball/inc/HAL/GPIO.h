@@ -5,7 +5,6 @@
 
 
 void initGPIO();
-void initJoystick() ;
 void initLED();
 void SetLed(char R, char G, char B);
 uint8_t readJoystick();

@@ -1,11 +1,17 @@
 #include "GPIO.h"
 
-/*
 
 uint8_t readJoystick() {
+        uint16_t Up = (GPIOA->IDR & (0x0001 << 4)) >> 4;
+        uint16_t Down = (GPIOB->IDR & (0x0001 << 0)) << 1;
+        uint16_t Left = (GPIOC->IDR & (0x0001 << 1)) << 1;
+        uint16_t Right = (GPIOC->IDR & (0x0001 << 0)) << 3;
+        uint16_t Center = (GPIOB->IDR & (0x0001 << 5)) >> 1;
 
-
+        return Up + Down + Left + Right + Center;
 }
+
+
 
 uint8_t ReadGyro(){
 
@@ -33,17 +39,17 @@ void Potentiometer() {
 void initGPIO() {
     // Aktivere klokken for GPIO port A
     RCC->AHBENR |= RCC_AHBPeriph_GPIOA;
-
-     // Aktivere klokken for GPIO port B.
-    RCC->AHBENR |= RCC_AHBPeriph_GPIOB;
-
-     // Aktivere klokken for GPIO port C.
-    RCC->AHBENR |= RCC_AHBPeriph_GPIOC;
-    initJoystick();
+      // Aktivere klokken for GPIO port B.                          
+      //
+      RCC->AHBENR |= RCC_AHBPeriph_GPIOB;                           
+                                                                    
+       // Aktivere klokken for GPIO port C.                         
+      RCC->AHBENR |= RCC_AHBPeriph_GPIOC;                           
+      initJoystick();
 
     initLED();
 }
-
+ 
 void initJoystick() {
 
 
@@ -57,7 +63,7 @@ void initJoystick() {
 
     // PB0 & PB5: Ryder register.
     GPIOB->MODER &= ~((0x00000C03) << (0 * 2));
-
+	 
 
     // PB0 & PB5: Ryder push/pull register.
     GPIOB->PUPDR &= ~((0x00000C03) << (0 * 2));
