@@ -311,7 +311,7 @@ void UpdateState(int state, int selection) {
 }
 
 void PrintEnd(char ASCIIEnd, int titleX, int titleY) {
-PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10,5, 9);
+PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10, 5, 9);
 }
 
 void UpdateHighScore() {
