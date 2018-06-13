@@ -27,9 +27,6 @@
 
 #define ESC 0x1B
 
-#define putHeight 50
-#define putWidth 200
-
 int binary_conversion(int num)
 {
     if (num == 0)
@@ -105,55 +102,40 @@ void initInterrupt(){
 
 int main(void)
     {
-	
+
 	// Input Variables
 	uint8_t joyInput;
 	uint8_t tiltInput;
 	uint8_t analogInput;
-	
+
 	// Output Variables
-	char Graph[512] = { { } };						// Graph: Pixel graph to push to LCD Screen (Redundant?)
-	char LCDData[4][128] = { { } };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
-	
-	
-	// Game Instances
-	struct ball_t ball1;							// Ball	(Possibly multiple)
-	struct striker_t striker;						// Striker (Only one)
-	
+	//char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
+	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
+
 	// Game data
-	struct brick_t brickArray[256];				// Maintain control of all Bricks. (Position, Health and Powerup)
-	char gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
 	uint8_t level = 1;								// Level counter; Controls game difficulty. Starts at level 1.
-	uint8_t DifficultyTime;							// Variable Count. Decreases as level increases: Speed increases!
-	
+						// Variable Count. Decreases as level increases: Speed increases!
+
 	// Counters - Maintain Time
 	uint16_t LCDTimeCnt = 0;
     uint16_t BallTimeCnt = 0;
     uint16_t StrikerTimeCnt = 0;
     uint16_t InterruptGame = 0;
-	
+
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
 
 	initGPIO();			   	// Enable GPIO Pins.
 
     initTime(&clk);			// Reset global time.
-    
+
     initInterrupt();		// Enable Interrupt (1/100 sec Interrupt)
 
     initAnalog();			// Enable ADC Potentiometers
 
-    initLCD();				// Enable LCD Screen
+    //initLCD();			// Enable LCD Screen
 
-	// Generate Array for Collision purposes.
-	// Values in Array:
-	// 0 	= Air / No Collision.
-	// 1 	= Wall / Collision.
-	// 2-6 	= Striker Segments
-	// 7-256= Brick in BrickArray.						
-	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime);
-
-	initBall(&ball, 1, 1, 1, 1); // Initialize ball (Which ball, Position, Velocity)
+	//initBall(&ball1, 1, 1, 1, 1); // Initialize ball (Which ball, Position, Velocity)
 
     //char Graph[512]; //Graph = Graph[0]
     //struct LCDDataLine LineData;
@@ -163,18 +145,11 @@ int main(void)
 
 	//ClearLineData[&LineData);
 	//lcd_update[Graph, LCDData);
-	
+
 	//LCDWrite(LCDData, "Hello", 0);
 	//LCDWrite(LCDData, "World!", 1);
 
-	for (int i = 0; i < putHeight; i++){
-		for (int r = 0; r < putWidth; r++){
-			printf("%d", gameArray[i][r]);
-		}
-		if (i != putHeight -1) {
-		      printf("\r\n");
-		}
-    }
+    runGame(&level);
 
 	/*while(1) {
 	    if (clk.change == 1)  { // Timer update 1/100th of a second.

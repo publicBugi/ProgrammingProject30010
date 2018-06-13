@@ -1,63 +1,42 @@
 #include "Menu.h"
 
-// Print text fra 2D array.
-void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
-
-  // Move cursor to (xCor,yCor)
-  gotoXY(xCor,yCor);
-
-  // Run through rows
-  for (int RowI = 0 ; RowI < RowTotal ; RowI++) {
-
-    // Run trough columns.
-    for (int ColI = 0 ; ColI < ColTotal ; ColI++) {
-
-        // Print out text.
-        printf("%c ", *(TextArray + RowI*ColTotal + ColI));
-
-    }
-
-    yCor++;
-
-    // Go to new row.
-    gotoXY(xCor, yCor);
-
-// Print text fra 2D array.
-void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
-
-  // Move cursor to (xCor,yCor)
-  gotoXY(xCor,yCor);
-
-  // Run through rows
-  for (int RowI = 0 ; RowI < RowTotal ; RowI++) {
-
-    // Run trough columns.
-    for (int ColI = 0 ; ColI < ColTotal ; ColI++) {
-
-        // Print out text.
-        printf("%c ", *(TextArray + RowI*ColTotal + ColI));
-
-    }
-
-    yCor++;
-
-    // Go to new row.
-    gotoXY(xCor, yCor);
-
-  }
->>>>>>> master
-
-
-   // printf("dfg");
-   // printf("\nvalue: %c", h);
-  // Run trough columns.
-//  for (int RowI = 0; RowI < MaxRowI; RowI++) {
+//// Print text fra 2D array.
+//void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
 //
-//    // Run trough rows.
-//    for (int ColI = 0; ColI < MaxColI; ColI++) {
+//  // Move cursor to (xCor,yCor)
+//  gotoXY(xCor,yCor);
 //
-//      // Print out char from text array.
-//      printf("%c", TextArray[RowI][ColI]);
+//  // Run through rows
+//  for (int RowI = 0 ; RowI < RowTotal ; RowI++) {
+//
+//    // Run trough columns.
+//    for (int ColI = 0 ; ColI < ColTotal ; ColI++) {
+//
+//        // Print out text.
+//        printf("%c ", *(TextArray + RowI*ColTotal + ColI));
+//
+//    }
+//
+//    yCor++;
+//
+//    // Go to new row.
+//    gotoXY(xCor, yCor);
+//  }
+//}
+//// Print text fra 2D array.
+//void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
+//
+//  // Move cursor to (xCor,yCor)
+//  gotoXY(xCor,yCor);
+//
+//  // Run through rows
+//  for (int RowI = 0 ; RowI < RowTotal ; RowI++) {
+//
+//    // Run trough columns.
+//    for (int ColI = 0 ; ColI < ColTotal ; ColI++) {
+//
+//        // Print out text.
+//        printf("%c ", *(TextArray + RowI*ColTotal + ColI));
 //
 //    }
 //
@@ -66,9 +45,30 @@ void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowT
 //    // Go to new row.
 //    gotoXY(xCor, yCor);
 //
-//
 //  }
-}
+//
+//
+//   // printf("dfg");
+//   // printf("\nvalue: %c", h);
+//  // Run trough columns.
+////  for (int RowI = 0; RowI < MaxRowI; RowI++) {
+////
+////    // Run trough rows.
+////    for (int ColI = 0; ColI < MaxColI; ColI++) {
+////
+////      // Print out char from text array.
+////      printf("%c", TextArray[RowI][ColI]);
+////
+////    }
+////
+////    yCor++;
+////
+////    // Go to new row.
+////    gotoXY(xCor, yCor);
+////
+////
+////  }
+//}
 
 void CreateMenuText(char ASCIIARRAYTYPE, uint8_t i, char* Text) {
 
@@ -99,14 +99,14 @@ void CreateMenuText(char ASCIIARRAYTYPE, uint8_t i, char* Text) {
 
 }
 
-
+/*
 // Print title.
 void PrintTitle(char TITLEASCIIARRAYTYPE) {
 
  // // Print
   //PrintOutTextArray(ASCIITitleArray, 0, 0);
 
-}
+}*/
 
 // Print main menu.
 void PrintMainMenu(char ASCIIARRAYTYPE){
@@ -168,9 +168,6 @@ void PrintScoreMenu(char ASCIIARRAYTYPE){
   }
 
     y += 20;
-
-
-
 
 }
 // Help menu.
@@ -297,14 +294,10 @@ void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state) 
             PrintOutTextArray(ASCIIArray[8], menuBlock1X, menuBlock1Y, 5, 9);
             break;
         }
-
-
-
 }
 
 // Call function in Menu, whenever user press Joystick button.
 void UpdateState(int state, int selection) {
-
 	switch(state) {
 		case 1 : // Titlepage
 		switch(selection) {
@@ -321,7 +314,7 @@ void UpdateState(int state, int selection) {
 		/*
 		* case 2 :
 		* Next state = Game State?
-		*//*
+		*/
 		case 3 : // Highscore
 		state = 1;
         break;
@@ -330,13 +323,12 @@ void UpdateState(int state, int selection) {
         break;
 	}
 	selection = 1;
-
 }
 
 void PrintEnd(char ASCIIEnd, int titleX, int titleY) {
-PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10,5, 9);
+    PrintOutTextArray(ASCIIEnd, titleX-10, titleY-10,5, 9);
 }
-
+/*
 void UpdateHighScore() {
 
 }

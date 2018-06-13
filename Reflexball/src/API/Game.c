@@ -13,7 +13,7 @@
 // 5 = Striker 4
 // 6 = Striker 5
 
-void initGameArray(char gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, int *Level, int *DifficultyTime) {
+void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime) {
 	// Size of Screen
 	const int MaxColI = putWidth;
 	const int MaxRowI = putHeight;
@@ -32,34 +32,52 @@ void initGameArray(char gameArray[putHeight][putWidth], struct brick_t brickArra
 	*DifficultyTime = TimeConst >> *Level;
 
 	// Brick Constants
-	const int brickXLength = 3;
-	const int brickYLength = 5;
-	const int BricksPerRow = brickXLength/MaxRowI + 1;
-	const int RowsOfBricks = 5;
+	const int brickHeight = 5;
+	const int brickWidth = 20;
+    int BricksPerRow = brickWidth/MaxRowI - 1;
+	const int RowsOfBricks = 3;
 
 	// Generate bricks in brickarray and draw in gameArray.
-	for (int r = 1; r <= RowsOfBricks + 1; r++) { 			// 4 Rows of Bricks
-		for (int i = 6; i < BricksPerRow; i++) {		// 5 Columns of Bricks per row
-			// Define indexed brick.
-			int index = i*r;
-			brickArray[index].posX = 2+(i-6)*brickXLength;
-			brickArray[index].posY = 2+(r-1)*brickYLength;
+    int index = 7;
+    for (int i = 0; i < 3; i++){
+        for (int r = 0; r < 5; r++) {
+            brickArray[index].posX = 1 + r*brickWidth;
+			brickArray[index].posY = 5 + i*brickHeight;
 			brickArray[index].MaxHP = 2*(*Level) + rand() % 3;
 			brickArray[index].currHP = brickArray[index].MaxHP;
 			brickArray[index].pwrUP = rand() % 2 == 0 ? 1 : 0; // Rand requires stdio.h; Alternative is analogread noise.
-			// Draw the new brick.
-			for (int RowI = brickArray[index].posX; RowI < brickArray[index].posX + brickXLength; RowI++) {
-				for (int ColI = brickArray[index].posY; ColI < brickArray[index].posY + brickYLength; ColI++){
-					gameArray[RowI][ColI] = index;
-				}
+            for (int x = 0; x < brickWidth; x++){
+                for(int y = 0; y < brickHeight; y++) {
+                    gameArray[5 + i*brickHeight + x][1 + r*brickWidth + y] = index;
+                }
 			}
-		}
-	}
+			index++;
+        }
+    }
+
+
+//	for (int r = 1; r <= RowsOfBricks + 1; r++) { 			// 4 Rows of Bricks
+//		for (int i = 6; i < BricksPerRow; i++) {		// 5 Columns of Bricks per row
+//			// Define indexed brick.
+//			int index = i*r;
+//			brickArray[index].posX = 2+(i-6)*brickXLength;
+//			brickArray[index].posY = 2+(r-1)*brickYLength;
+//			brickArray[index].MaxHP = 2*(*Level) + rand() % 3;
+//			brickArray[index].currHP = brickArray[index].MaxHP;
+//			brickArray[index].pwrUP = rand() % 2 == 0 ? 1 : 0; // Rand requires stdio.h; Alternative is analogread noise.
+//			// Draw the new brick.
+//			for (int RowI = brickArray[index].posX; RowI < brickArray[index].posX + brickXLength; RowI++) {
+//				for (int ColI = brickArray[index].posY; ColI < brickArray[index].posY + brickYLength; ColI++){
+//					gameArray[RowI][ColI] = index;
+//				}
+//			}
+//		}
+//	}
 
 	// Striker Initial Position
 	Striker->currpos = putWidth / 2 - 2;
 	for (int i = 0; i < 5; i++){
-		gameArray[putHeight - 5][Striker->currpos + i] = i + 2;
+		gameArray[putHeight - putStrikerPos][Striker->currpos + i] = i + 2;
 	}
 
 	Level++;
@@ -102,7 +120,7 @@ void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
 	}
 }
 
-void updateStriker(char gameArray[putWidth][putHeight], struct striker_t *striker, uint8_t position){
+void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker, uint8_t position){
     striker->prevpos = striker->currpos;
     striker->currpos = position;
 
@@ -119,6 +137,39 @@ void updateStriker(char gameArray[putWidth][putHeight], struct striker_t *strike
     }
 
 
+}
+
+
+uint16_t runGame(uint8_t *level) {
+    // Local Game Data
+    struct brick_t brickArray[40] = { };			// Maintain control of all Bricks. (Position, Health and Powerup)
+	uint8_t gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
+	uint8_t DifficultyTime;
+
+	// Game Instances
+	struct ball_t ball1;							// Ball	(Possibly multiple)
+	struct striker_t striker;						// Striker (Only one)
+
+    // Game Array for Collision purposes.
+	// Values in Array:
+	// 0 	= Air / No Collision.
+	// 1 	= Wall / Collision.
+	// 2-6 	= Striker Segments
+	// 7-256= Brick in BrickArray.
+
+    // Generate map for current level (Used for collision detection)
+	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime);
+	for (int i = 0; i < putHeight; i++){
+		for (int r = 0; r < putWidth; r++){
+			uint8_t index = gameArray[i][r];
+			printf("%d", index % 10);
+		}
+		if (i != putHeight -1) {
+		      printf("\r\n");
+		}
+    }
+
+    return 0;
 }
 
 /*

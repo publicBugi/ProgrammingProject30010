@@ -10,17 +10,17 @@ void initLCD(){
 }
 
 void LCDWrite(char LCDData[4][128], char* Text, int Line) {
-	
+
     int Location = 0;
-    
-    for (j=0; j < strlen(Text); j++) {
-    
+
+    for (int j=0; j < strlen(Text); j++) {
+
         uint8_t t = Text[j];
-    
-        for (i=0; i<5; i++) {
+
+        for (int i=0; i<5; i++) {
             if ((Location+i) < 128) {
                 LCDData[Line][Location + i] = character_data[t-0x20][i];
-            }       
+            }
         }
         Location += 5;
     }
@@ -68,7 +68,7 @@ void ClearLineData(char LCDData[4][128]) {
 //}
 
 void Shift(char LCDData[4][128], uint8_t Line) {
-    int FirstElement = LineData->Data[Line][0];
+    int FirstElement = LCDData[Line][0];
     for (int i = 0; i < 127; i++){
         LCDData[Line][i] = LCDData[Line][i+1];
     }
@@ -89,7 +89,7 @@ void lcd_update(char *Graph, char LCDData[4][128]) {
     //Shift(LineData, 1);
     //Shift(LineData, 2);
     //Shift(LineData, 3);
-    CollectGraph(Graph, LineData);
+    CollectGraph(Graph, LCDData);
     lcd_push_buffer(Graph);
 
 }

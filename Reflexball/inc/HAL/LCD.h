@@ -2,11 +2,11 @@
 #define _LCD_H
 #include "30010_io.h"
 
-void ClearLineData(struct LCDDataLine *LineData);
-void LCDWrite(struct LCDDataLine *LineData, char* Text, int Line);
-void CollectGraph(char *Graph, struct LCDDataLine *LineData);
-void lcd_update(char *Graph, struct LCDDataLine *LineData);
+void ClearLineData(char LCDData[4][128]);
+void LCDWrite(char LCDData[4][128], char* Text, int Line);
+void CollectGraph(char *Graph, char LCDData[4][128]);
+void lcd_update(char *Graph, char LCDData[4][128]);
 void initLCD();
-void Shift(struct LCDDataLine *LineData, uint8_t Line);
+void Shift(char LCDData[4][128], uint8_t Line);
 void lcd_update();
 #endif

@@ -4,32 +4,34 @@
 
 #define putHeight 50
 #define putWidth 200
+#define putStrikerPos 2
 
 struct ball_t {
     struct vector_t PrevPos, NextPos, DirVec;
 };
 
 struct pwrUp {
-    int posX, posY;
-    int alive;
-    int enable;
+    uint8_t posX, posY;
+    uint8_t alive;
+    uint8_t enable;
 };
 
 struct brick_t {
-    int posX, posY, MaxHP, currHP, pwrUP;
+    uint8_t posX, posY, MaxHP, currHP, pwrUP;
 };
 
 struct striker_t {
-	int currpos;
-	int prevpos;
+	uint8_t currpos;
+	uint8_t prevpos;
 };
 
-void initGameArray(char gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, int *Level, int *DifficultyTime);
+void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime);
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy);
 void updateBall(struct ball_t *ball, uint8_t velMod);
 void drawBall(struct ball_t *ball);
 void updateBallSpeed(struct ball_t *ball, int8_t velMod);
-void updateStriker(char gameArray[putWidth][putHeight], struct striker_t *striker, uint8_t position);
+void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker, uint8_t position);
+uint16_t runGame(uint8_t *level);
 /*void CountDown();
 int CollisionDetect(struct ball_t *ball, struct box_t *box);
 void UpdateBallAngle();
