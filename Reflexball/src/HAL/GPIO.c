@@ -19,7 +19,33 @@ uint8_t ReadGyro(){
 
 }
 
-void UpdateLCD() {
+void UpdateLCD(int playerHP, struct *striker, int score) {
+  uint8_t tempHP;
+  uint16_t tempScore;
+
+  if(tempHP != playerHP){
+    tempHP=playerHP;
+    switch (playerHP) {
+      case 3:
+      LCDWrite(&LineData, "         ÇüÇüÇü", 2);
+      break;
+      case 2:
+      LCDWrite(&LineData, "          ÇüÇü ", 2);
+      break;
+      case 1:
+      LCDWrite(&LineData, "           Çü  ", 2);
+      break;
+      case 0:
+      ClearLines();
+      break;
+    }
+  }
+
+  if(tempScore != score){
+    tempScore=score;
+    LCDWrite(&LineData, score, 2)
+  }
+
 
 }
 
