@@ -62,7 +62,7 @@ void initLED() {
     // PA9: Ryder register.
     GPIOA->OSPEEDR &= ~((0x00000003) << (9 * 2));
 
-    // PA9: S�tter hastighed.
+    // PA9: Sætter hastighed.
     GPIOA->OSPEEDR |= ((0x00000002) << (9 * 2));
 
     // PA9: Ryder register..
@@ -74,14 +74,14 @@ void initLED() {
     // PA9: Ryder register.
     GPIOA->MODER &= ~((0x00000003) << (9 * 2));
 
-    // PA9: S�tter til udgang.
+    // PA9: Sætter til udgang.
     GPIOA->MODER |= ((0x00000001) << (9 * 2));
 
 
     // PB4: Ryder register.
     GPIOB->OSPEEDR &= ~((0x00000003) << (4 * 2));
 
-    // PB4: S�tter hastighed.
+    // PB4: Sætter hastighed.
     GPIOB->OSPEEDR |= ((0x00000002) << (4 * 2));
 
     // PB4: Ryder register..
@@ -93,7 +93,7 @@ void initLED() {
     // PB4: Ryder register.
     GPIOB->MODER &= ~((0x00000003) << (4 * 2));
 
-    // PB4: S�tter til udgang.
+    // PB4: Sætter til udgang.
     GPIOB->MODER |= ((0x00000001) << (4 * 2));
 
 
@@ -101,7 +101,7 @@ void initLED() {
     // PC7: Ryder register.
     GPIOC->OSPEEDR &= ~((0x00000003) << (7 * 2));
 
-    // PC7: S�tter hastighed.
+    // PC7: Sætter hastighed.
     GPIOC->OSPEEDR |= ((0x00000002) << (7 * 2));
 
     // PC7: Ryder register..
@@ -113,14 +113,14 @@ void initLED() {
     // PC7: Ryder register.
     GPIOC->MODER &= ~((0x00000003) << (7 * 2));
 
-    // PC7: S�tter til udgang.
+    // PC7: Sætter til udgang.
     GPIOC->MODER |= ((0x00000001) << (7 * 2));
 }
 
 void SetLed(char R, char G, char B) {
 
     if (R == 1) {
-        // R�d-LED
+        // Rød-LED
         GPIOB->ODR  &= ~(0x0001 << 4);
     }
     else {
@@ -128,7 +128,7 @@ void SetLed(char R, char G, char B) {
     }
 
     if (G == 1) {
-        // Gr�n-LED.
+        // Grøn-LED.
         GPIOC->ODR &= ~(0x0001 << 7);
     }
     else {
@@ -137,7 +137,7 @@ void SetLed(char R, char G, char B) {
 
 
     if (B == 1) {
-         // Bl�-LED.
+         // Blå-LED.
         GPIOA->ODR &= ~(0x0001<< 9);
     }
     else {
