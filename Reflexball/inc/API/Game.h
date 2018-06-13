@@ -1,10 +1,15 @@
+#include "vectortrig.h"
+#include "30010_io.h"
+#include <stdlib.h>
+#include "timer.h"
 
 #ifndef _GAME_H_
 #define _GAME_H_
 
 #define putHeight 50
 #define putWidth 200
-#define putStrikerPos 2
+#define putStrikerPos putHeight - 2
+#define maxBricks 40
 
 struct ball_t {
     struct vector_t PrevPos, NextPos, DirVec;
@@ -23,6 +28,8 @@ struct brick_t {
 struct striker_t {
 	uint8_t currpos;
 	uint8_t prevpos;
+	uint8_t strikersize;
+	uint8_t strikerinc;
 };
 
 void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime);
@@ -32,6 +39,8 @@ void drawBall(struct ball_t *ball);
 void updateBallSpeed(struct ball_t *ball, int8_t velMod);
 void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker, uint8_t position);
 uint16_t runGame(uint8_t *level);
+
+void drawBox(struct brick_t *brick);
 /*void CountDown();
 int CollisionDetect(struct ball_t *ball, struct box_t *box);
 void UpdateBallAngle();

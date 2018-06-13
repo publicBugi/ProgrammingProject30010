@@ -19,6 +19,4 @@ void bgcolor(int background);
 void color(int foreground, int background);
 void resetbgcolor();
 void ShowWindow(char x1, char y1, char x2, char y2, char text[], uint8_t color, char style);
-void initBox(struct box_t *box, char x1, char y1, char x2, char y2);
-void drawBox(struct box_t *box);
 #endif /* _ANSI_H_ */
