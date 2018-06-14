@@ -44,9 +44,9 @@ void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickA
         for (int r = 0; r < Columns; r++) {
             brickArray[index].posX = center + r*brickWidth;
 			brickArray[index].posY = 5 + i*brickHeight;
-			brickArray[index].MaxHP = 2*(*Level) + rand() % 3;
+			brickArray[index].MaxHP = 2*(*Level) + analogRand() % 3;
 			brickArray[index].currHP = brickArray[index].MaxHP;
-			brickArray[index].pwrUP = rand() % 2 == 0 ? 1 : 0; // Rand requires stdio.h; Alternative is analogread noise.
+			brickArray[index].pwrUP = analogRand() % 2; // Rand requires stdio.h; Alternative is analogread noise.
             for (int x = 0; x < brickWidth; x++){
                 for(int y = 0; y < brickHeight; y++) {
                     gameArray[brickArray[index].posY + y][brickArray[index].posX + x] = index;
