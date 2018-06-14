@@ -12,4 +12,4 @@ obj\debug\src\api\game.o: src\API\Game.c inc\API/Game.h \
  SPL\inc/stm32f30x_rcc.h SPL\inc/stm32f30x_rtc.h SPL\inc/stm32f30x_spi.h \
  SPL\inc/stm32f30x_tim.h SPL\inc/stm32f30x_usart.h \
  SPL\inc/stm32f30x_wwdg.h SPL\inc/stm32f30x_misc.h inc\API/ansi.h \
- inc\HAL/timer.h src/30010_io.h
+ inc\HAL/timer.h src/30010_io.h inc\HAL/GPIO.h inc\HAL/stm32f30x_conf.h

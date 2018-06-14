@@ -74,13 +74,6 @@ int main(void)
 
 	// Game data
 	uint8_t level = 1;								// Level counter; Controls game difficulty. Starts at level 1.
-						// Variable Count. Decreases as level increases: Speed increases!
-
-	// Counters - Maintain Time
-	uint16_t LCDTimeCnt = 0;
-    uint16_t BallTimeCnt = 0;
-    uint16_t StrikerTimeCnt = 0;
-    uint16_t InterruptGame = 0;
 
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
