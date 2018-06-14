@@ -30,6 +30,26 @@ int32_t getCos(int index) {
     return temp;
 }
 
+//
+int32_t Arccos(int value) {
+
+
+    // Run through all angles.
+    for (int i = 0; i < 512 - 1; i++) {
+
+        // Next cos(angle) value.
+        int32_t tempnext = (int32_t)SIN[getIndex(i+1+128)];
+
+        // If next cos(angle) is less than value
+        if (tempnext < value) {
+            return i;
+            break;
+
+        }
+    }
+    return 0;
+}
+
 // Prints signed 16.16 Fixed point number. Input 18.14 Number.
 void printFix(int32_t i) {
     i = expand(i);
