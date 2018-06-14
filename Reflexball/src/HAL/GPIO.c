@@ -179,12 +179,20 @@ void initAnalog() {
     GPIOA->MODER |= ((0x00000001) << (0 * 2));
 	// PA0: CLear pull reg / Set no pull.
     GPIOA->PUPDR &= ~((0x00000003) << (0 * 2));
+
     // PA1: Clear conf register
     GPIOA->MODER &= ~((0x00000003) << (1 * 2));
     // PA1: Set as regular input.
     GPIOA->MODER |= ((0x00000001) << (1 * 2));
 	// PA1: CLear pull reg / Set no pull.
     GPIOA->PUPDR &= ~((0x00000003) << (1 * 2));
+
+    // PA7: Clear conf register
+    GPIOA->MODER &= ~((0x00000003) << (7 * 2));
+    // PA7: Set as regular input.
+    GPIOA->MODER |= ((0x00000001) << (7 * 2));
+	// PA7: CLear pull reg / Set no pull.
+    GPIOA->PUPDR &= ~((0x00000003) << (7 * 2));
 
     RCC->CFGR2 &= ~RCC_CFGR2_ADCPRE12;
     RCC->CFGR2 |= RCC_CFGR2_ADCPRE12_DIV6;
@@ -219,6 +227,15 @@ uint16_t readAnalog(char channel) {
 	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
 	analogVal = ADC_GetConversionValue(ADC1);
 	return analogVal;
+}
+
+uint16_t analogRand() {
+    uint16_t analogVal = 0;
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 1, ADC_SampleTime_1Cycles5);
+    ADC_StartConversion(ADC1);
+    while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
+    analogVal = ADC_GetConversionValue(ADC1);
+    return analogVal;
 }
 
 uint8_t readJoystick2() {
