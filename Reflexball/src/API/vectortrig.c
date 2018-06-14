@@ -78,10 +78,12 @@ void printVector(struct vector_t *v) {
 
 // Rotate given vector with degree given in 512 increments. (64 = 45 Degree, 128 = 90, etc.)
 void rotateVector(struct vector_t *v, int index) {
+
     int32_t xprime = v->x * getCos(index) - v->y * getSin(index);
     int32_t yprime = v->x * getSin(index) + v->y * getCos(index);
     v->x = xprime >> 14;
     v->y = yprime >> 14;
+
 }
 
 // Translates vector with a given (x,y) value.

@@ -1,6 +1,6 @@
 #include "vectortrig.h"
 #include "30010_io.h"
-#include <stdlib.h>
+
 #include "timer.h"
 
 #ifndef _GAME_H_
@@ -13,6 +13,8 @@
 
 struct ball_t {
     struct vector_t PrevPos, NextPos, DirVec;
+    uint16_t DegreeIndex;
+    char BallDirectionUp;
 };
 
 struct pwrUp {
@@ -42,6 +44,7 @@ uint16_t runGame(uint8_t *level);
 char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball);
 void BallHitStricker(int k);
 void drawBox(struct brick_t *brick);
+
 /*void CountDown();
 int CollisionDetect(struct ball_t *ball, struct box_t *box);
 void UpdateBallAngle();
