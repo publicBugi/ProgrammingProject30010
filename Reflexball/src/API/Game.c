@@ -69,7 +69,7 @@ void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickA
 
 	Level++;
 }
-
+// Initialize vectors.
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
     /*ball->PosVec.x = XPos << 14;
     ball->PosVec.y = YPos << 14;
@@ -77,22 +77,32 @@ void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32
     ball->VelVec.y = Vy << 14;
     ball->NextPos.x = 0;
     ball->NextPos.y = 0;*/
-
+    //
     initVector(&ball->PrevPos, XPos, YPos);
+    // Initialize direction vector.
     initVector(&ball->DirVec, Vx, Vy);
     initVector(&ball->NextPos, XPos, YPos);
 }
 
+// Update ball next XY-position.
 void updateBall(struct ball_t *ball, uint8_t velMod) {
-	ball->PrevPos = ball->NextPos;
+    // Set next positions to next position.
+    ball->PrevPos = ball->NextPos;
+    // Calculate next x position using direction vector (velMod divedes)
     ball->NextPos.x = ball->PrevPos.x + (ball->DirVec.x >> velMod);
+    // Calculate next y position using direction vector (velMod divedes)
     ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
 }
 
+// Draw ball in the PuTTY terminal.
 void drawBall(struct ball_t *ball){
+    // Goto previous xy position (shift 14 bit to the left as 18.14 type)
     gotoXY(ball->PrevPos.x >> 14, ball->PrevPos.y >> 14);
+    // Draw space char.
 	putchar(32);
+	// Goto next xy position (shift 14 bit to the left as 18.14 type)
     gotoXY(ball->NextPos.x >> 14, ball->NextPos.y >> 14);
+    // Draw ball char.
     putchar(111);
 }
 
@@ -133,11 +143,15 @@ uint16_t runGame(uint8_t *level) {
 	uint8_t gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
 	uint8_t DifficultyTime;
     uint8_t Score = 0;
+    void* CollisionDectectReturnAddr;
 	// Game Instances
 	struct ball_t ball1;							// Ball	(Possibly multiple)
 	struct striker_t striker;                       // Striker (Only one)
     striker.strikersize = putWidth/10;
     striker.strikerinc = striker.strikersize/5;
+
+    // Clear screen.
+    clrscr();
     // Game Array for Collision purposes.
 	// Values in Array:
 	// 0 	= Air / No Collision.
@@ -149,6 +163,8 @@ uint16_t runGame(uint8_t *level) {
 	initGameArray(gameArray, brickArray, &striker, level, &DifficultyTime);
 
     initBall(&ball1, putWidth/2, putStrikerPos - 1, -1, -1);
+
+
 	// Draw gameArray index
 //	for (uint8_t i = 0; i < putHeight; i++){
 //		for (uint8_t r = 0; r < putWidth; r++){
@@ -201,11 +217,30 @@ uint16_t runGame(uint8_t *level) {
 	        //StrikerTimeCnt++;
 	        clk.change = 0;
 	    }
-	    if (BallTimeCnt == 2) {
-            updateBall(&ball1, 1);
+	    // Control ball speed.
+        else if (BallTimeCnt == 2) {
+
+            // Update ball next XY-position.
+            updateBall(&ball1, 0);
+
+            // Return the address of the functions that has to be called after CollissionDectect
+            CollisionDectectReturnAddr = CollisionDetect(gameArray, &ball1);
+
+            // If CollissionDectect has returned a address.
+            if (CollisionDectectReturnAddr != 0) {
+
+                // Call return address.
+                ((void (*)(void)) CollisionDectectReturnAddr)();
+
+            }
+
+            // Draw ball in PuTTY console.
             drawBall(&ball1);
+
+            // Reset ball speed.
             BallTimeCnt = 0;
 	    }
+
 
 
 
@@ -230,12 +265,105 @@ void drawBox(struct brick_t *brick){
         }
 }
 
+
+void BallHitWall() {
+gotoXY(40,40);
+ printf("Ball hit border         ");
+}
+
+void BallHitBrick() {
+gotoXY(40,40);
+ printf("Ball hit bricks         ");
+}
+
+void BallHitStricker1(){
+gotoXY(40,40);
+
+ printf("Ball hit stricker 1");
+}
+
+void BallHitStricker2(){
+gotoXY(40,40);
+
+ printf("Ball hit stricker 2");
+}
+
+void BallHitStricker3(){
+gotoXY(40,40);
+
+ printf("Ball hit stricker 3");
+}
+
+void BallHitStricker4(){
+gotoXY(40,40);
+
+ printf("Ball hit stricker 4");
+}
+
+void BallHitStricker5(){
+gotoXY(40,40);
+
+ printf("Ball hit stricker 5");
+}
+
+void BallHitStricker6(){
+gotoXY(40,40);
+
+ printf("Ball hit stricker 6");
+}
+
+void BallOutOfBounds(){
+gotoXY(40,40);
+
+ printf("END GAME!");
+}
+
+
+
+
+// Detects collision.
+// gameArray:
+// 0 = Air
+// 1 = Wall
+// 2 = Striker 1
+// 3 = Striker 2
+// 4 = Striker 3
+// 5 = Striker 4
+// 6 = Striker 5
+// 7 >=  = Bricks
+void* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball) {
+
+    // Positions. ball->NextPos is shifted 14 to the left because it is 18.14.
+    uint8_t xPos = ball->NextPos.x >> 14;
+    uint8_t yPos = ball->NextPos.y >> 14;
+
+    // Get game data from array.
+    uint8_t gameData = gameArray[yPos][xPos];
+
+    // Check type of collision.
+    switch(gameData) {
+        case 1: return BallHitWall;
+        case 2: return BallHitStricker1;
+        case 3: return BallHitStricker2;
+        case 4: return BallHitStricker3;
+        case 5: return BallHitStricker4;
+        case 6: return BallHitStricker5;
+        case 7: return BallHitStricker6;
+    }
+
+
+    if ((yPos < putStrikerPos) && (gameData == 0)) {
+        return 0;
+    }
+    else if ((yPos > putStrikerPos) && (gameData == 0)) {
+         return BallOutOfBounds;
+    }
+    else {
+        return BallHitBrick;
+    }
+}
 /*
 void CountDown(){
-
-}
-int CollisionDetect() {
-
 
 }
 //int CollisionDetect(struct ball_t *ball, struct box_t *box){
