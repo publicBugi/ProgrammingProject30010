@@ -24,6 +24,7 @@
 #include "LCD.h"
 #include "Game.h"
 #include "timer.h"
+#include "i2c.h"
 //#include "charset.h"
 
 #define ESC 0x1B
@@ -58,15 +59,12 @@ void getSerialInput(char* input){
     }
 }
 
-
+#define MMA7660Adress 0x4C << 1
 
 int main(void)
     {
 
 	// Input Variables
-	uint8_t joyInput;
-	uint8_t tiltInput;
-	uint8_t analogInput;
 
 	// Output Variables
 	//char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
@@ -85,6 +83,21 @@ int main(void)
     initInterrupt();		// Enable Interrupt (1/100 sec Interrupt)
 
     initAnalog();			// Enable ADC Potentiometers
+
+    I2C_init();
+
+    I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
+    uint8_t avgTilt = 0;
+    uint8_t IC2_VAL = 0;
+    while(1){
+        gotoXY(0,0);
+        for (uint8_t i = 0; i < 20; i++) {
+                I2C_Read(MMA7660Adress, 0x01, &IC2_VAL, 8);
+                IC2_VAL <<= 2;
+                avgTilt += IC2_VAL;
+        }
+        printf("%04d", (int8_t)IC2_VAL);
+    }
 
     //initLCD();			// Enable LCD Screen
 

@@ -248,7 +248,7 @@ uint8_t readJoystick2() {
         return Up + Down + Left + Right + Center;
 }
 
-// printf("%02ld", readAnalog(1));
-// char str[7];
-// sprintf(str, "%02ld", readAnalog(1));
-//
+uint8_t readTilt() {
+
+
+}
