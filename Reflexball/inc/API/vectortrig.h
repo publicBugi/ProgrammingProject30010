@@ -16,4 +16,5 @@ void initVector(struct vector_t *v, int32_t x, int32_t y);
 void printVector(struct vector_t *v);
 void rotateVector(struct vector_t *v, int index);
 void translateVector(struct vector_t *v, int32_t x, int32_t y);
+int32_t Arccos(int value);
  #endif
