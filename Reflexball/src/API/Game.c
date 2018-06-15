@@ -133,19 +133,23 @@ void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
 void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker, uint8_t position){
     striker->prevpos = striker->currpos;
     striker->currpos = position;
-
-    gotoXY(256-5, striker->prevpos);
-    for (int i = 0; i < 5; i++){
-            gameArray[256-5][striker->prevpos + i] = 0;
+    fgcolor(0);
+    gotoXY(putStrikerPos, striker->prevpos);
+    for (int i = 0; i < striker->strikersize; i++){
+            gameArray[putStrikerPos][striker->prevpos + i] = 0;
             putchar(32);
     }
 
-    gotoXY(256-5, striker->currpos);
-    for (int i = 0; i < 5; i++){
-            gameArray[256-5][striker->currpos + i] = i;
+    fgcolor(8);
+    gotoXY(putStrikerPos, striker->currpos);
+    uint8_t value = 2;
+	for (uint8_t i = 0; i < striker->strikersize; i += striker->strikerinc){
+        for (uint8_t s = 0; s < striker->strikerinc; s++){
+            gameArray[putStrikerPos][striker->currpos + i + s] = value;
             putchar(223);
-    }
-
+        }
+        value++;
+	}
 
 }
 
@@ -171,7 +175,12 @@ uint16_t runGame(uint8_t *level) {
     char* CollisionDectectReturnAddr;
     char WhatNextAfterBallCollision = 0;
     uint16_t Brickindex;
+
     uint16_t BrickCounter;
+
+
+    uint8_t brickHeight = 6 - *level;
+    uint8_t brickWidth = 25 - *level*5;
 
 	// Game Instances
 	struct pwrUp powerup;
@@ -288,7 +297,7 @@ uint16_t runGame(uint8_t *level) {
                             brickArray[Brickindex].currHP--;
 
                             // Change brick color.
-                            drawBox(&brickArray[Brickindex]);
+                            drawBox(&brickArray[Brickindex], &brickHeight, &brickWidth);
 
                             // Change color to default.
                             fgcolor(15);
@@ -411,21 +420,21 @@ gotoXY(40,40);
 
 
 
-void CountDown(char *numberArray[]){
-  // Start at 4 to make sure the first second is at least a full second
-  for (int i = 4; i > 0; i--) {
-    uint8_t clkSec = clk->time_sec;
-    while(clkSec == clk->time_sec){}
-    // For the first value of I, print 3
-    if (i==4) {
-      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
-    }
-    // Print the rest of the numbers, every time the time_sec changes
-    else{
-      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
-    }
-  }
-}
+//void CountDown(char *numberArray[]){
+//  // Start at 4 to make sure the first second is at least a full second
+//  for (int i = 4; i > 0; i--) {
+//    uint8_t clkSec = clk.time_sec;
+//    while(clkSec == clk.time_sec){}
+//    // For the first value of I, print 3
+//    if (i==4) {
+//      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
+//    }
+//    // Print the rest of the numbers, every time the time_sec changes
+//    else{
+//      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
+//    }
+//  }
+//}
 
 
 // gameArray:
