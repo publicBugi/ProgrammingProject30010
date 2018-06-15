@@ -150,6 +150,18 @@ void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *strike
 
 }
 
+// Kill brick.
+void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct brick_t *brick) {
+    // Change game array of brick to 0 (air).
+    for (int x = 0; x < 20; x++){
+        for(int y = 0; y < 5; y++) {
+            gameArray[brick->posY + y][brick->posX + x] = 0;
+        }
+
+    }
+
+}
+
 
 uint16_t runGame(uint8_t *level) {
     // Local Game Data
@@ -159,6 +171,8 @@ uint16_t runGame(uint8_t *level) {
     uint8_t Score = 0;
     char* CollisionDectectReturnAddr;
     char WhatNextAfterBallCollision = 0;
+    uint16_t Brickindex;
+
 	// Game Instances
 	struct ball_t ball1;							// Ball	(Possibly multiple)
 	struct striker_t striker;                       // Striker (Only one)
@@ -180,7 +194,7 @@ uint16_t runGame(uint8_t *level) {
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
 
-	// Draw gameArray index
+//	// Draw gameArray index
 //	for (uint8_t i = 0; i < putHeight; i++){
 //		for (uint8_t r = 0; r < putWidth; r++){
 //			printf("%d", gameArray[i][r] % 10);
@@ -245,18 +259,48 @@ uint16_t runGame(uint8_t *level) {
             if (CollisionDectectReturnAddr != 0) {
 
                 // Call return address and return what to do next.
-                WhatNextAfterBallCollision = ((char (*)()) CollisionDectectReturnAddr)(5);
+                WhatNextAfterBallCollision = ((char (*)()) CollisionDectectReturnAddr)();
 
                 // If WhatNextAfterBallCollision =
                 // 1: Update ball angle
                 // 2: End game,
                 switch(WhatNextAfterBallCollision) {
+                    // Ball out of boundary.
+                    case 0:
+                        gameEnabled = 0;
+                        break;
+                    // Ball hit stricker.
                     case 1:
                         UpdateBallAngle(&ball1, gameArray);
-
                         break;
+                    // Ball hit brick
                     case 2:
-                        gameEnabled = 0;
+
+                        // Get brick index.
+                        Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
+
+                        // Calculate and set new ball angle.
+                        UpdateBallAngle(&ball1, gameArray);
+
+                        // Prevent brick hit point of being negative.
+                        if (brickArray[Brickindex].currHP > 0) {
+                            // Decrement brick hit points.
+                            brickArray[Brickindex].currHP--;
+
+                            // Change brick color.
+                            drawBox(&brickArray[Brickindex]);
+
+                            // Change color to default.
+                            fgcolor(15);
+                        }
+                        // If hit points is zero kill the brick.
+                        if (brickArray[Brickindex].currHP == 0) {
+                            // Kill brick.
+                           KillBrick(Brickindex, gameArray, &brickArray[Brickindex]);
+                        }
+
+
+
                         break;
                 }
 
@@ -297,14 +341,15 @@ void drawBox(struct brick_t *brick){
 
 char BallHitWall() {
 gotoXY(40,40);
- printf("Ball will hit the border         ");
+ printf("Ball will hit the border          ");
   return 1;
 }
 
-char BallHitBrick(int k) {
+// Return type of hit.
+char BallHitBrick() {
 gotoXY(40,40);
- printf("Ball will hit the bricks         ");
- return 1;
+ printf("Ball will hit the bricks           ");
+ return 2;
 }
 
 char BallHitStricker1(){
@@ -352,59 +397,11 @@ gotoXY(40,40);
 char BallOutOfBoundary(){
 gotoXY(40,40);
 
- printf("END GAME!          ");
+ printf("END GAME!                    ");
   return 1;
 }
 
-//// Return 1 if ball hit boundary.
-//char BallHitBoundary(struct ball_t *ball) {
-//    int16_t x = (ball->NextPos.x >> 14);
-//
-//    if (x == 0 || x == putWidth-1) {
-//        return 1;
-//    }
-//
-//    return 0;
-//}
 
-//// Return
-//// 0 is up.
-//// 1 is down.
-//// 2 is right.
-////3 is left.
-//char BallDirection(struct ball_t *ball) {
-//    int16_t x2 = (ball->DirVec.x >> 14);
-//    int16_t y2 = (ball->DirVec.y >> 14);
-//
-//    int16_t x = ball->DirVec.x;
-//    int16_t y = ball->DirVec.y;
-////    // Ball direction is up.
-////    if ((x  -1 && y == -1) || (x == 0 && y == -1) || (x == 1 && y == -1)) {
-////        return 0;
-////    }
-////    // Ball direction is down.
-////    else if ((x == -1 && y == 1) || (x == 0 && y == 1) || (x == 1 && y == 1)) {
-////        return 1;
-////    }
-////    // Ball direction is right.
-////    else if (x < 0 && y < 0) {
-////        return 2;
-////    }
-////    // Ball direction is left.
-////    else if (x < 0 && y < 0) {
-////        return 3;
-////    }
-//
-//    if (x < 0) {
-//        return 3;
-//
-//    }
-//    else if (x > 0) {
-//        return 2;
-//
-//    }
-//    return -1;
-//}
 
 // gameArray:
 // 0 = Air
@@ -418,7 +415,7 @@ gotoXY(40,40);
 // Return
 // 0: Direction of ball attack is up.
 // 1: Direction of ball attack is down.
-// 2: Direction of ball attack is right.
+// 2: Direction of ball attack }is right.
 // 3: Direction of ball attack is left.
 // 4: Direction of ball attack is corner.
 char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball) {
@@ -493,7 +490,7 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
     char DirectionOfBallAttack_Var;
 
    // rotateVector(&ball->DirVec, 512 - (ball->DegreeIndex)*2);
-  // BallDirection(ball);
+
 
     // Get direction of ball attack.
     DirectionOfBallAttack_Var = DirectionOfBallAttack(gameArray, ball);
@@ -522,30 +519,6 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
             ball->DirVec.x = getCos(ball->DegreeIndex);
             ball->DirVec.y = getSin(ball->DegreeIndex);
     }
-//    // Ball side attack is left or right.
-//    if (DirectionOfBallAttack_Var == 2 || DirectionOfBallAttack_Var == 3) {
-//         ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
-//           ball->DirVec.x = getCos(ball->DegreeIndex);
-//        ball->DirVec.y = getSin(ball->DegreeIndex);
-//    }
-//    else if (DirectionOfBallAttack_Var == 0 || DirectionOfBallAttack_Var == 1) {
-//        ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
-//        ball->DirVec.x = getCos(ball->DegreeIndex);
-//        ball->DirVec.y = getSin(ball->DegreeIndex);
-//    }
-//
-//    else if (DirectionOfBallAttack_Var == 4) {
-//            ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
-//
-//           ball->DirVec.x = getCos(ball->DegreeIndex);
-//    ball->DirVec.y = getSin(ball->DegreeIndex);
-//
-//                ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
-//          ball->DirVec.x = getCos(ball->DegreeIndex);
-//    ball->DirVec.y = getSin(ball->DegreeIndex);
-//    }
-
-
 
     // Update next ball position.
     ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y);
@@ -582,7 +555,6 @@ char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *bal
         case 4: return BallHitStricker3;
         case 5: return BallHitStricker4;
         case 6: return BallHitStricker5;
-        case 7: return BallHitStricker6;
     }
 
 
@@ -600,46 +572,7 @@ char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *bal
 void CountDown(){
 
 }
-//int CollisionDetect(struct ball_t *ball, struct box_t *box){
-//    char returnval = 0;
-//    if ((ball->PosVec.x >> 14) == box->x1) {
-//            returnval = 1;
-//            if (ball->VelVec.y > 0){
-//                    rotateVector(&ball->VelVec, -128);
-//            }
-//            else{
-//                    rotateVector(&ball->VelVec, 128);
-//            }
-//    }
-//    else if((ball->PosVec.x >> 14) == box->x2){
-//            returnval = 1;
-//            if (ball->VelVec.y > 0){
-//                    rotateVector(&ball->VelVec, 128);
-//            }
-//            else{
-//                    rotateVector(&ball->VelVec, -128);
-//            }
-//    }
-//    if ((ball->PosVec.y >> 14) == box->y1) {
-//            returnval = 1;
-//            if (ball->VelVec.x > 0){
-//                    rotateVector(&ball->VelVec, 128);
-//            }
-//            else{
-//                    rotateVector(&ball->VelVec, -128);
-//            }
-//    }
-//    else if ((ball->PosVec.y >> 14) == box->y2) {
-//            returnval = 1;
-//            if (ball->VelVec.x > 0){
-//                    rotateVector(&ball->VelVec, -128);
-//            }
-//            else{
-//                    rotateVector(&ball->VelVec, 128);
-//            }
-//    }
-//    return returnval;
-//}
+
 
 
 
