@@ -51,7 +51,7 @@ void ReadFromFlash(uint32_t address, char* text, uint8_t drawX, uint8_t drawY) {
         gotoXY(drawX,drawY+i);
         for (uint8_t j = 0; j < strlen(text); j++) {
             for (uint8_t k = 0; k < char_width[text[j]-0x30]; k++) {
-                char tempChar = char_location[k+char_width[text[j]-0x30]*i];
+                char tempChar = char_flash[k+char_width[text[j]-0x30]*i];
                 printf("%c", tempChar);
             }
         }
