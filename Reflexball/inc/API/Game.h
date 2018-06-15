@@ -1,7 +1,7 @@
 #include "vectortrig.h"
 #include "30010_io.h"
-
 #include "timer.h"
+#include "GPIO.h"
 
 #ifndef _GAME_H_
 #define _GAME_H_
@@ -33,7 +33,7 @@ struct striker_t {
 	uint8_t strikerinc;
 };
 
-void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime);
+void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth);
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy);
 void updateBall(struct ball_t *ball, uint8_t velMod);
 void drawBall(struct ball_t *ball);
@@ -42,8 +42,7 @@ void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *strike
 uint16_t runGame(uint8_t *level);
 char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball);
 void BallHitStricker(int k);
-void drawBox(struct brick_t *brick);
-
+void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth);
 /*void CountDown();
 int CollisionDetect(struct ball_t *ball, struct box_t *box);
 void UpdateBallAngle();

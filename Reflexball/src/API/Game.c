@@ -1,4 +1,3 @@
-
 #include "Game.h"
 
 
@@ -10,13 +9,13 @@
 // 2 = Striker 1
 // 3 = Striker 2
 // 4 = Striker 3
-// 5 = Striker 4
-// 6 = Striker 5
 
-void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime) {
+
+void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
 	// Size of Screen
 	const int MaxColI = putWidth;
 	const int MaxRowI = putHeight;
+
 
 	// Generate Walls at edges
 	for (int i = 0; i < MaxRowI; i++){
@@ -31,24 +30,24 @@ void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickA
 	const int TimeConst = 500;
 	*DifficultyTime = TimeConst >> *Level;
 
-	// Brick Constants
-	const int brickHeight = 5;  // Brick size as function of Level! Increase difficulty!
-	const int brickWidth = 20;
-    uint8_t   Columns = (MaxColI-2)/brickWidth ;            // Fill out as many bricks as you can
-    uint8_t   center = ((MaxColI-2) % brickWidth) / 2 + 1;  // Center the bricks; Not left align.
+	// Brick Values
+	*brickHeight -= *Level;  // Brick size as function of Level! Increase difficulty!
+	*brickWidth -= *Level*5;
+    uint8_t   Columns = (MaxColI-2)/(*brickWidth) ;            // Fill out as many bricks as you can
+    uint8_t   center = ((MaxColI-2) % (*brickWidth)) / 2 + 1;  // Center the bricks; Not left align.
 	const int Rows = 3;                                         // Rows should also be function of level.
 
 	// Generate bricks in brickarray and draw in gameArray.
     int index = 7;
     for (int i = 0; i < Rows; i++){
         for (int r = 0; r < Columns; r++) {
-            brickArray[index].posX = center + r*brickWidth;
-			brickArray[index].posY = 5 + i*brickHeight;
-			brickArray[index].MaxHP = 2*(*Level) + rand() % 3;
+            brickArray[index].posX = center + r*(*brickWidth);
+			brickArray[index].posY = 5 + i*(*brickHeight);
+			brickArray[index].MaxHP = 2*(*Level) + analogRand() % 3;
 			brickArray[index].currHP = brickArray[index].MaxHP;
-			brickArray[index].pwrUP = rand() % 2 == 0 ? 1 : 0; // Rand requires stdio.h; Alternative is analogread noise.
-            for (int x = 0; x < brickWidth; x++){
-                for(int y = 0; y < brickHeight; y++) {
+			brickArray[index].pwrUP = analogRand() % 2; // Rand requires stdio.h; Alternative is analogread noise.
+            for (int x = 0; x < (*brickWidth); x++){
+                for(int y = 0; y < (*brickHeight); y++) {
                     gameArray[brickArray[index].posY + y][brickArray[index].posX + x] = index;
                 }
 			}
@@ -66,8 +65,6 @@ void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickA
         }
         value++;
 	}
-
-	Level++;
 }
 // Initialize vectors.
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
@@ -174,10 +171,13 @@ uint16_t runGame(uint8_t *level) {
     uint16_t Brickindex;
 
 	// Game Instances
+	struct pwrUp powerup;
 	struct ball_t ball1;							// Ball	(Possibly multiple)
 	struct striker_t striker;                       // Striker (Only one)
     striker.strikersize = putWidth/10;
     striker.strikerinc = striker.strikersize/5;
+
+
 
     // Clear screen.
     clrscr();
@@ -189,7 +189,7 @@ uint16_t runGame(uint8_t *level) {
 	// 7-256= Brick in BrickArray.
 
     // Generate map for current level (Used for collision detection)
-	initGameArray(gameArray, brickArray, &striker, level, &DifficultyTime);
+	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime, &brickHeight, &brickWidth);
 
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
@@ -216,12 +216,9 @@ uint16_t runGame(uint8_t *level) {
 		putchar(178);
 	}
 
-    const int brickHeight = 5;  // Brick size as function of Level! Increase difficulty!
-	const int brickWidth = 20;
-
 	for (int i = 7; i < maxBricks; i++) {
         if (brickArray[i].currHP != 0){
-            drawBox(&brickArray[i]);
+            drawBox(&brickArray[i], &brickHeight, &brickWidth);
         }
 	}
 
@@ -320,19 +317,17 @@ uint16_t runGame(uint8_t *level) {
     }
 
 
-
+    level++;
     return Score;
 }
 
 
-void drawBox(struct brick_t *brick){
-        const int brickHeight = 5;  // Brick size as function of Level! Increase difficulty!
-        const int brickWidth = 20;
+void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth){
         fgcolor(brick->currHP);
 
-        for (int y = 0; y < brickHeight; y++){
+        for (int y = 0; y < *brickHeight; y++){
             gotoXY(brick->posX, brick->posY + y);
-                for(int x = 0; x < brickWidth; x++) {
+                for(int x = 0; x < *brickWidth; x++) {
                     putchar(178);
             }
         }
@@ -401,6 +396,23 @@ gotoXY(40,40);
   return 1;
 }
 
+
+
+void CountDown(char *numberArray[]){
+  // Start at 4 to make sure the first second is at least a full second
+  for (int i = 4; i > 0; i--) {
+    uint8_t clkSec = clk->time_sec;
+    while(clkSec == clk->time_sec){}
+    // For the first value of I, print 3
+    if (i==4) {
+      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
+    }
+    // Print the rest of the numbers, every time the time_sec changes
+    else{
+      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
+    }
+  }
+}
 
 
 // gameArray:
@@ -479,11 +491,8 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
 
     // Ball hit a corner.
     return 4;
-
-
-
-
 }
+
 
 
 void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]) {
@@ -568,6 +577,39 @@ char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *bal
         return BallHitBrick;
     }
 }
+
+
+void spawnPowerup(struct pwrUp *powerup, struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth) {
+
+    if (powerup->alive == 0) {
+        powerup->alive = 1;
+        powerup->posX = brick->posX + *brickWidth/2;
+        powerup->posY = brick->posY + *brickHeight/2;
+        powerup->enable = 0;
+    }
+}
+
+void updatePowerup(struct pwrUp *powerup) {
+    if (powerup->alive == 1) {
+        if (powerup->posY == putHeight){
+                powerup->alive = 0;
+        }
+        else {
+                powerup->posY++;
+        }
+    }
+}
+
+void drawPowerup(struct pwrUp *powerup){
+    if (powerup->alive == 1) {
+        gotoXY(powerup->posX, powerup->posY);
+        fgcolor(6);
+        putchar('*');
+
+    }
+}
+
+
 /*
 void CountDown(){
 
@@ -576,22 +618,9 @@ void CountDown(){
 
 
 
-void UpdateBallSpeed() {
-
-}
-
-void SpawnPowerup() {
-
-}
-
 void updateStrikerPosition() {
+A
 
 }
-
-void UpdatePowerup() {
-
-}
-
-void DrawPowerup(){
-
-} */
+ * 
+*/
