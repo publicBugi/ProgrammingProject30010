@@ -65,9 +65,9 @@ void getSerialInput(char* input){
 int main(void)    {
 
 	// Input Variables
-
+    char str1[7];
 	// Output Variables
-	//char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
+	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
 	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
 
 	// Game data
@@ -89,20 +89,21 @@ int main(void)    {
     I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
 
 
-    //initLCD();			// Enable LCD Screen
+    initLCD();			// Enable LCD Screen
 
 	//initBall(&ball1, 1, 1, 1, 1); // Initialize ball (Which ball, Position, Velocity)
 
     //char Graph[512]; //Graph = Graph[0]
     //struct LCDDataLine LineData;
 
-	//ClearLineData(&LineData);
-	//lcd_update(Graph, &LineData);
 
-	//ClearLineData[&LineData);
-	//lcd_update[Graph, LCDData);
+//	ClearLineData(LCDData);
+//	//lcd_update(Graph, &LineData);
+//
+//	//ClearLineData(&LineData);
+//	lcd_update(Graph, LCDData);
 
-	//LCDWrite(LCDData, "Hello", 0);
+
 	//LCDWrite(LCDData, "World!", 1);
 
     level = 1;// Level counter; Controls game difficulty. Starts at level 1.
@@ -112,7 +113,7 @@ int main(void)    {
     // 1: If complete level.
     while (ResultsFromGame == 1) {
 
-        ResultsFromGame = runGame(&level, &PlayerScore);
+        ResultsFromGame = runGame(&level, &PlayerScore, Graph, LCDData);
 
         if (ResultsFromGame == 1) {
 

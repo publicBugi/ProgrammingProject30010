@@ -124,6 +124,8 @@ void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct 
 
 // Print brick counter
 void PrintBrickCounter(uint16_t BrickCounter) {
+        // Change color to default.
+                            fgcolor(15);
     gotoXY(10,80);
     printf("Brick counter: %d  ", BrickCounter);
 }
@@ -203,13 +205,12 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 // Run game. Return
 // 0: If player died
 // 1: If complete level.
-uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
+uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LCDData[4][128]) {
     // Local Game Data
     struct brick_t brickArray[maxBricks] = { };			// Maintain control of all Bricks. (Position, Health and Powerup)
 	uint8_t gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
 	uint8_t DifficultyTime;
 
-    char* CollisionDectectReturnAddr;
     char WhatNextAfterBallCollision = 0;
     uint16_t Brickindex;
 
@@ -218,11 +219,12 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
     uint8_t brickHeight = 5;
     uint8_t brickWidth = 20;
-
+    char str1[128];
 	// Game Instances
 	struct pwrUp powerup;
 	struct ball_t ball1;							// Ball	(Possibly multiple)
 	struct striker_t striker;                       // Striker (Only one)
+	char* CollisionDectectReturnAddr;
     striker.strikersize = putWidth/10;
     striker.strikerinc = striker.strikersize/5;
 
@@ -291,8 +293,14 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
     gotoXY(90,80);
     printf("Level %d  ", *level);
 
+        sprintf(str1, "Brick counter: %03d", BrickCounter);
+        LCDWrite(LCDData, str1, 1);
+        sprintf(str1, "Score: %03d", *PlayerScore);
+        LCDWrite(LCDData, str1, 2);
+        lcd_update(Graph, LCDData);
     //// START GAME ////
     uint8_t gameEnabled = 1;
+
     while (gameEnabled) {
 
         if (clk.change == 1)  { // Timer update 1/100th of a second.
@@ -302,6 +310,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
 	        clk.change = 0;
 	    }
+
 	    // Control ball speed.
         if (BallTimeCnt == 2) {
 
@@ -319,8 +328,8 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
                 // If WhatNextAfterBallCollision =
                 // 0: Ball out of boundary.
-                // 1: Update ball angle
-                // 2: End game,
+                // 1: Ball hit stricker or wall.
+                // 2: Bal hit a brick.
                 switch(WhatNextAfterBallCollision) {
 
                     // Ball out of boundary.
@@ -333,7 +342,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
                         break;
 
-                    // Ball hit stricker.
+                    // Ball hit stricker or wall.
                     case 1:
                         UpdateBallAngle(&ball1, gameArray);
                         break;
@@ -373,6 +382,12 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
                             // Print brick counter;
                             PrintBrickCounter(BrickCounter);
 
+
+        sprintf(str1, "Brick counter: %03d", BrickCounter);
+        LCDWrite(LCDData, str1, 1);
+        sprintf(str1, "Score: %03d", *PlayerScore);
+        LCDWrite(LCDData, str1, 2);
+        lcd_update(Graph, LCDData);
                         }
 
                         // If all bricks are killed.
@@ -398,7 +413,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
             BallTimeCnt = 0;
 	    }
 	    if (StrikerTimeCnt == 2) {
-            updateStriker(gameArray, &striker);
+           // updateStriker(gameArray, &striker);
             StrikerTimeCnt = 0;
 	    }
                             // Change color to default.
@@ -475,7 +490,7 @@ char BallOutOfBoundary(){
 gotoXY(40,100);
 
  printf("END GAME!                    ");
-  return 0;
+  return 1;
 }
 
 
@@ -561,9 +576,9 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
     GameDataLeft = gameArray[Left.y][Left.x];
 
      // TEMPEARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
-//    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
-//            return 1;
-//    }
+    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
+           return 1;
+   }
 
      // Check for up attack.
     if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop != 0  && GameDataBottom == 0) {
