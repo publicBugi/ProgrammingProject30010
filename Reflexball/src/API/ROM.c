@@ -29,10 +29,10 @@ void InitFlash() {
     FLASH_Lock(); //Lock the flash
 }
 
-void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address) {
+void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address, uint8_t arraySize) {
     uint16_t location = 0;
     FLASH_Unlock();
-    for (uint8_t i = 0; i < 26; i++) {
+    for (uint8_t i = 0; i < arraySize; i++) {
         for (uint8_t j = 0; j < 4; j++) {
             for (uint8_t k = 0; k < 10; k++) {
                 if(data[i][j][k] == 0){
