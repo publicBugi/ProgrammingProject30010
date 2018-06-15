@@ -47,11 +47,12 @@ void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address) {
 }
 
 void ReadFromFlash(char* text, uint8_t drawX, uint8_t drawY) {
+    char tempChar;
     for (uint8_t i = 0; i < 4; i++) {
         gotoXY(drawX,drawY+i);
         for (uint8_t j = 0; j < strlen(text); j++) {
             for (uint8_t k = 0; k < char_width[text[j]-0x30]; k++) {
-                char tempChar = char_flash[k+char_width[text[j]-0x30]*i];
+                tempChar = *(char *)(char_flash[text[j]-0x30]+char_width[text[j]-0x30]*i+k);
                 printf("%c", tempChar);
             }
         }
