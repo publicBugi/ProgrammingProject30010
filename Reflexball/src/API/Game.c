@@ -598,8 +598,8 @@ void spawnPowerup(struct pwrUp *powerup, struct brick_t *brick, uint8_t *brickHe
 
     if (powerup->alive == 0) {
         powerup->alive = 1;
-        powerup->posX = brick->posX + brickWidth/2;
-        powerup->posY = brick->posY + brickHeight/2;
+        powerup->posX = brick->posX + *brickWidth/2;
+        powerup->posY = brick->posY + *brickHeight/2;
         powerup->enable = 0;
     }
 }
