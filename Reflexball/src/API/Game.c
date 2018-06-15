@@ -11,7 +11,7 @@
 // 4 = Striker 3
 
 
-void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
+uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
 	// Size of Screen
 	const int MaxColI = putWidth;
 	const int MaxRowI = putHeight;
@@ -65,6 +65,8 @@ void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickA
         }
         value++;
 	}
+
+	return index - 7;
 }
 // Initialize vectors.
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
@@ -169,6 +171,7 @@ uint16_t runGame(uint8_t *level) {
     char* CollisionDectectReturnAddr;
     char WhatNextAfterBallCollision = 0;
     uint16_t Brickindex;
+    uint16_t BrickCounter;
 
 	// Game Instances
 	struct pwrUp powerup;
@@ -188,8 +191,8 @@ uint16_t runGame(uint8_t *level) {
 	// 2-6 	= Striker Segments
 	// 7-256= Brick in BrickArray.
 
-    // Generate map for current level (Used for collision detection)
-	initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime, &brickHeight, &brickWidth);
+    // Generate map for current level (Used for collision detection). Return numbers of bricks created.
+	BrickCounter = initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime, &brickHeight, &brickWidth);
 
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
@@ -292,10 +295,20 @@ uint16_t runGame(uint8_t *level) {
                         }
                         // If hit points is zero kill the brick.
                         if (brickArray[Brickindex].currHP == 0) {
+                            // Decrement brick counter.
+                            BrickCounter--;
                             // Kill brick.
                            KillBrick(Brickindex, gameArray, &brickArray[Brickindex]);
                         }
+                        // If all bricks is kill.
+                        if (BrickCounter == 0) {
+                            // Stop game.
+                            gameEnabled = 0;
+                            clrscr();
+                            gotoXY(40,40);
+                            printf("            GAME LEVEL COMPLETE!                 ")
 
+                        }
 
 
                         break;
@@ -622,5 +635,5 @@ void updateStrikerPosition() {
 A
 
 }
- * 
+ *
 */
