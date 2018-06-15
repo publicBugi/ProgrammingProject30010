@@ -1,3 +1,4 @@
+
 #include "Game.h"
 
 
@@ -9,7 +10,8 @@
 // 2 = Striker 1
 // 3 = Striker 2
 // 4 = Striker 3
-
+// 5 = Striker 4
+// 6 = Striker 5
 
 void initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
 	// Size of Screen
@@ -154,8 +156,14 @@ uint16_t runGame(uint8_t *level) {
 	uint8_t gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
 	uint8_t DifficultyTime;
     uint8_t Score = 0;
+<<<<<<< HEAD
+    void* CollisionDectectReturnAddr;
+    uint8_t brickHeight = 6;  // Brick size as function of Level! Increase difficulty!
+	uint8_t brickWidth = 25;
+=======
     char* CollisionDectectReturnAddr;
     char WhatNextAfterBallCollision = 0;
+>>>>>>> 62f3ea3aefd0cdee32cb4ef0b5362bc7db9318bb
 	// Game Instances
 	struct pwrUp powerup;
 	struct ball_t ball1;							// Ball	(Possibly multiple)
@@ -401,23 +409,6 @@ gotoXY(40,40);
 //    return -1;
 //}
 
-void CountDown(char *numberArray[]){
-  // Start at 4 to make sure the first second is at least a full second
-  for (int i = 4; i > 0; i--) {
-    uint8_t clkSec = clk->time_sec;
-    while(clkSec == clk->time_sec){}
-    // For the first value of I, print 3
-    if (i==4) {
-      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
-    }
-    // Print the rest of the numbers, every time the time_sec changes
-    else{
-      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
-    }
-  }
-}
-
-
 // gameArray:
 // 0 = Air
 // 1 = Wall
@@ -494,8 +485,11 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
 
     // Ball hit a corner.
     return 4;
-}
 
+
+
+
+}
 
 
 void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]) {
@@ -611,8 +605,8 @@ void spawnPowerup(struct pwrUp *powerup, struct brick_t *brick, uint8_t *brickHe
 
     if (powerup->alive == 0) {
         powerup->alive = 1;
-        powerup->posX = brick->posX + *brickWidth/2;
-        powerup->posY = brick->posY + *brickHeight/2;
+        powerup->posX = brick->posX + brickWidth/2;
+        powerup->posY = brick->posY + brickHeight/2;
         powerup->enable = 0;
     }
 }
@@ -686,8 +680,6 @@ void CountDown(){
 
 
 void updateStrikerPosition() {
-A
 
 }
- * 
 */

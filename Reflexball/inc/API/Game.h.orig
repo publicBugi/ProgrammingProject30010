@@ -42,7 +42,12 @@ void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *strike
 uint16_t runGame(uint8_t *level);
 char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball);
 void BallHitStricker(int k);
+<<<<<<< HEAD
 void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth);
+=======
+void drawBox(struct brick_t *brick);
+
+>>>>>>> 62f3ea3aefd0cdee32cb4ef0b5362bc7db9318bb
 /*void CountDown();
 int CollisionDetect(struct ball_t *ball, struct box_t *box);
 void UpdateBallAngle();

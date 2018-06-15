@@ -10,4 +10,5 @@ void SetLed(char R, char G, char B);
 uint8_t readJoystick();
 void initAnalog();
 uint16_t readAnalog(char channel);
+uint16_t analogRand();
 #endif

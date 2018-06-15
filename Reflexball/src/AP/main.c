@@ -11,6 +11,9 @@
    ID:                 $Id:  $
 
 **********************************************************************/
+
+
+
 #include "stm32f30x_conf.h"
 #include "stm32f30x.h"
 #include "30010_io.h"
@@ -19,11 +22,12 @@
 #include "vectortrig.h"
 #include "GPIO.h"
 #include "LCD.h"
-#include "Menu.h"
+#include "Game.h"
+#include "timer.h"
+#include "i2c.h"
 //#include "charset.h"
 
 #define ESC 0x1B
-
 
 int binary_conversion(int num)
 {
@@ -37,39 +41,6 @@ int binary_conversion(int num)
     }
 }
 
-struct time {
-	uint32_t time_hseconds;
-	uint8_t time_sec;
-	uint8_t time_min;
-	uint8_t time_hour;
-	char change;
-};
-
-
-void initTime(volatile struct time *clk) {
-	clk->time_hseconds = 0;
-	clk->time_sec = 0;
-	clk->time_min = 0;
-	clk->time_hour = 0;
-	clk->change = 1;
-}
-
-void incrementTime(volatile struct time *clk) {
-    ++clk->time_hseconds;
-	clk->time_sec = (clk->time_hseconds / 100);
-	clk->change = 1;
-	clk->time_min = (clk->time_sec / 60);
-	clk->time_hour = clk->time_min / 60;
-}
-
-volatile struct time clk;
-
-
-void TIM2_IRQHandler(void) {
-	// Interrupt function!
-	incrementTime(&clk);
-	TIM2->SR &= ~0x0001; // End the interrupt.
-	}
 
 
 void getSerialInput(char* input){
@@ -86,184 +57,221 @@ void getSerialInput(char* input){
         input[i] = inputchar;
         }
     }
-
 }
 
-void ClearData(char ASCIIARRAYTYPE) {
 
-    for (int i=0; i<12; i++) {
-        for (int j=0; j<5; j++) {
-            for (int g=0; g<9; g++) {
-            ASCIIArray[i][j][g] = ' ';
-            }
+
+#define MMA7660Adress 0x4C << 1
+int main(void)
+    {
+
+	// Input Variables
+
+	// Output Variables
+	//char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
+	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
+
+	// Game data
+	uint8_t level = 1;								// Level counter; Controls game difficulty. Starts at level 1.
+
+	// Initialize functions
+	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
+
+	initGPIO();			   	// Enable GPIO Pins.
+
+    initTime(&clk);			// Reset global time.
+
+    initInterrupt();		// Enable Interrupt (1/100 sec Interrupt)
+
+    initAnalog();			// Enable ADC Potentiometers
+
+    I2C_init();              // Enable I2C Communication
+    I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
+
+
+    //initLCD();			// Enable LCD Screen
+
+	//initBall(&ball1, 1, 1, 1, 1); // Initialize ball (Which ball, Position, Velocity)
+
+    //char Graph[512]; //Graph = Graph[0]
+    //struct LCDDataLine LineData;
+
+	//ClearLineData(&LineData);
+	//lcd_update(Graph, &LineData);
+
+	//ClearLineData[&LineData);
+	//lcd_update[Graph, LCDData);
+
+	//LCDWrite(LCDData, "Hello", 0);
+	//LCDWrite(LCDData, "World!", 1);
+
+    runGame(&level);
+
+	/*while(1) {
+	    if (clk.change == 1)  { // Timer update 1/100th of a second.
+	        LCDTimeCnt++;
+	        //BallTimeCnt++;
+	        //StrikerTimeCnt++;
+	        clk.change = 0;
+	    }
+	    if (LCDTimeCnt == 20) {
+            sprintf(str1, "%04d", readAnalog(1));
+            sprintf(str2, "%04d", readAnalog(2));
+            LCDWrite(&LineData, str1, 2);
+            LCDWrite(&LineData, str2, 3);
+            lcd_update(Graph, &LineData);
+            LCDTimeCnt = 0;
+	    }
+	    if (BallTimeCnt == DifficultyTime) {
+            drawBall(&ball);
+            updateBall(&ball, 0);
+	        BallTimeCnt = 0;
+	    }
+	    if (StrikerTimeCnt == 20){
+            updateStriker(gameArray ,&striker, readAnalog(1) >> 8);
+            StrikerTimeCnt = 0;
+	    }
+	}
+
+	/*
+    while(1) {
+        if (clk.change == 1) {
+            CountInterrupt ++;
+            clk.change = 0;
         }
+
+        if (CountInterrupt == 20) {
+            sprintf(str1, "%04ld", readAnalog(1));
+            sprintf(str2, "%04ld", readAnalog(2));
+            LCDWrite(&LineData, str1, 2);
+            LCDWrite(&LineData, str2, 3);
+            lcd_update(Graph, &LineData);
+            CountInterrupt = 0;
+        }
+
+
+
     }
-}
+	*/
 
-
-
-int main(void)   {
-        // ASCII array.
-        char ASCIIARRAYTYPE;
-
-        int JoyInput, SelectedMenu;
-        char EnableSelection = 1;
-        char MenuState = 1;
-
-         // Initialization of hardware.
-         HDInitialization();
-
-        clrscr();
-        printf("kff");
-        ClearData(ASCIIArray);
-        // Create menu text
-        CreateMenuText(ASCIIArray, 0, "Play");
-        CreateMenuText(ASCIIArray, 1, "Score");
-        CreateMenuText(ASCIIArray, 2, "Help");
-        CreateMenuText(ASCIIArray, 3, "1 player");
-        CreateMenuText(ASCIIArray, 4, "2 player");
-
-        // Print main menu.
-        PrintMenu(1,ASCIIArray);
-        SelectedMenu = 1;
-
-        // Selected menu.
-        Select(SelectedMenu, 1, ASCIIArray, 1);
-
-        // MAIN LOOP.
-        while(1){
-
-            // Læs joystik indgange.
-            JoyInput = readJoystick();
-
-            // If joystick up or down.
-            if (EnableSelection && (JoyInput == 1 || JoyInput == 2)) {
-                // Up.
-                if (JoyInput == 2) {
-
-                    // Deselect previous menu.
-                    Select(SelectedMenu, 0, ASCIIArray, 1);
-
-                    // Get next menu.
-                    SelectedMenu = ChangeSelection(1, SelectedMenu, MenuDataArray[MenuState][1]);
-
-                    // Select menu.
-                    Select(SelectedMenu, 1, ASCIIArray, 1);
-                }
-                // Down
-                else if (JoyInput == 1) {
-
-                    // Deselect previous menu.
-                    Select(SelectedMenu, 0, ASCIIArray, 1);
-
-                    // Get next menu.
-                    SelectedMenu = ChangeSelection(0, SelectedMenu, MenuDataArray[MenuState][1]);
-
-                    // Select menu.
-                    Select(SelectedMenu, 1, ASCIIArray, 1);
-
-                }
-
-                // Disable joystick selection.
-                EnableSelection = 0;
-            }
-
-
-            // If joystick is in neutral position.
-            if (JoyInput == 0) {
-                // Enable joystick selection.
-                EnableSelection = 1;
-
-            }
-
-                        // If joystick is in neutral position.
-            if (EnableSelection && JoyInput == 16) {
-                    bgcolor(0);
-                    clrscr();
-
-
-                // Change menu state.
-                MenuState = MenuDataArray[MenuState][0];
-
-                SelectedMenu = 1;
-
-                // Change to new menu state
-                PrintMenu(MenuState, ASCIIArray);
-
-                // Disable joystick selection.
-                EnableSelection = 0;
-            }
-
+    /*
+    int prevJoystick = 0;
+    struct time splitTime1;
+    struct time splitTime2;
+    initTime(&splitTime1);
+    initTime(&splitTime2);
+    ShowWindow(0,0,14,4, "Stopwatch", 5, 1);
+    while(1) {
+        if (clk.change == 1) {
+            clk.change = 0;
+            gotoXY(1,1);
+            printf("%02d:%02d:%02d:%02lu", clk.time_hour, clk.time_min % 60, clk.time_sec % 60, clk.time_hseconds % 100);
         }
-        //PrintOutTextArray(&ASCIIArray[1][0][0],0,10);
+        gotoXY(1,2);
+        printf("%02d:%02d:%02d:%02lu", splitTime1.time_hour, splitTime1.time_min % 60, splitTime1.time_sec % 60, splitTime1.time_hseconds % 100);
+        gotoXY(1,3);
+        printf("%02d:%02d:%02d:%02lu", splitTime2.time_hour, splitTime2.time_min % 60, splitTime2.time_sec % 60, splitTime2.time_hseconds % 100);
+        gotoXY(9,9);
 
-       // PrintOutTextArray(ASCIIArray[0],0,5,5,9);
-        // PrintOutTextArray(ASCIIArray[1],0,20,5,9);
-        // PrintOutTextArray(ASCIIArray[2],0,30,5,9);
-       // ClearMenuLines(0,50);
-   // PrintTitle(ASCIITitleArray);
+        getSerialInput(input);
+        gotoXY(10,10);
+        if (strcmp(input, "start")==0) {
+            TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+        }
+        else if (strcmp(input, "split1") == 0) {
+                    __disable_irq();
+                    splitTime1 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "split2") == 0) {
+                    __disable_irq();
+                    splitTime2 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "reset") == 0) {
+                    TIM2->CR1 = 0x00000000;
+                    initTime(&clk);
+        }
+       else if (strcmp(input, "help") == 0) {
+                    printf("sdgajsgkljsgajhsdglkj");
+       }
+        else if (strcmp(input, "") == 0) {
+
+       }
+        else {
+                    printf("start : start/stop timer\nsplit1 : split timer to slot 1\nsplit 2 : ");
+        }
+*/
+
+
+        // JoyTimeCtrl();
+        /*JoyInput = readJoystick();
+        if (JoyInput != prevJoystick) {	// Has Joystick changed?
+            prevJoystick = JoyInput;
+            switch (JoyInput) {				// What did it change to?
+
+                case 16 : 	// Center - Start/Stop
+                    TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+                    break;
+                case 4 :	// Left - Split time 1
+                    __disable_irq();
+
+        if (CountInterrupt == 20) {
+            sprintf(str1, "%04ld", readAnalog(1));
+            sprintf(str2, "%04ld", readAnalog(2));
+            LCDWrite(&LineData, str1, 2);
+            LCDWrite(&LineData, str2, 3);
+            lcd_update(Graph, &LineData);
+            CountInterrupt = 0;
+        }
 
 
 
+    }
+	*/
 
+    /*
+    int prevJoystick = 0;
+    struct time splitTime1;
+    struct time splitTime2;
+    initTime(&splitTime1);
+    initTime(&splitTime2);
+    ShowWindow(0,0,14,4, "Stopwatch", 5, 1);
+    while(1) {
+        if (clk.change == 1) {
+            clk.change = 0;
+            gotoXY(1,1);
+            printf("%02d:%02d:%02d:%02lu", clk.time_hour, clk.time_min % 60, clk.time_sec % 60, clk.time_hseconds % 100);
+        }
+        gotoXY(1,2);
+        printf("%02d:%02d:%02d:%02lu", splitTime1.time_hour, splitTime1.time_min % 60, splitTime1.time_sec % 60, splitTime1.time_hseconds % 100);
+        gotoXY(1,3);
+        printf("%02d:%02d:%02d:%02lu", splitTime2.time_hour, splitTime2.time_min % 60, splitTime2.time_sec % 60, splitTime2.time_hseconds % 100);
+        gotoXY(9,9);
 
-
-
-//    RCC->APB1ENR |= RCC_APB1Periph_TIM2; 	// Clock line for timer 2
-//    TIM2->CR1 = 0x00000001; 				// Configure [0 0 0 0 UIF 0 CKD ARPE CMS DIR OPM UDIS CEN]
-//    TIM2->ARR = 0x0009C3FF;					// Relead Value = 63999 = 1/100 Second.
-//    TIM2->PSC = 0x00000000;					// Preset = 0;
-//
-//    uint16_t CountInterrupt = 0;
-//
-//    TIM2->DIER |= 0x0001;					// Timer 2 Interrupts Enabled
-//    NVIC_SetPriority(TIM2_IRQn, 0);
-//    NVIC_EnableIRQ(TIM2_IRQn);
-//    //uint16_t old;
-//    int JoyInput;
-//    //int c = 0;
-//    init_usb_uart(115200); // Initialize USB serial at 115200 baud
-//   // clrscr();
-//    char input[7];
-//    // Initialisering.
-//    initGPIO();
-//    initTime(&clk);
-//    initAnalog();
-//    // Update PuTTy everytime 2nd digit changes.
-//    char Graph[512]; //Graph = Graph[0]
-//    struct LCDDataLine LineData;
-//
-//    ClearLineData(&LineData);
-//
-//    initLCD();
-//    memset(Graph, 0x00, 512);
-//
-//    lcd_update(Graph, &LineData);
-//
-//    LCDWrite(&LineData, "Hordur", 0);
-//    LCDWrite(&LineData, "Sebastian Frederik", 1);
-//
-//    printf("%02ld", readAnalog(1));
-//    char str1[7];
-//    char str2[7];
-//
-//
-//    while(1) {
-//        if (clk.change == 1) {
-//            CountInterrupt ++;
-//            clk.change = 0;
-//        }
-//
-//        if (CountInterrupt == 20) {
-//            sprintf(str1, "%04ld", readAnalog(1));
-//            sprintf(str2, "%04ld", readAnalog(2));
-//            LCDWrite(&LineData, str1, 2);
-//            LCDWrite(&LineData, str2, 3);
-//            lcd_update(Graph, &LineData);
-//            CountInterrupt = 0;
-//        }
-//
-//    }
+        getSerialInput(input);
+        gotoXY(10,10);
+        if (strcmp(input, "start")==0) {
+            TIM2->CR1 = ~TIM2->CR1 & 0x00000001;
+        }
+        else if (strcmp(input, "split1") == 0) {
+                    __disable_irq();
+                    splitTime1 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "split2") == 0) {
+                    __disable_irq();
+                    splitTime2 = clk;
+                    __enable_irq();
+        }
+        else if (strcmp(input, "reset") == 0) {
+                    TIM2->CR1 = 0x00000000;
+                    initTime(&clk);
+        }
+       else if (strcmp(input, "help") == 0) {
+                    printf("sdgajsgkljsgajhsdglkj");
+       }
+        else if (strcmp(input, "") == 0) {
 
 
     /*

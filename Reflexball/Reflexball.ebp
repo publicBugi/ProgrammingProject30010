@@ -99,9 +99,11 @@
 		<Unit filename="inc\API\vectortrig.h" />
 		<Unit filename="inc\HAL\GPIO.h" />
 		<Unit filename="inc\HAL\HDInitializering.h" />
+		<Unit filename="inc\HAL\i2c.h" />
 		<Unit filename="inc\HAL\LCD.h" />
 		<Unit filename="inc\HAL\stm32f30x_conf.h" />
 		<Unit filename="inc\HAL\system_stm32f30x.h" />
+		<Unit filename="inc\HAL\timer.h" />
 		<Unit filename="readme.txt" />
 		<Unit filename="SPL\inc\stm32f30x_adc.h" />
 		<Unit filename="SPL\inc\stm32f30x_can.h" />
@@ -219,6 +221,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\HDInitializering.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\i2c.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\LCD.c">
