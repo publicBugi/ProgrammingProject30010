@@ -9,46 +9,40 @@ void initLCD(){
 
 }
 
-void LCDWrite(struct LCDDataLine *LineData, char* Text, int Line) {
+void LCDWrite(char LCDData[4][128], char* Text, int Line) {
 
-    int i,j = 0;
     int Location = 0;
 
-    for (j=0; j< strlen(Text); j++) {
+    for (int j=0; j < strlen(Text); j++) {
 
         uint8_t t = Text[j];
 
-        for (i=0; i<5; i++) {
-
+        for (int i=0; i<5; i++) {
             if ((Location+i) < 128) {
-                LineData->Data[Line][Location + i] = character_data[t-0x20][i];
+                LCDData[Line][Location + i] = character_data[t-0x20][i];
             }
-
         }
         Location += 5;
-
     }
-
 }
 
-void CollectGraph(char *Graph, struct LCDDataLine *LineData){
+void CollectGraph(char *Graph, char LCDData[4][128]){
 
     for (int i=0; i<4; i++) {
         for (int j=0; j<128; j++) {
-            Graph[(i*128) + j] = LineData->Data[i][j];
+            Graph[(i*128) + j] = LCDData[i][j];
         }
     }
 
 }
 
-void ClearLineData(struct LCDDataLine *LineData) {
+void ClearLineData(char LCDData[4][128]) {
 
     for (int i=0; i<4; i++) {
         for (int j=0; j<128; j++) {
-            LineData->Data[i][j] = 0;
+            LCDData[i][j] = 0;
         }
     }
-
 }
 
 //void LCDWrite2(char *Graph, char* Text, int Line) {
@@ -73,12 +67,12 @@ void ClearLineData(struct LCDDataLine *LineData) {
 //
 //}
 
-void Shift(struct LCDDataLine *LineData, uint8_t Line) {
-    int FirstElement = LineData->Data[Line][0];
+void Shift(char LCDData[4][128], uint8_t Line) {
+    int FirstElement = LCDData[Line][0];
     for (int i = 0; i < 127; i++){
-        LineData->Data[Line][i] = LineData->Data[Line][i+1];
+        LCDData[Line][i] = LCDData[Line][i+1];
     }
-    LineData->Data[Line][127] = FirstElement;
+    LCDData[Line][127] = FirstElement;
 }
 
 //void Shift2(char* Graph) {
@@ -90,12 +84,12 @@ void Shift(struct LCDDataLine *LineData, uint8_t Line) {
 //    Graph[0] = LastElement;
 //}
 
-void lcd_update(char *Graph, struct LCDDataLine *LineData) {
+void lcd_update(char *Graph, char LCDData[4][128]) {
     //Shift(LineData, 0);
     //Shift(LineData, 1);
     //Shift(LineData, 2);
     //Shift(LineData, 3);
-    CollectGraph(Graph, LineData);
+    CollectGraph(Graph, LCDData);
     lcd_push_buffer(Graph);
 
 }
