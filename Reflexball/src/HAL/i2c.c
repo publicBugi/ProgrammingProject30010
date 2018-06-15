@@ -23,8 +23,8 @@ void I2C_Write(uint16_t address, uint8_t reg, uint8_t val) {
 }
 
 
-uint8_t I2C_Read(uint16_t address, uint8_t reg, uint8_t* vals, uint8_t n) {
-    uint8_t val = 0;
+void I2C_Read(uint16_t address, uint8_t reg, int8_t* vals, uint8_t n) {
+    int8_t val = 0;
 
     while (I2C_GetFlagStatus(I2C1, I2C_FLAG_BUSY) == SET); // Wait until free
 
@@ -49,7 +49,7 @@ uint8_t I2C_Read(uint16_t address, uint8_t reg, uint8_t* vals, uint8_t n) {
 
     I2C_ClearFlag(I2C1, I2C_FLAG_STOPF); // Clear stop flag
 
-    return val;
+    *vals = val;
 }
 
 void I2C_init()

@@ -1,21 +1,152 @@
 #include "Game.h"
 
 
+// Initialize ball vectors.
+void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
+    ball->DegreeIndex = 320;
+    initVector(&ball->PrevPos, XPos, YPos);
+    ball->DirVec.y = getSin(ball->DegreeIndex);
+    ball->DirVec.x = getCos(ball->DegreeIndex);
+    initVector(&ball->NextPos, XPos, YPos);
+}
+
+// Update ball next XY-position.
+void updateBall(struct ball_t *ball, uint8_t velMod) {
+    int testx =  ball->NextPos.x >> 14;
+    int testy =  ball->NextPos.y >> 14;
+    // Set next positions to next position.
+    ball->PrevPos = ball->NextPos;
+    // Calculate next x position using direction vector (velMod divedes)
+    ball->NextPos.x = ball->PrevPos.x + (ball->DirVec.x >> velMod);
+    // Calculate next y position using direction vector (velMod divedes)
+    if ((ball->NextPos.y) >> 14 < putStrikerPos) {
+        ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
+    }
+    else {
+        ball->NextPos.y = (putStrikerPos - 1) << 14;
+
+    }
+       int testx2 =  ball->NextPos.x >> 14;
+    int testy2 =  ball->NextPos.y >> 14;
+}
+
+// Update the velocity of the ball
+void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
+	if (velMod < 0) {
+		ball->DirVec.x >>= velMod;
+		ball->DirVec.y >>= velMod;
+	}
+	else {
+		ball->DirVec.x <<= velMod;
+		ball->DirVec.y <<= velMod;
+	}
+}
+
+// Draw ball in the PuTTY terminal.
+void drawBall(struct ball_t *ball){
+    // Goto previous xy position (shift 14 bit to the left as 18.14 type)
+    gotoXY(ball->PrevPos.x >> 14, ball->PrevPos.y >> 14);
+    // Draw space char.
+	putchar(32);
+	// Goto next xy position (shift 14 bit to the left as 18.14 type)
+    gotoXY(ball->NextPos.x >> 14, ball->NextPos.y >> 14);
+    // Draw ball char.
+    putchar(111);
+}
+
+//// STRIKER FUNCTIONS ////
+// Updates and Draws striker position
+void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker){
+    striker->prevpos = striker->currpos;
 
 
-// Game Array [putWidth] [putHeight].
-// 0 = No Collission
-// 1 = Wall
-// 2 = Striker 1
-// 3 = Striker 2
-// 4 = Striker 3
+    uint8_t Acceleration = readRoll(20);
+    if (Acceleration < 10 && Acceleration < -10) {
+        Acceleration = 0;
+    }
+
+    striker->currpos = striker->currpos + Acceleration;
+
+    if (striker->currpos < 1 || striker->currpos > (putWidth - striker->strikersize - 1)) {
+        striker->currpos = striker->prevpos;
+    }
 
 
+
+    int temp = striker->currpos;
+    fgcolor(0);
+    gotoXY(striker->prevpos, putStrikerPos);
+    for (int i = 0; i < striker->strikersize; i++){
+            gameArray[putStrikerPos][striker->prevpos + i] = 0;
+            putchar(32);
+    }
+
+    fgcolor(8);
+    gotoXY( striker->currpos, putStrikerPos);
+    uint8_t value = 2;
+	for (uint8_t i = 0; i < striker->strikersize; i += striker->strikerinc){
+        for (uint8_t s = 0; s < striker->strikerinc; s++){
+            gameArray[putStrikerPos][striker->currpos + i + s] = value;
+            putchar(223);
+        }
+        value++;
+	}
+}
+
+// Get data from controller + fit to screen.
+void getStrikerPosition(struct striker_t *striker) {
+    // Turn control to striker into usable data.
+
+    // HARDWARE RANGE; -90 to 90: 0 = No roll.
+    // STRIKER RANGE; 1 to putWidth - 1
+    int8_t Acceleration = readRoll(20);
+    striker->currpos = striker->currpos + Acceleration;
+
+    if (striker->currpos < 1 || striker->currpos > putWidth - 1 - striker->strikersize) {
+        striker->currpos = putWidth / 2;
+    }
+}
+
+
+//// BRICKS ////
+
+// Kill brick.
+void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth) {
+    // Change game array of brick to 0 (air).
+    for (int x = 0; x < *brickWidth; x++){
+        for(int y = 0; y < *brickHeight; y++) {
+            gameArray[brick->posY + y][brick->posX + x] = 0;
+        }
+
+    }
+
+}
+
+// Print brick counter
+void PrintBrickCounter(uint16_t BrickCounter) {
+    gotoXY(10,80);
+    printf("Brick counter: %d  ", BrickCounter);
+}
+
+
+void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth){
+        fgcolor(brick->currHP);
+
+        for (int y = 0; y < *brickHeight; y++){
+            gotoXY(brick->posX, brick->posY + y);
+                for(int x = 0; x < *brickWidth; x++) {
+                    putchar(178);
+            }
+        }
+}
+
+
+
+//// GAME LOOP AND INITI ///
 uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
 	// Size of Screen
 	const int MaxColI = putWidth;
 	const int MaxRowI = putHeight;
-
 
 	// Generate Walls at edges
 	for (int i = 0; i < MaxRowI; i++){
@@ -29,9 +160,6 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 	// Set Speed level of time (Define TimeConst)
 	const int TimeConst = 500;
 	DifficultyTime = TimeConst >> *Level;
-
-
-
 
 	// Brick Values
 	*brickHeight -= *Level;  // Brick size as function of Level! Increase difficulty!
@@ -69,125 +197,7 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
         }
         value++;
 	}
-
 	return index - 7;
-}
-// Initialize vectors.
-void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
-    /*ball->PosVec.x = XPos << 14;
-    ball->PosVec.y = YPos << 14;
-    ball->VelVec.x = Vx << 14;
-    ball->VelVec.y = Vy << 14;
-    ball->NextPos.x = 0;
-    ball->NextPos.y = 0;*/
-    //
-    ball->DegreeIndex = 320;
-
-    initVector(&ball->PrevPos, XPos, YPos);
-    // Initialize direction vector.
-    //initVector(&ball->DirVec, Vx, Vy);
-    ball->DirVec.y = getSin(ball->DegreeIndex);
-    ball->DirVec.x = getCos(ball->DegreeIndex);
-    initVector(&ball->NextPos, XPos, YPos);
-}
-
-// Update ball next XY-position.
-void updateBall(struct ball_t *ball, uint8_t velMod) {
-    int testx =  ball->NextPos.x >> 14;
-    int testy =  ball->NextPos.y >> 14;
-    // Set next positions to next position.
-    ball->PrevPos = ball->NextPos;
-    // Calculate next x position using direction vector (velMod divedes)
-    ball->NextPos.x = ball->PrevPos.x + (ball->DirVec.x >> velMod);
-    // Calculate next y position using direction vector (velMod divedes)
-    if ((ball->NextPos.y) >> 14 < putStrikerPos) {
-        ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
-    }
-    else {
-        ball->NextPos.y = (putStrikerPos - 1) << 14;
-
-    }
-       int testx2 =  ball->NextPos.x >> 14;
-    int testy2 =  ball->NextPos.y >> 14;
-}
-
-// Draw ball in the PuTTY terminal.
-void drawBall(struct ball_t *ball){
-    // Goto previous xy position (shift 14 bit to the left as 18.14 type)
-    gotoXY(ball->PrevPos.x >> 14, ball->PrevPos.y >> 14);
-    // Draw space char.
-	putchar(32);
-	// Goto next xy position (shift 14 bit to the left as 18.14 type)
-    gotoXY(ball->NextPos.x >> 14, ball->NextPos.y >> 14);
-    // Draw ball char.
-    putchar(111);
-}
-
-void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
-	if (velMod < 0) {
-		ball->DirVec.x >>= velMod;
-		ball->DirVec.y >>= velMod;
-	}
-	else {
-		ball->DirVec.x <<= velMod;
-		ball->DirVec.y <<= velMod;
-	}
-}
-
-void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker){
-    striker->prevpos = striker->currpos;
-    striker->currpos = getStrikerPosition();
-    fgcolor(0);
-    gotoXY(putStrikerPos, striker->prevpos);
-    for (int i = 0; i < striker->strikersize; i++){
-            gameArray[putStrikerPos][striker->prevpos + i] = 0;
-            putchar(32);
-    }
-
-    fgcolor(8);
-    gotoXY(putStrikerPos, striker->currpos);
-    uint8_t value = 2;
-	for (uint8_t i = 0; i < striker->strikersize; i += striker->strikerinc){
-        for (uint8_t s = 0; s < striker->strikerinc; s++){
-            gameArray[putStrikerPos][striker->currpos + i + s] = value;
-            putchar(223);
-        }
-        value++;
-	}
-}
-  
-void CountDown(char *numberArray[]){
-//  // Start at 4 to make sure the first second is at least a full second
-//  for (int i = 4; i > 0; i--) {
-//    uint8_t clkSec = clk->time_sec;
-//    while(clkSec == clk->time_sec){}
-//    // For the first value of I, print 3
-//    if (i==4) {
-//      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
-//    }
-//    // Print the rest of the numbers, every time the time_sec changes
-//    else{
-//      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
-//    }
-//  }
-}
-
-// Kill brick.
-void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth) {
-    // Change game array of brick to 0 (air).
-    for (int x = 0; x < *brickWidth; x++){
-        for(int y = 0; y < *brickHeight; y++) {
-            gameArray[brick->posY + y][brick->posX + x] = 0;
-        }
-
-    }
-
-}
-
-// Print brick counter
-void PrintBrickCounter(uint16_t BrickCounter) {
-    gotoXY(10,80);
-    printf("Brick counter: %d  ", BrickCounter);
 }
 
 // Run game. Return
@@ -274,7 +284,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
     drawBall(&ball1);
 
     uint16_t BallTimeCnt = 0;
-
+    uint16_t StrikerTimeCnt = 0;
     // Print brick counter;
     PrintBrickCounter(BrickCounter);
 
@@ -288,11 +298,12 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
         if (clk.change == 1)  { // Timer update 1/100th of a second.
 	        //LCDTimeCnt++;
 	        BallTimeCnt++;
-	        //StrikerTimeCnt++;
+	        StrikerTimeCnt++;
+
 	        clk.change = 0;
 	    }
 	    // Control ball speed.
-        else if (BallTimeCnt == 2) {
+        if (BallTimeCnt == 2) {
 
             // Update ball next XY-position.
             updateBall(&ball1, 0);
@@ -393,6 +404,11 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
             // Reset ball speed.
             BallTimeCnt = 0;
 	    }
+	    if (StrikerTimeCnt == 2) {
+            updateStriker(gameArray, &striker);
+            StrikerTimeCnt = 0;
+	    }
+
 
 
 
@@ -403,18 +419,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
    // level++;
 
 
-}
-
-
-void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth){
-        fgcolor(brick->currHP);
-
-        for (int y = 0; y < *brickHeight; y++){
-            gotoXY(brick->posX, brick->posY + y);
-                for(int x = 0; x < *brickWidth; x++) {
-                    putchar(178);
-            }
-        }
 }
 
 
@@ -481,7 +485,21 @@ gotoXY(40,100);
 }
 
 
-
+//void CountDown(char *numberArray[]){
+//  // Start at 4 to make sure the first second is at least a full second
+//  for (int i = 4; i > 0; i--) {
+//    uint8_t clkSec = clk->time_sec;
+//    while(clkSec == clk->time_sec){}
+//    // For the first value of I, print 3
+//    if (i==4) {
+//      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
+//    }
+//    // Print the rest of the numbers, every time the time_sec changes
+//    else{
+//      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
+//    }
+//  }
+//}
 //void CountDown(char *numberArray[]){
 //  // Start at 4 to make sure the first second is at least a full second
 //  for (int i = 4; i > 0; i--) {
@@ -549,9 +567,9 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
     GameDataLeft = gameArray[Left.y][Left.x];
 
      // TEMPEARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
-    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
-            return 1;
-    }
+//    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
+//            return 1;
+//    }
 
      // Check for up attack.
     if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop != 0  && GameDataBottom == 0) {
@@ -694,21 +712,3 @@ void drawPowerup(struct pwrUp *powerup){
 }
 
 
-uint8_t getStrikerPosition() {
-    // Turn control to striker into usable data.
-
-    // HARDWARE RANGE; -90 to 90: 0 = No roll.
-    // STRIKER RANGE; 1 to putWidth - 1
-    const int8_t mapCenter = putWidth / 2 + 1;
-
-    int8_t strikerPosition = mapCenter + readRoll(10); // readRoll(Average amount) ; Argument controls sensitivity of controller
-
-    if (strikerPosition < 0) {
-        strikerPosition = 0;
-    }
-    else if (strikerPosition > putWidth - 1){
-        strikerPosition = putWidth - 1;
-    }
-
-    return strikerPosition + UINT8_MAX + 1;
-}
