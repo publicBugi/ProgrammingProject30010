@@ -1,7 +1,7 @@
 #include "vectortrig.h"
 #include "30010_io.h"
-
 #include "timer.h"
+#include "GPIO.h"
 
 #ifndef _GAME_H_
 #define _GAME_H_
