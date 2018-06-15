@@ -1,5 +1,14 @@
 #include "ROM.h"
 
+const char ASCII_table[43][4][10] = {
+    {   // A
+        {0x20, 0x20, 0x20, 0x5F, 0x20, 0x20, 0x20, 0, 0, 0},
+        {0x20, 0x20, 0x2F, 0x5F, 0x5C, 0x20, 0x20, 0, 0, 0},
+        {0x20, 0x2F, 0x20, 0x5F, 0x20, 0x5C, 0x20, 0, 0, 0},
+        {0x2F, 0x5F, 0x2F, 0x20, 0x5C, 0x5F, 0x5C, 0, 0, 0}
+    }
+};
+
 const uint32_t char_location[43] = {
   0x0800F000, 0x0800F018, 0x0800F024, 0x0800F038, 0x0800F04C,
   0x0800F064, 0x0800F078, 0x0800F08C, 0x0800F0A4, 0x0800F0B8,
@@ -27,6 +36,23 @@ void InitFlash() {
     FLASH_ClearFlag( FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPERR );
     FLASH_ErasePage(ADDRESS); //Erase the flash storage on the last address
     FLASH_Lock(); //Lock the flash
+}
+
+void ReadFromASCII(char* text, uint8_t drawX, uint8_t drawY) {
+    char tempChar;
+    for (uint8_t i = 0; i < 4; i++) {
+        gotoXY(drawX,drawY+i);
+        for (uint8_t j = 0; j < strlen(text); j++) {
+            for (uint8_t k = 0; k < 10; k++) {
+                uint8_t l = text[j]-0x30;
+                if(ASCII_table[l][i][k] == 0){
+                    k=10;
+                }
+                tempChar = ASCII_table[l][i][k];
+                printf("%c", tempChar);
+            }
+        }
+    }
 }
 
 void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address, uint8_t arraySize) {
