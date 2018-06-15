@@ -56,24 +56,23 @@ void drawBall(struct ball_t *ball){
 
 //// STRIKER FUNCTIONS ////
 // Updates and Draws striker position
-void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker){
+void updateStriker(uint8_t gameArray[putHeight][putWidth], struct striker_t *striker){
     striker->prevpos = striker->currpos;
 
+    // Update strikers acceleration.
+    striker->currAccel = readRoll(20, striker->currAccel);
 
-    uint8_t Acceleration = readRoll(20);
-    if (Acceleration < 10 && Acceleration < -10) {
-        Acceleration = 0;
-    }
+    int acceltemp = striker->currAccel >> 14;
+    // Update striker position based on new acceleration.
+    striker->currpos = striker->currpos + (striker->currAccel >> 14);
 
-    striker->currpos = striker->currpos + Acceleration;
-
+    // Keep striker within bounds
     if (striker->currpos < 1 || striker->currpos > (putWidth - striker->strikersize - 1)) {
         striker->currpos = striker->prevpos;
     }
 
 
 
-    int temp = striker->currpos;
     fgcolor(0);
     gotoXY(striker->prevpos, putStrikerPos);
     for (int i = 0; i < striker->strikersize; i++){
@@ -111,7 +110,7 @@ void getStrikerPosition(struct striker_t *striker) {
 //// BRICKS ////
 
 // Kill brick.
-void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth) {
+void KillBrick(uint16_t Brickindex, uint8_t gameArray[putHeight][putWidth], struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth) {
     // Change game array of brick to 0 (air).
     for (int x = 0; x < *brickWidth; x++){
         for(int y = 0; y < *brickHeight; y++) {
@@ -408,11 +407,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
 
     }
-
-
-   // level++;
-
-
 }
 
 

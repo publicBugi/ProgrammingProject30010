@@ -293,15 +293,16 @@ uint8_t readJoystick2() {
 
 #define MMA7660Adress 0x4C << 1 // I2C Address of MM7660 3-Axis Accelerometer
 // Get ROLL data from Accelerometer
-int8_t readRoll(uint8_t Average) {
-    int8_t avgRoll = 0;
-    int8_t IC2_VAL = 0;
+int32_t readRoll(uint8_t Average, int32_t currAccel) {
+    int32_t avgRoll = 0;
+    uint8_t IC2_VAL = 0;
     // Take the average of AVERAGE measurements.
     for (uint8_t i = 0; i < Average; i++) {
         I2C_Read(MMA7660Adress, 0x01, &IC2_VAL, 1);
         IC2_VAL &= 0x3F; // Save first 6 Bits; Dont care about Alarm signal.
-        avgRoll += IC2_VAL;
+        avgRoll += (int8_t)IC2_VAL;
     }
     avgRoll /= Average;
-    return avgRoll;
+    avgRoll <<= 14;
+    return (currAccel * 0x2328 + avgRoll * 0x3E8) >> 14;
 }
