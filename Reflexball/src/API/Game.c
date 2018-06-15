@@ -128,9 +128,9 @@ void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
 	}
 }
 
-void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker, uint8_t position){
+void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker){
     striker->prevpos = striker->currpos;
-    striker->currpos = position;
+    striker->currpos = getStrikerPosition();
     fgcolor(0);
     gotoXY(putStrikerPos, striker->prevpos);
     for (int i = 0; i < striker->strikersize; i++){
@@ -148,7 +148,6 @@ void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *strike
         }
         value++;
 	}
-
 }
 
 // Kill brick.
@@ -615,17 +614,21 @@ void drawPowerup(struct pwrUp *powerup){
 }
 
 
-/*
-void CountDown(){
+uint8_t getStrikerPosition() {
+    // Turn control to striker into usable data.
 
+    // HARDWARE RANGE; -90 to 90: 0 = No roll.
+    // STRIKER RANGE; 1 to putWidth - 1
+    const int8_t mapCenter = putWidth / 2 + 1;
+
+    int8_t strikerPosition = mapCenter + readRoll(10); // readRoll(Average amount) ; Argument controls sensitivity of controller
+
+    if (strikerPosition < 0) {
+        strikerPosition = 0;
+    }
+    else if (strikerPosition > putWidth - 1){
+        strikerPosition = putWidth - 1;
+    }
+
+    return strikerPosition + UINT8_MAX + 1;
 }
-
-
-
-
-void updateStrikerPosition() {
-A
-
-}
- *
-*/
