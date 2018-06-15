@@ -35,12 +35,11 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 
 	// Brick Values
 	*brickHeight -= *Level;  // Brick size as function of Level! Increase difficulty!
-	*brickWidth -= *Level*5;
-	int tempH = *brickHeight;
-	int tempW = *brickWidth;
+	*brickWidth -= *Level*3;
+
     uint8_t   Columns = (MaxColI-2)/(*brickWidth) ;            // Fill out as many bricks as you can
     uint8_t   center = ((MaxColI-2) % (*brickWidth)) / 2 + 1;  // Center the bricks; Not left align.
-	const int Rows = 3;                                         // Rows should also be function of level.
+	uint8_t Rows = 2 + *Level;                                         // Rows should also be function of level.
 
 	// Generate bricks in brickarray and draw in gameArray.
     int index = 7;
@@ -176,13 +175,15 @@ void PrintBrickCounter(uint16_t BrickCounter) {
     printf("Brick counter: %d  ", BrickCounter);
 }
 
-
-uint16_t runGame(uint8_t *level) {
+// Run game. Return
+// 0: If player died
+// 1: If complete level.
+uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
     // Local Game Data
     struct brick_t brickArray[maxBricks] = { };			// Maintain control of all Bricks. (Position, Health and Powerup)
 	uint8_t gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
 	uint8_t DifficultyTime;
-    uint8_t Score = 0;
+
     char* CollisionDectectReturnAddr;
     char WhatNextAfterBallCollision = 0;
     uint16_t Brickindex;
@@ -262,6 +263,9 @@ uint16_t runGame(uint8_t *level) {
     // Print brick counter;
     PrintBrickCounter(BrickCounter);
 
+    gotoXY(90,80);
+    printf("Level %d  ", *level);
+
     //// START GAME ////
     uint8_t gameEnabled = 1;
     while (gameEnabled) {
@@ -295,7 +299,12 @@ uint16_t runGame(uint8_t *level) {
 
                     // Ball out of boundary.
                     case 0:
+                        // Stop game.
                         gameEnabled = 0;
+
+                        // Return player died.
+                        return 0;
+
                         break;
 
                     // Ball hit stricker.
@@ -331,7 +340,7 @@ uint16_t runGame(uint8_t *level) {
                             BrickCounter--;
 
                             // Increase score.
-                            Score += brickArray[Brickindex].MaxHP;
+                            *PlayerScore += brickArray[Brickindex].MaxHP;
 
                             // Kill brick.
                             KillBrick(Brickindex, gameArray, &brickArray[Brickindex], &brickHeight, &brickWidth);
@@ -352,6 +361,7 @@ uint16_t runGame(uint8_t *level) {
                             gotoXY(40,40);
 
                             printf("            GAME LEVEL COMPLETE!                 ");
+                            return 1;
 
                         }
 
@@ -375,9 +385,9 @@ uint16_t runGame(uint8_t *level) {
     }
 
 
-    level++;
+   // level++;
 
-    return Score;
+
 }
 
 
