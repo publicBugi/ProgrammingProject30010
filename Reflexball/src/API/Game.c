@@ -28,11 +28,16 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 
 	// Set Speed level of time (Define TimeConst)
 	const int TimeConst = 500;
-	*DifficultyTime = TimeConst >> *Level;
+	DifficultyTime = TimeConst >> *Level;
+
+
+
 
 	// Brick Values
 	*brickHeight -= *Level;  // Brick size as function of Level! Increase difficulty!
 	*brickWidth -= *Level*5;
+	int tempH = *brickHeight;
+	int tempW = *brickWidth;
     uint8_t   Columns = (MaxColI-2)/(*brickWidth) ;            // Fill out as many bricks as you can
     uint8_t   center = ((MaxColI-2) % (*brickWidth)) / 2 + 1;  // Center the bricks; Not left align.
 	const int Rows = 3;                                         // Rows should also be function of level.
@@ -154,15 +159,21 @@ void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *strike
 }
 
 // Kill brick.
-void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct brick_t *brick) {
+void KillBrick(uint16_t Brickindex, char gameArray[putHeight][putWidth], struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth) {
     // Change game array of brick to 0 (air).
-    for (int x = 0; x < 20; x++){
-        for(int y = 0; y < 5; y++) {
+    for (int x = 0; x < *brickWidth; x++){
+        for(int y = 0; y < *brickHeight; y++) {
             gameArray[brick->posY + y][brick->posX + x] = 0;
         }
 
     }
 
+}
+
+// Print brick counter
+void PrintBrickCounter(uint16_t BrickCounter) {
+    gotoXY(10,80);
+    printf("Brick counter: %d  ", BrickCounter);
 }
 
 
@@ -179,8 +190,8 @@ uint16_t runGame(uint8_t *level) {
     uint16_t BrickCounter;
 
 
-    uint8_t brickHeight = 6 - *level;
-    uint8_t brickWidth = 25 - *level*5;
+    uint8_t brickHeight = 5;
+    uint8_t brickWidth = 20;
 
 	// Game Instances
 	struct pwrUp powerup;
@@ -193,6 +204,7 @@ uint16_t runGame(uint8_t *level) {
 
     // Clear screen.
     clrscr();
+
     // Game Array for Collision purposes.
 	// Values in Array:
 	// 0 	= Air / No Collision.
@@ -201,12 +213,12 @@ uint16_t runGame(uint8_t *level) {
 	// 7-256= Brick in BrickArray.
 
     // Generate map for current level (Used for collision detection). Return numbers of bricks created.
-	BrickCounter = initGameArray(gameArray, brickArray, &striker, &level, &DifficultyTime, &brickHeight, &brickWidth);
+	BrickCounter = initGameArray(gameArray, brickArray, &striker, level, &DifficultyTime, &brickHeight, &brickWidth);
 
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
 
-//	// Draw gameArray index
+	// Draw gameArray index
 //	for (uint8_t i = 0; i < putHeight; i++){
 //		for (uint8_t r = 0; r < putWidth; r++){
 //			printf("%d", gameArray[i][r] % 10);
@@ -215,7 +227,7 @@ uint16_t runGame(uint8_t *level) {
 //		      printf("\r\n");
 //		}
 //    }
-    gotoXY(0,0);
+//    gotoXY(0,0);
 
     // Generate Walls at edges
     fgcolor(15);
@@ -228,12 +240,14 @@ uint16_t runGame(uint8_t *level) {
 		putchar(178);
 	}
 
+    // Generate bricks.
 	for (int i = 7; i < maxBricks; i++) {
         if (brickArray[i].currHP != 0){
             drawBox(&brickArray[i], &brickHeight, &brickWidth);
         }
 	}
 
+    // Generate stricker.
     fgcolor(8);
     gotoXY(striker.currpos, putStrikerPos);
 	for (int i = 0; i < striker.strikersize; i++){
@@ -244,6 +258,9 @@ uint16_t runGame(uint8_t *level) {
     drawBall(&ball1);
 
     uint16_t BallTimeCnt = 0;
+
+    // Print brick counter;
+    PrintBrickCounter(BrickCounter);
 
     //// START GAME ////
     uint8_t gameEnabled = 1;
@@ -271,17 +288,21 @@ uint16_t runGame(uint8_t *level) {
                 WhatNextAfterBallCollision = ((char (*)()) CollisionDectectReturnAddr)();
 
                 // If WhatNextAfterBallCollision =
+                // 0: Ball out of boundary.
                 // 1: Update ball angle
                 // 2: End game,
                 switch(WhatNextAfterBallCollision) {
+
                     // Ball out of boundary.
                     case 0:
                         gameEnabled = 0;
                         break;
+
                     // Ball hit stricker.
                     case 1:
                         UpdateBallAngle(&ball1, gameArray);
                         break;
+
                     // Ball hit brick
                     case 2:
 
@@ -293,6 +314,7 @@ uint16_t runGame(uint8_t *level) {
 
                         // Prevent brick hit point of being negative.
                         if (brickArray[Brickindex].currHP > 0) {
+
                             // Decrement brick hit points.
                             brickArray[Brickindex].currHP--;
 
@@ -302,20 +324,34 @@ uint16_t runGame(uint8_t *level) {
                             // Change color to default.
                             fgcolor(15);
                         }
+
                         // If hit points is zero kill the brick.
                         if (brickArray[Brickindex].currHP == 0) {
                             // Decrement brick counter.
                             BrickCounter--;
+
+                            // Increase score.
+                            Score += brickArray[Brickindex].MaxHP;
+
                             // Kill brick.
-                           KillBrick(Brickindex, gameArray, &brickArray[Brickindex]);
+                            KillBrick(Brickindex, gameArray, &brickArray[Brickindex], &brickHeight, &brickWidth);
+
+                            // Print brick counter;
+                            PrintBrickCounter(BrickCounter);
+
                         }
-                        // If all bricks is kill.
+
+                        // If all bricks are killed.
                         if (BrickCounter == 0) {
                             // Stop game.
                             gameEnabled = 0;
+
+                            // Clear screen.
                             clrscr();
+
                             gotoXY(40,40);
-                            printf("            GAME LEVEL COMPLETE!                 ")
+
+                            printf("            GAME LEVEL COMPLETE!                 ");
 
                         }
 
@@ -340,6 +376,7 @@ uint16_t runGame(uint8_t *level) {
 
 
     level++;
+
     return Score;
 }
 
@@ -357,62 +394,62 @@ void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth){
 
 
 char BallHitWall() {
-gotoXY(40,40);
+gotoXY(40,100);
  printf("Ball will hit the border          ");
   return 1;
 }
 
 // Return type of hit.
 char BallHitBrick() {
-gotoXY(40,40);
+gotoXY(40,100);
  printf("Ball will hit the bricks           ");
  return 2;
 }
 
 char BallHitStricker1(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("Ball will hit the stricker 1");
   return 1;
 }
 
 char BallHitStricker2(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("Ball will hit the stricker 2");
   return 1;
 }
 
 char BallHitStricker3(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("Ball will hit the stricker 3");
   return 1;
 }
 
 char BallHitStricker4(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("Ball will hit the stricker 4");
   return 1;
 }
 
 char BallHitStricker5(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("Ball will hit the stricker 5");
   return 1;
 }
 
 char BallHitStricker6(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("Ball will hit the stricker 6");
  return 1;
 }
 
 char BallOutOfBoundary(){
-gotoXY(40,40);
+gotoXY(40,100);
 
  printf("END GAME!                    ");
   return 1;
@@ -455,12 +492,12 @@ gotoXY(40,40);
 char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball) {
 
     // Positions. ball->PrevPos is shifted 14 to the left because it is 18.14.
-    uint8_t xPos = ball->PrevPos.x >> 14;
-    uint8_t yPos = ball->PrevPos.y >> 14;
+    uint16_t xPos = ball->PrevPos.x >> 14;
+    uint16_t yPos = ball->PrevPos.y >> 14;
 
     struct vector_t Top, Bottom;
     struct vector_t Left, Right;
-    uint8_t GameDataTop, GameDataBottom, GameDataLeft, GameDataRight;
+    uint16_t GameDataTop, GameDataBottom, GameDataLeft, GameDataRight;
 
 
     // Top postion.

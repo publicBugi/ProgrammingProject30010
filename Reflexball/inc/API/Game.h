@@ -9,7 +9,7 @@
 #define putHeight 50
 #define putWidth 200
 #define putStrikerPos putHeight - 2
-#define maxBricks 40
+#define maxBricks 100
 
 struct ball_t {
     struct vector_t PrevPos, NextPos, DirVec;

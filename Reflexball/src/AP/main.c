@@ -62,8 +62,7 @@ void getSerialInput(char* input){
 
 
 #define MMA7660Adress 0x4C << 1
-int main(void)
-    {
+int main(void)    {
 
 	// Input Variables
 
@@ -73,7 +72,7 @@ int main(void)
 
 	// Game data
 	uint8_t level = 1;								// Level counter; Controls game difficulty. Starts at level 1.
-
+    uint8_t PlayerScore = 0;
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
 
@@ -105,7 +104,8 @@ int main(void)
 	//LCDWrite(LCDData, "Hello", 0);
 	//LCDWrite(LCDData, "World!", 1);
 
-    runGame(&level);
+    // Run game and return score.
+    PlayerScore = runGame(&level);
 
 	/*while(1) {
 	    if (clk.change == 1)  { // Timer update 1/100th of a second.
