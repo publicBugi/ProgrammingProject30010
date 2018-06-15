@@ -9,4 +9,4 @@ extern const uint8_t char_width[43];
 
 void InitFlash();
 void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address);
-void ReadFromFlash(uint32_t address, char* text, uint8_t drawX, uint8_t drawY);
+void ReadFromFlash(char* text, uint8_t drawX, uint8_t drawY);

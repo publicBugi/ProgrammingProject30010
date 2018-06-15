@@ -46,7 +46,7 @@ void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address) {
     FLASH_Lock();
 }
 
-void ReadFromFlash(uint32_t address, char* text, uint8_t drawX, uint8_t drawY) {
+void ReadFromFlash(char* text, uint8_t drawX, uint8_t drawY) {
     for (uint8_t i = 0; i < 4; i++) {
         gotoXY(drawX,drawY+i);
         for (uint8_t j = 0; j < strlen(text); j++) {
