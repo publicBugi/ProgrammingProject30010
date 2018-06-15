@@ -14,7 +14,6 @@
 struct ball_t {
     struct vector_t PrevPos, NextPos, DirVec;
     uint16_t DegreeIndex;
-    char BallDirectionUp;
 };
 
 struct pwrUp {

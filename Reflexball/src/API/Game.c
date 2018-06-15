@@ -79,7 +79,7 @@ void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32
     ball->NextPos.y = 0;*/
     //
     ball->DegreeIndex = 320;
-    ball->BallDirectionUp = 1;
+
     initVector(&ball->PrevPos, XPos, YPos);
     // Initialize direction vector.
     //initVector(&ball->DirVec, Vx, Vy);
@@ -90,6 +90,8 @@ void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32
 
 // Update ball next XY-position.
 void updateBall(struct ball_t *ball, uint8_t velMod) {
+    int testx =  ball->NextPos.x >> 14;
+    int testy =  ball->NextPos.y >> 14;
     // Set next positions to next position.
     ball->PrevPos = ball->NextPos;
     // Calculate next x position using direction vector (velMod divedes)
@@ -102,6 +104,8 @@ void updateBall(struct ball_t *ball, uint8_t velMod) {
         ball->NextPos.y = (putStrikerPos - 1) << 14;
 
     }
+       int testx2 =  ball->NextPos.x >> 14;
+    int testy2 =  ball->NextPos.y >> 14;
 }
 
 // Draw ball in the PuTTY terminal.
@@ -241,14 +245,15 @@ uint16_t runGame(uint8_t *level) {
             if (CollisionDectectReturnAddr != 0) {
 
                 // Call return address and return what to do next.
-                WhatNextAfterBallCollision = ((char (*)(void)) CollisionDectectReturnAddr)();
+                WhatNextAfterBallCollision = ((char (*)()) CollisionDectectReturnAddr)(5);
 
                 // If WhatNextAfterBallCollision =
                 // 1: Update ball angle
                 // 2: End game,
                 switch(WhatNextAfterBallCollision) {
                     case 1:
-                        UpdateBallAngle(&ball1);
+                        UpdateBallAngle(&ball1, gameArray);
+
                         break;
                     case 2:
                         gameEnabled = 0;
@@ -256,6 +261,7 @@ uint16_t runGame(uint8_t *level) {
                 }
 
             }
+
 
             // Draw ball in PuTTY console.
             drawBall(&ball1);
@@ -295,7 +301,7 @@ gotoXY(40,40);
   return 1;
 }
 
-char BallHitBrick() {
+char BallHitBrick(int k) {
 gotoXY(40,40);
  printf("Ball will hit the bricks         ");
  return 1;
@@ -350,16 +356,16 @@ gotoXY(40,40);
   return 1;
 }
 
-// Return 1 if ball hit boundary.
-char BallHitBoundary(struct ball_t *ball) {
-    int16_t x = (ball->NextPos.x >> 14);
-
-    if (x == 0 || x == putWidth) {
-        return 1;
-    }
-
-    return 0;
-}
+//// Return 1 if ball hit boundary.
+//char BallHitBoundary(struct ball_t *ball) {
+//    int16_t x = (ball->NextPos.x >> 14);
+//
+//    if (x == 0 || x == putWidth-1) {
+//        return 1;
+//    }
+//
+//    return 0;
+//}
 
 //// Return
 //// 0 is up.
@@ -367,67 +373,185 @@ char BallHitBoundary(struct ball_t *ball) {
 //// 2 is right.
 ////3 is left.
 //char BallDirection(struct ball_t *ball) {
-//    int16_t x = (ball->DirVec.x >> 14);
-//    int16_t y = (ball->DirVec.y >> 14);
+//    int16_t x2 = (ball->DirVec.x >> 14);
+//    int16_t y2 = (ball->DirVec.y >> 14);
 //
-//    // Ball direction is up.
-//    if ((x == -1 && y == -1) || (x == 0 && y == -1) || (x == 1 && y == -1)) {
-//        return 0;
-//    }
-//    // Ball direction is down.
-//    else if ((x == -1 && y == 1) || (x == 0 && y == 1) || (x == 1 && y == 1)) {
-//        return 1;
-//    }
-//    // Ball direction is right.
-//    else if (x == 1 && y == 0) {
-//        return 2;
-//    }
-//    // Ball direction is left.
-//    else if (x == -1 && y == 0) {
+//    int16_t x = ball->DirVec.x;
+//    int16_t y = ball->DirVec.y;
+////    // Ball direction is up.
+////    if ((x  -1 && y == -1) || (x == 0 && y == -1) || (x == 1 && y == -1)) {
+////        return 0;
+////    }
+////    // Ball direction is down.
+////    else if ((x == -1 && y == 1) || (x == 0 && y == 1) || (x == 1 && y == 1)) {
+////        return 1;
+////    }
+////    // Ball direction is right.
+////    else if (x < 0 && y < 0) {
+////        return 2;
+////    }
+////    // Ball direction is left.
+////    else if (x < 0 && y < 0) {
+////        return 3;
+////    }
+//
+//    if (x < 0) {
 //        return 3;
+//
+//    }
+//    else if (x > 0) {
+//        return 2;
+//
 //    }
 //    return -1;
 //}
 
+// gameArray:
+// 0 = Air
+// 1 = Wall
+// 2 = Striker 1
+// 3 = Striker 2
+// 4 = Striker 3
+// 5 = Striker 4
+// 6 = Striker 5
+// 7 >=  = Bricks
+// Return
+// 0: Direction of ball attack is up.
+// 1: Direction of ball attack is down.
+// 2: Direction of ball attack is right.
+// 3: Direction of ball attack is left.
+// 4: Direction of ball attack is corner.
+char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball) {
 
-void UpdateBallAngle(struct ball_t *ball) {
-   //  struct vector_t XY;
-    //int32_t x = ball->DirVec.x >> 14;
-    //int32_t y = (ball->DirVec.y >> 14)* -1;
-    // Angle of attack i
-    // Normal degree 'a' (angle of attack)
-    // a = 360 degree - 90 degree - i (angle of attack)= 270 degree - i
-    // Normal degree 'r' (angle of reflection)
-    // r = 360 degree - 90 degree + a= 270 degree + (270 degree - i) = 2 * 270 degree - i= 540 degree - i = 180 degree - i
-   // uint16_t AngleOfAttack = 384 - ball->DegreeIndex;
-   // int AngleOfReflection = 128 + ball->DegreeIndex;
-    //ball->DirVec.x = 1 << 14;
-  //  ball->DirVec.y = 0 << 14;
+    // Positions. ball->PrevPos is shifted 14 to the left because it is 18.14.
+    uint8_t xPos = ball->PrevPos.x >> 14;
+    uint8_t yPos = ball->PrevPos.y >> 14;
+
+    struct vector_t Top, Bottom;
+    struct vector_t Left, Right;
+    uint8_t GameDataTop, GameDataBottom, GameDataLeft, GameDataRight;
+
+
+    // Top postion.
+    Top.x = xPos;
+    Top.y = yPos - 1 >= 0 ? yPos - 1 : 0;
+
+    // Bottom postion.
+    Bottom.x = xPos;
+    Bottom.y = yPos + 1 < putHeight ? yPos + 1 : putHeight - 1;
+
+     // Left postion.
+    Left.x = xPos - 1 >= 0 ? xPos - 1 : 0;
+    Left.y = yPos;
+
+     // Right postion.
+    Right.x = xPos + 1 < putWidth ? xPos + 1 :0;
+    Right.y = yPos;
+
+
+    // Get game data from array.
+    GameDataTop = gameArray[Top.y][Top.x];
+    GameDataBottom = gameArray[Bottom.y][Bottom.x];
+    GameDataRight = gameArray[Right.y][Right.x];
+    GameDataLeft = gameArray[Left.y][Left.x];
+
+     // TEMPEARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
+    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
+            return 1;
+    }
+
+     // Check for up attack.
+    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop != 0  && GameDataBottom == 0) {
+            return 0;
+    }
+
+    // Check for down attack.
+    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom != 0) {
+            return 1;
+    }
+
+    // Check for right attack.
+    if (GameDataRight != 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
+            return 2;
+    }
+
+    // Check for left attack.
+    if (GameDataRight == 0 && GameDataLeft != 0 && GameDataTop == 0  && GameDataBottom == 0) {
+            return 3;
+    }
+
+    // Ball hit a corner.
+    return 4;
+
+
+
+
+}
+
+
+void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]) {
+    char DirectionOfBallAttack_Var;
+
    // rotateVector(&ball->DirVec, 512 - (ball->DegreeIndex)*2);
   // BallDirection(ball);
 
-    if (BallHitBoundary(ball) == 1) {
-         ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
+    // Get direction of ball attack.
+    DirectionOfBallAttack_Var = DirectionOfBallAttack(gameArray, ball);
+
+    //
+    switch(DirectionOfBallAttack_Var) {
+          // Ball side attack is left or right.
+         case 0 ... 1:
+            ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
+            ball->DirVec.x = getCos(ball->DegreeIndex);
+            ball->DirVec.y = getSin(ball->DegreeIndex);
+            break;
+          // Ball side attack is down or up.
+        case 2 ... 3:
+            ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
+            ball->DirVec.x = getCos(ball->DegreeIndex);
+            ball->DirVec.y = getSin(ball->DegreeIndex);
+            break;
+        // Roate 180 degree.
+        default:
+            ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
+            ball->DirVec.x = getCos(ball->DegreeIndex);
+            ball->DirVec.y = getSin(ball->DegreeIndex);
+
+            ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
+            ball->DirVec.x = getCos(ball->DegreeIndex);
+            ball->DirVec.y = getSin(ball->DegreeIndex);
     }
-    else {
-        ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
-    }
+//    // Ball side attack is left or right.
+//    if (DirectionOfBallAttack_Var == 2 || DirectionOfBallAttack_Var == 3) {
+//         ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
+//           ball->DirVec.x = getCos(ball->DegreeIndex);
+//        ball->DirVec.y = getSin(ball->DegreeIndex);
+//    }
+//    else if (DirectionOfBallAttack_Var == 0 || DirectionOfBallAttack_Var == 1) {
+//        ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
+//        ball->DirVec.x = getCos(ball->DegreeIndex);
+//        ball->DirVec.y = getSin(ball->DegreeIndex);
+//    }
+//
+//    else if (DirectionOfBallAttack_Var == 4) {
+//            ball->DegreeIndex = 256 - (ball->DegreeIndex) & 0x1FF;
+//
+//           ball->DirVec.x = getCos(ball->DegreeIndex);
+//    ball->DirVec.y = getSin(ball->DegreeIndex);
+//
+//                ball->DegreeIndex = 512 - (ball->DegreeIndex) & 0x1FF;
+//          ball->DirVec.x = getCos(ball->DegreeIndex);
+//    ball->DirVec.y = getSin(ball->DegreeIndex);
+//    }
 
 
-    ball->DirVec.x = getCos(ball->DegreeIndex);
-    ball->DirVec.y = getSin(ball->DegreeIndex);
-/*
-    if (ball->BallDirectionUp == 1) {
-        ball->NextPos.y = ((ball->NextPos.y >> 14) + 1) << 14;
-    }
-    else {
-        ball->NextPos.y = ((ball->NextPos.y >> 14) - 1) << 14;
-    }
 
-    ball->BallDirectionUp = ball->BallDirectionUp == 1 ? 0:1;*/
-    //ball->NextPos.y = ((ball->NextPos.y >> 14) + 1) << 14;
-    //ball->DirVec.y = getCos(64);
-  //  Arccos(y2/x2 << 14);
+    // Update next ball position.
+    ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y);
+    ball->NextPos.x = ball->PrevPos.x + (ball->DirVec.x);
+
+
 }
 
 
