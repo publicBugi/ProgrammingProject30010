@@ -356,8 +356,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
                             // Change brick color.
                             drawBox(&brickArray[Brickindex], &brickHeight, &brickWidth);
 
-                            // Change color to default.
-                            fgcolor(15);
+
                         }
 
                         // If hit points is zero kill the brick.
@@ -381,12 +380,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
                             // Stop game.
                             gameEnabled = 0;
 
-                            // Clear screen.
-                            clrscr();
-
-                            gotoXY(40,40);
-
-                            printf("            GAME LEVEL COMPLETE!                 ");
                             return 1;
 
                         }
@@ -408,7 +401,8 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
             updateStriker(gameArray, &striker);
             StrikerTimeCnt = 0;
 	    }
-
+                            // Change color to default.
+                            fgcolor(15);
 
 
 
@@ -481,7 +475,7 @@ char BallOutOfBoundary(){
 gotoXY(40,100);
 
  printf("END GAME!                    ");
-  return 1;
+  return 0;
 }
 
 

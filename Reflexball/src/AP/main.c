@@ -81,7 +81,7 @@ int main(void)    {
 
     initTime(&clk);			// Reset global time.
 
-    initInterrupt();		// Enable Interrupt (1/100 sec Interrupt)
+    initInterrupt();		// void getStrikerPosition(struct striker_t *striker)Enable Interrupt (1/100 sec Interrupt)
 
     initAnalog();			// Enable ADC Potentiometers
 
@@ -115,8 +115,27 @@ int main(void)    {
         ResultsFromGame = runGame(&level, &PlayerScore);
 
         if (ResultsFromGame == 1) {
+
+        // Clear screen.
+        clrscr();
+
+        gotoXY(40,40);
+
+        printf("            GAME LEVEL COMPLETE!                 ");
         // Increase level.
         level++;
+        }
+        else {
+
+            // Clear screen.
+            clrscr();
+
+            gotoXY(40,40);
+
+            printf("            GAME OVER!              ");
+            gotoXY(40,41);
+
+            printf("            Your score is %d               ", PlayerScore);
         }
 
     }
