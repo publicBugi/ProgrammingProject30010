@@ -59,8 +59,9 @@ void getSerialInput(char* input){
     }
 }
 
-#define MMA7660Adress 0x4C << 1
 
+
+#define MMA7660Adress 0x4C << 1
 int main(void)
     {
 
@@ -84,20 +85,9 @@ int main(void)
 
     initAnalog();			// Enable ADC Potentiometers
 
-    I2C_init();
-
+    I2C_init();              // Enable I2C Communication
     I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
-    uint8_t avgTilt = 0;
-    uint8_t IC2_VAL = 0;
-    while(1){
-        gotoXY(0,0);
-        for (uint8_t i = 0; i < 20; i++) {
-                I2C_Read(MMA7660Adress, 0x01, &IC2_VAL, 8);
-                IC2_VAL <<= 2;
-                avgTilt += IC2_VAL;
-        }
-        printf("%04d", (int8_t)IC2_VAL);
-    }
+
 
     //initLCD();			// Enable LCD Screen
 
