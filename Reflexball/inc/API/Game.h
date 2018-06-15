@@ -39,7 +39,7 @@ void updateBall(struct ball_t *ball, uint8_t velMod);
 void drawBall(struct ball_t *ball);
 void updateBallSpeed(struct ball_t *ball, int8_t velMod);
 void updateStriker(char gameArray[putHeight][putWidth], struct striker_t *striker, uint8_t position);
-uint16_t runGame(uint8_t *level);
+uint8_t runGame(uint8_t *level, uint16_t *PlayerScore);
 char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball);
 void BallHitStricker(int k);
 void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth);

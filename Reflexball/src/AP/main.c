@@ -71,8 +71,9 @@ int main(void)    {
 	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
 
 	// Game data
-	uint8_t level = 1;								// Level counter; Controls game difficulty. Starts at level 1.
-    uint8_t PlayerScore = 0;
+	uint8_t level;
+    uint16_t PlayerScore = 0;
+    uint8_t ResultsFromGame = 1;
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
 
@@ -104,8 +105,22 @@ int main(void)    {
 	//LCDWrite(LCDData, "Hello", 0);
 	//LCDWrite(LCDData, "World!", 1);
 
-    // Run game and return score.
-    PlayerScore = runGame(&level);
+    level = 1;// Level counter; Controls game difficulty. Starts at level 1.
+
+    // Run game and return
+    // 0: If player died
+    // 1: If complete level.
+    while (ResultsFromGame == 1) {
+
+        ResultsFromGame = runGame(&level, &PlayerScore);
+
+        if (ResultsFromGame == 1) {
+        // Increase level.
+        level++;
+        }
+
+    }
+
 
 	/*while(1) {
 	    if (clk.change == 1)  { // Timer update 1/100th of a second.
