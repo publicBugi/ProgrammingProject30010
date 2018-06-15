@@ -20,10 +20,10 @@
 #include "GPIO.h"
 #include "LCD.h"
 #include "Menu.h"
+#include "ROM.h"
 //#include "charset.h"
 
 #define ESC 0x1B
-
 
 int binary_conversion(int num)
 {
