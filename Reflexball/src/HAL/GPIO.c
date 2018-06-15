@@ -19,12 +19,55 @@ uint8_t ReadGyro(){
 
 }
 
-void UpdateLCD() {
+void UpdateLCD(int playerHP, struct *striker, int score) {
+  uint8_t tempHP;
+  uint16_t tempScore;
+  strcpy(src,  char score);
+  strcpy(dest, "Score: ");
+  strcat(dest, src);
+
+  printf(dest);
+  if(tempHP != playerHP){
+    tempHP=playerHP;
+    switch (playerHP) {
+      case 3:
+      LCDWrite(&LineData, "         ÇüÇüÇü", 2);
+      break;
+      case 2:
+      LCDWrite(&LineData, "          ÇüÇü ", 2);
+      break;
+      case 1:
+      LCDWrite(&LineData, "           Çü  ", 2);
+      break;
+      case 0:
+      ClearLines();
+      break;
+    }
+  }
+
+  if(tempScore != score){
+    tempScore=score;
+    LCDWrite(&LineData, score, 2)
+  }
+
 
 }
 
-void UpdateRGB() {
-
+void UpdateRGB(int playerHP) {
+  switch(playerHP) {
+    case 3:
+    SetLed(0,1,0);
+    break;
+    case 2:
+    SetLed(1,1,0);
+    break;
+    case 1:
+    SetLed(1,0,0);
+    break;
+    case 0:
+    SetLed(0,0,0);
+    break;
+  }
 }
 
 void BuzzerSound() {
@@ -85,7 +128,7 @@ void initLED() {
     // PA9: Ryder register.
     GPIOA->OSPEEDR &= ~((0x00000003) << (9 * 2));
 
-    // PA9: S�tter hastighed.
+    // PA9: Sætter hastighed.
     GPIOA->OSPEEDR |= ((0x00000002) << (9 * 2));
 
     // PA9: Ryder register..
@@ -97,14 +140,14 @@ void initLED() {
     // PA9: Ryder register.
     GPIOA->MODER &= ~((0x00000003) << (9 * 2));
 
-    // PA9: S�tter til udgang.
+    // PA9: Sætter til udgang.
     GPIOA->MODER |= ((0x00000001) << (9 * 2));
 
 
     // PB4: Ryder register.
     GPIOB->OSPEEDR &= ~((0x00000003) << (4 * 2));
 
-    // PB4: S�tter hastighed.
+    // PB4: Sætter hastighed.
     GPIOB->OSPEEDR |= ((0x00000002) << (4 * 2));
 
     // PB4: Ryder register..
@@ -116,7 +159,7 @@ void initLED() {
     // PB4: Ryder register.
     GPIOB->MODER &= ~((0x00000003) << (4 * 2));
 
-    // PB4: S�tter til udgang.
+    // PB4: Sætter til udgang.
     GPIOB->MODER |= ((0x00000001) << (4 * 2));
 
 
@@ -124,7 +167,7 @@ void initLED() {
     // PC7: Ryder register.
     GPIOC->OSPEEDR &= ~((0x00000003) << (7 * 2));
 
-    // PC7: S�tter hastighed.
+    // PC7: Sætter hastighed.
     GPIOC->OSPEEDR |= ((0x00000002) << (7 * 2));
 
     // PC7: Ryder register..
@@ -136,14 +179,14 @@ void initLED() {
     // PC7: Ryder register.
     GPIOC->MODER &= ~((0x00000003) << (7 * 2));
 
-    // PC7: S�tter til udgang.
+    // PC7: Sætter til udgang.
     GPIOC->MODER |= ((0x00000001) << (7 * 2));
 }
 
 void SetLed(char R, char G, char B) {
 
     if (R == 1) {
-        // R�d-LED
+        // Rød-LED
         GPIOB->ODR  &= ~(0x0001 << 4);
     }
     else {
@@ -151,7 +194,7 @@ void SetLed(char R, char G, char B) {
     }
 
     if (G == 1) {
-        // Gr�n-LED.
+        // Grøn-LED.
         GPIOC->ODR &= ~(0x0001 << 7);
     }
     else {
@@ -160,7 +203,7 @@ void SetLed(char R, char G, char B) {
 
 
     if (B == 1) {
-         // Bl�-LED.
+         // Blå-LED.
         GPIOA->ODR &= ~(0x0001<< 9);
     }
     else {

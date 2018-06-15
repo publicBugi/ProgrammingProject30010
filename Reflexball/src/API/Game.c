@@ -1,4 +1,3 @@
-
 #include "Game.h"
 
 
@@ -402,6 +401,23 @@ gotoXY(40,40);
 //    return -1;
 //}
 
+void CountDown(char *numberArray[]){
+  // Start at 4 to make sure the first second is at least a full second
+  for (int i = 4; i > 0; i--) {
+    uint8_t clkSec = clk->time_sec;
+    while(clkSec == clk->time_sec){}
+    // For the first value of I, print 3
+    if (i==4) {
+      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
+    }
+    // Print the rest of the numbers, every time the time_sec changes
+    else{
+      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
+    }
+  }
+}
+
+
 // gameArray:
 // 0 = Air
 // 1 = Wall
@@ -478,11 +494,8 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
 
     // Ball hit a corner.
     return 4;
-
-
-
-
 }
+
 
 
 void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]) {
