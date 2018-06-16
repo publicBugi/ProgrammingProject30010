@@ -193,9 +193,8 @@ int main(void)   {
                 // Disable joystick selection.
                 EnableSelection = 0;
             }
-init_usb_uart(115200);
-
-        ReadFromASCII("010101", 25, 25);
+        init_usb_uart(115200);
+        ReadFromASCII("FUCK HVOR ER DET SMUKT", 25, 25);
         }
 
 

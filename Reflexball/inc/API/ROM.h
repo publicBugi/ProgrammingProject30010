@@ -1,12 +1,13 @@
 #include "stm32f30x_conf.h"
 #include "ansi.h"
+#include "30010_io.h"
 
 #define ADDRESS 0x0800F800
 #define ASCIICHARARRAY data[36][4][10]
 
 extern const uint32_t char_flash[43];
 extern const uint8_t char_width[43];
-extern const char ASCII_table[43][4][10];
+extern const char ASCII_table[43][4][11];
 
 
 void InitFlash();
