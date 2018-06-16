@@ -6,6 +6,8 @@
 
 extern const uint32_t char_flash[43];
 extern const uint8_t char_width[43];
+extern const char ASCII_table[43][4][10];
+
 
 void InitFlash();
 void WriteToFlash(uint8_t ASCIICHARARRAY, uint32_t address, uint8_t arraySize);

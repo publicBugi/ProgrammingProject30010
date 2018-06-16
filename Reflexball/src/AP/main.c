@@ -193,8 +193,13 @@ int main(void)   {
                 // Disable joystick selection.
                 EnableSelection = 0;
             }
+init_usb_uart(115200);
 
+        ReadFromASCII("010101", 25, 25);
         }
+
+
+
         //PrintOutTextArray(&ASCIIArray[1][0][0],0,10);
 
        // PrintOutTextArray(ASCIIArray[0],0,5,5,9);
