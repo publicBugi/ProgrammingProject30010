@@ -130,6 +130,22 @@ int main(void)   {
         // Selected menu.
         Select(SelectedMenu, 1, ASCIIArray, 1);
 
+
+        // Testing of ROM
+        init_usb_uart(115200);
+        PrintFromASCII("TESTING 123", 0, 25);
+
+        char tempArray[21] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+
+        uint8_t tempVal = *(uint16_t *) (0x0800F800);
+        gotoXY(30,30);
+        printf("%d", tempVal);
+        InitFlash();
+        WriteToFlash(tempArray);
+
+        tempVal = *(uint16_t *) (0x0800F80E);
+        printf("%d", tempVal);
+
         // MAIN LOOP.
         while(1){
 
@@ -193,8 +209,7 @@ int main(void)   {
                 // Disable joystick selection.
                 EnableSelection = 0;
             }
-        init_usb_uart(115200);
-        ReadFromASCII("FUCK HVOR ER DET SMUKT", 25, 25);
+
         }
 
 
