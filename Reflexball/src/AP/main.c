@@ -22,9 +22,12 @@
 #include "vectortrig.h"
 #include "GPIO.h"
 #include "LCD.h"
+#include "Menu.h"
+#include "ROM.h"
 #include "Game.h"
 #include "timer.h"
 #include "i2c.h"
+
 //#include "charset.h"
 #include "buzzer.h"
 
@@ -61,25 +64,72 @@ void getSerialInput(char* input){
 }
 
 
-
 #define MMA7660Adress 0x4C << 1
-int main(void)    {
+
+int main(void)   {
+
+        // ASCII array.
+        char ASCIIARRAYTYPE;
+
+        int JoyInput, SelectedMenu;
+        char EnableSelection = 1;
+        char MenuState = 1;
+  
+  	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
+	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
 
 	// Input Variables
     char str1[7];
-	// Output Variables
-
-	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
-	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
-
-	// Game data
+  	// Game data
 	uint8_t level;
     uint16_t PlayerScore = 0;
     uint8_t ResultsFromGame = 1;
+  
+  
+	// Output Variables
+
+        clrscr();
+        printf("kff");
+        ClearData(ASCIIArray);
+        // Create menu text
+        PrintFromASCII("PLAY",0,0);
+        PrintFromASCII("HIGHSCORE",0,5);
+        PrintFromASCII("HELP",0,10);
+//        CreateMenuText(ASCIIArray, 0, "Play");
+//        CreateMenuText(ASCIIArray, 1, "Score");
+//        CreateMenuText(ASCIIArray, 2, "Help");
+//        CreateMenuText(ASCIIArray, 3, "1 player");
+//        CreateMenuText(ASCIIArray, 4, "2 player");
+
+        // Print main menu.
+        PrintMenu(1,ASCIIArray);
+        SelectedMenu = 1;
+
+        // Selected menu.
+        Select(SelectedMenu, 1, ASCIIArray, 1);
+
+
+        // Testing of ROM
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
+        PrintFromASCII("TESTING 123", 0, 25);
 
-	initGPIO();			   	// Enable GPIO Pins.
+        uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
+
+        uint8_t tempVal = *(uint16_t *) (0x0800F800);
+        gotoXY(30,30);
+        InitFlash();
+        WriteToFlash(tempArray);
+
+        char tempTestArray;
+        tempVal = *(uint16_t*) (0x0800F806);
+
+
+        PrintScore();
+
+
+
+    	initGPIO();			   	// Enable GPIO Pins.
 
     initTime(&clk);			// Reset global time.
 
@@ -92,21 +142,6 @@ int main(void)    {
     initBuzzer();
 
     initLCD();			// Enable LCD Screen
-
-	//initBall(&ball1, 1, 1, 1, 1); // Initialize ball (Which ball, Position, Velocity)
-
-    //char Graph[512]; //Graph = Graph[0]
-    //struct LCDDataLine LineData;
-
-
-//	ClearLineData(LCDData);
-//	//lcd_update(Graph, &LineData);
-//
-//	//ClearLineData(&LineData);
-//	lcd_update(Graph, LCDData);
-
-
-	//LCDWrite(LCDData, "World!", 1);
 
     level = 1;// Level counter; Controls game difficulty. Starts at level 1.
 
@@ -128,19 +163,4 @@ int main(void)    {
         // Increase level.
         level++;
         }
-        else {
-
-            // Clear screen.
-            clrscr();
-
-            gotoXY(40,40);
-
-            printf("            GAME OVER!              ");
-            gotoXY(40,41);
-
-            printf("            Your score is %d               ", PlayerScore);
-        }
-
     }
-    while(1){}
-}

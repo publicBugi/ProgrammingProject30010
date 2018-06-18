@@ -98,6 +98,7 @@
 		<Unit filename="inc\API\Game.h" />
 		<Unit filename="inc\API\lut.h" />
 		<Unit filename="inc\API\Menu.h" />
+		<Unit filename="inc\API\ROM.h" />
 		<Unit filename="inc\API\powerup.h" />
 		<Unit filename="inc\API\stm32f30x.h" />
 		<Unit filename="inc\API\striker.h" />
@@ -228,6 +229,9 @@
 		</Unit>
 		<Unit filename="src\API\Menu.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\API\ROM.c">
+    			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\powerup.c">
 			<Option compilerVar="CC" />
