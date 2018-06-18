@@ -11,51 +11,103 @@ uint8_t readJoystick() {
         return Up + Down + Left + Right + Center;
 }
 
+/*
+
+void UpdateLCD(int playerHP, struct *striker, int score) {
+  uint8_t tempHP;
+  uint16_t tempScore;
+  strcpy(src,  char score);
+  strcpy(dest, "Score: ");
+  strcat(dest, src);
+
+  printf(dest);
+  if(tempHP != playerHP){
+    tempHP=playerHP;
+    switch (playerHP) {
+      case 3:
+      LCDWrite(&LineData, "         ÇüÇüÇü", 2);
+      break;
+      case 2:
+      LCDWrite(&LineData, "          ÇüÇü ", 2);
+      break;
+      case 1:
+      LCDWrite(&LineData, "           Çü  ", 2);
+      break;
+      case 0:
+      ClearLines();
+      break;
+    }
+  }
+
+  if(tempScore != score){
+    tempScore=score;
+    LCDWrite(&LineData, score, 2)
+  }
 
 
-uint8_t ReadGyro(){
-
-
-
-}
-
-void UpdateLCD() {
-
-}
+}*/
 
 void UpdateRGB(int playerHP) {
   switch(playerHP) {
     case 3:
-    SetLed(0,1,0);
+    SetLed(0,1,0); // Green
     break;
     case 2:
-    SetLed(1,1,0);
+    SetLed(1,1,0); // Yellow
     break;
     case 1:
-    SetLed(1,0,0);
+    SetLed(1,0,0); // Red
     break;
     case 0:
-    SetLed(0,0,0);
+    SetLed(0,0,0); // Black
     break;
   }
 }
 
-void BuzzerSound() {
-
-}
-
-void Potentiometer() {
-
-}
-
 
 void initGPIO() {
+    // Aktivere klokken for GPIO port A
+    RCC->AHBENR |= RCC_AHBPeriph_GPIOA;
+      // Aktivere klokken for GPIO port B.
+      //
+      RCC->AHBENR |= RCC_AHBPeriph_GPIOB;
 
+       // Aktivere klokken for GPIO port C.
+      RCC->AHBENR |= RCC_AHBPeriph_GPIOC;
+      initJoystick();
 
     initLED();
 }
 
+void initJoystick() {
 
+
+    // PA4: Ryder register.
+    GPIOA->MODER &= ~((0x00000003) << (4 * 2));
+
+
+    // PA4: Ryder push/pull register.
+    GPIOA->PUPDR &= ~((0x00000003) << (4 * 2));
+
+
+    // PB0 & PB5: Ryder register.
+    GPIOB->MODER &= ~((0x00000C03) << (0 * 2));
+
+
+    // PB0 & PB5: Ryder push/pull register.
+    GPIOB->PUPDR &= ~((0x00000C03) << (0 * 2));
+
+
+
+    // PC0 & PC1: Ryder register.
+    GPIOC->MODER &= ~((0x0000000F) << (0 * 2));
+
+
+    // PC0 & PC1: Ryder push/pull register.
+    GPIOC->PUPDR &= ~((0x0000000F) << (0 * 2));
+
+
+}
 
 void initLED() {
 
@@ -156,12 +208,20 @@ void initAnalog() {
     GPIOA->MODER |= ((0x00000001) << (0 * 2));
 	// PA0: CLear pull reg / Set no pull.
     GPIOA->PUPDR &= ~((0x00000003) << (0 * 2));
+
     // PA1: Clear conf register
     GPIOA->MODER &= ~((0x00000003) << (1 * 2));
     // PA1: Set as regular input.
     GPIOA->MODER |= ((0x00000001) << (1 * 2));
 	// PA1: CLear pull reg / Set no pull.
     GPIOA->PUPDR &= ~((0x00000003) << (1 * 2));
+
+    // PA7: Clear conf register
+    GPIOA->MODER &= ~((0x00000003) << (7 * 2));
+    // PA7: Set as regular input.
+    GPIOA->MODER |= ((0x00000001) << (7 * 2));
+	// PA7: CLear pull reg / Set no pull.
+    GPIOA->PUPDR &= ~((0x00000003) << (7 * 2));
 
     RCC->CFGR2 &= ~RCC_CFGR2_ADCPRE12;
     RCC->CFGR2 |= RCC_CFGR2_ADCPRE12_DIV6;
@@ -172,7 +232,7 @@ void initAnalog() {
     ADC1->SQR1 &= ~ADC_SQR1_L;
 
     ADC1->CR |= 0x10000000;
-	for(int i = 0; i < 1000; i++) {}
+	for(uint16_t i = 0; i < 1000; i++) {}
 
 	ADC1->CR |= 0x80000000;
 	while (!(ADC1->CR & 0x80000000));
@@ -198,8 +258,39 @@ uint16_t readAnalog(char channel) {
 	return analogVal;
 }
 
+uint16_t analogRand() {
+    uint16_t analogVal = 0;
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 1, ADC_SampleTime_1Cycles5);
+    ADC_StartConversion(ADC1);
+    while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
+    analogVal = ADC_GetConversionValue(ADC1);
+    return analogVal;
+}
 
-// printf("%02ld", readAnalog(1));
-// char str[7];
-// sprintf(str, "%02ld", readAnalog(1));
-//
+
+uint8_t readJoystick2() {
+        uint16_t Up = (GPIOA->IDR & (0x0001 << 4)) >> 4;
+        uint16_t Down = (GPIOB->IDR & (0x0001 << 0)) << 1;
+        uint16_t Left = (GPIOC->IDR & (0x0001 << 1)) << 1;
+        uint16_t Right = (GPIOC->IDR & (0x0001 << 0)) << 3;
+        uint16_t Center = (GPIOB->IDR & (0x0001 << 5)) >> 1;
+
+        return Up + Down + Left + Right + Center;
+}
+
+#define MMA7660Adress 0x4C << 1 // I2C Address of MM7660 3-Axis Accelerometer
+// Get ROLL data from Accelerometer
+int32_t readRoll(uint8_t Average, uint8_t Sensitivity) {
+    int32_t avgRoll = 0;
+    int8_t IC2_VAL = 0;
+    // Take the average of AVERAGE measurements.
+    for (uint8_t i = 0; i < Average; i++) {
+        I2C_Read(MMA7660Adress, 0x01, &IC2_VAL, 1);
+        //IC2_VAL &= 0x3F; // Save first 6 Bits; Dont care about Alarm signal.
+        IC2_VAL <<= 2;
+        avgRoll += IC2_VAL;
+    }
+    avgRoll /= Average;
+    avgRoll >>= Sensitivity; // Divide Value.
+    return avgRoll;
+}

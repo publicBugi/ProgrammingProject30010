@@ -1,31 +1,31 @@
-
 #ifndef _GAME_H_
 #define _GAME_H_
 
-struct ball_n {
-    struct vector_t Position, NextPosition, DirectVector;
-};
+#include "30010_io.h"
+#include "vectortrig.h"
+#include "timer.h"
+#include "GPIO.h"
+#include "striker.h"
+#include "ball.h"
+#include "collision.h"
+#include "powerup.h"
+#include "bricks.h"
+#include "buzzer.h"
 
-struct pwrUp {
-    int posX, posY;
-    int alive = 0;
-    int enable = 0;
-};
+#define putHeight 50
+#define putWidth 200
+#define putStrikerPos putHeight - 2
+#define maxBricks 100
 
-struct brick {
-    int posX, posY, MaxHP, pwrUP, CurrentHP ;
-};
 
-void GenerateGameArray();//char gameArray[][][], struct brick BrickArray, struct striker *Striker, int *Level, int *DifficultyTime
-void initBall();//struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy
-void updateBall();//struct ball_t *ball, int32_t k)
-void drawBall(struct ball_t *ball);
+
+
+
+
+uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth);
+
+
+uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LCDData[4][128]);
+
 void CountDown();
-int CollisionDetect();//struct ball_t *ball, struct box_t *box
-void UpdateBallAngle();
-void UpdateBallSpeed();
-void SpawnPowerup();
-void updateStrikerPosition();
-void UpdatePowerup();
-void DrawPowerup();
  #endif

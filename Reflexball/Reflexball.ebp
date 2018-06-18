@@ -91,18 +91,26 @@
 		<Unit filename="cmsis\core_cmInstr.h" />
 		<Unit filename="inc\API\30010_io.h" />
 		<Unit filename="inc\API\ansi.h" />
+		<Unit filename="inc\API\ball.h" />
+		<Unit filename="inc\API\bricks.h" />
 		<Unit filename="inc\API\charset.h" />
+		<Unit filename="inc\API\collision.h" />
 		<Unit filename="inc\API\Game.h" />
 		<Unit filename="inc\API\lut.h" />
 		<Unit filename="inc\API\Menu.h" />
 		<Unit filename="inc\API\ROM.h" />
+		<Unit filename="inc\API\powerup.h" />
 		<Unit filename="inc\API\stm32f30x.h" />
+		<Unit filename="inc\API\striker.h" />
 		<Unit filename="inc\API\vectortrig.h" />
+		<Unit filename="inc\HAL\buzzer.h" />
 		<Unit filename="inc\HAL\GPIO.h" />
 		<Unit filename="inc\HAL\HDInitializering.h" />
+		<Unit filename="inc\HAL\i2c.h" />
 		<Unit filename="inc\HAL\LCD.h" />
 		<Unit filename="inc\HAL\stm32f30x_conf.h" />
 		<Unit filename="inc\HAL\system_stm32f30x.h" />
+		<Unit filename="inc\HAL\timer.h" />
 		<Unit filename="readme.txt" />
 		<Unit filename="SPL\inc\stm32f30x_adc.h" />
 		<Unit filename="SPL\inc\stm32f30x_can.h" />
@@ -201,7 +209,16 @@
 		<Unit filename="src\API\ansi.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\API\ball.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\API\bricks.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\API\charset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\API\collision.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\Game.c">
@@ -214,15 +231,27 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\ROM.c">
+    			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\API\powerup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\API\striker.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\vectortrig.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\buzzer.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\GPIO.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\HDInitializering.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\i2c.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\LCD.c">
