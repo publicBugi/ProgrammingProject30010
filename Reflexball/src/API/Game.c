@@ -160,6 +160,11 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
 	        clk.change = 0;
 	    }
+	    if (powerup.alive) {
+            updatePowerup(&pwrUp);
+            drawPowerup(&pwrUp);
+	    }
+
 	    // Control ball speed.
         if (BallTimeCnt == 4) {
 
@@ -230,6 +235,12 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore) {
 
                             // Print brick counter;
                             PrintBrickCounter(BrickCounter);
+
+                            // Spawn a powerup!
+                            if (brickArray[Brickindex].pwrUP && pwrUp.alive == 0) {
+                                spawnPowerup(&pwrUp, brickArray[Brickindex], &brickHeight, &brickWidth);
+                            }
+
 
                         }
 
