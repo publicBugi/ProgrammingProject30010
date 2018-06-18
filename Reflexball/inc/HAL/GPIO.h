@@ -2,7 +2,7 @@
 #define _GPIO_H
 
 #include "stm32f30x_conf.h"
-
+#include "i2c.h"
 
 void initGPIO();
 void initLED();
@@ -11,4 +11,5 @@ uint8_t readJoystick();
 void initAnalog();
 uint16_t readAnalog(char channel);
 uint16_t analogRand();
+int32_t readRoll(uint8_t Average, uint8_t Sensitivity);
 #endif
