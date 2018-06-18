@@ -12,7 +12,9 @@
 #define putWidth 200
 #define putStrikerPos putHeight - 2
 
+
 char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *ball);
+
 
 void BallHitStricker(int k);
 

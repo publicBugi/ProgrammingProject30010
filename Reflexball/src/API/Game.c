@@ -68,7 +68,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 	uint8_t DifficultyTime;
 
     char WhatNextAfterBallCollision = 0;
-    uint16_t Brickindex;
+
 
     uint16_t BrickCounter;
 
@@ -97,7 +97,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 	// 7-256= Brick in BrickArray.
 
     // Generate map for current level (Used for collision detection). Return numbers of bricks created.
-	BrickCounter = initGameArray(gameArray, brickArray, &striker, level, &DifficultyTime, &brickHeight, &brickWidth);
+	BrickCounter = initGameArray(gameArray, &brickArray, &striker, level, &DifficultyTime, &brickHeight, &brickWidth);
 
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
@@ -131,7 +131,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
         }
 	}
 
-    // Generate stricker.
+    // Generate striker.
     fgcolor(8);
     gotoXY(striker.currpos, putStrikerPos);
 	for (int i = 0; i < striker.strikersize; i++){
@@ -144,16 +144,17 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
     uint16_t BallTimeCnt = 0;
     uint16_t StrikerTimeCnt = 0;
     // Print brick counter;
-    PrintBrickCounter(BrickCounter);
+    PrintBrickCounter(&BrickCounter);
 
     gotoXY(90,80);
     printf("Level %d  ", *level);
+    // Update LCD.
+    sprintf(str1, "Brick counter: %03d", BrickCounter);
+    LCDWrite(LCDData, str1, 1);
+    sprintf(str1, "Score: %03d", *PlayerScore);
+    LCDWrite(LCDData, str1, 2);
+    lcd_update(Graph, LCDData);
 
-        sprintf(str1, "Brick counter: %03d", BrickCounter);
-        LCDWrite(LCDData, str1, 1);
-        sprintf(str1, "Score: %03d", *PlayerScore);
-        LCDWrite(LCDData, str1, 2);
-        lcd_update(Graph, LCDData);
     //// START GAME ////
     uint8_t gameEnabled = 1;
 
@@ -174,22 +175,25 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 	    // Control ball speed.
         if (BallTimeCnt == 4) {
 
-            // Update ball next XY-position.
+            // Calculate and update ball next XY-position.
             updateBall(&ball1, 0);
 
-            // Return the address of the functions that has to be called after CollissionDectect
+            // Return the address of the functions that will be called after CollissionDectect
             CollisionDectectReturnAddr = CollisionDetect(gameArray, &ball1);
 
             // If CollissionDectect has returned a address.
             if (CollisionDectectReturnAddr != 0) {
 
-                // Call return address and return what to do next.
-                WhatNextAfterBallCollision = ((char (*)()) CollisionDectectReturnAddr)();
+                // Call return address and do whats needed. Return what to do next.
+                WhatNextAfterBallCollision = ((uint16_t (*)()) CollisionDectectReturnAddr)(&ball1, gameArray, brickArray, &brickHeight, &brickWidth, &BrickCounter, PlayerScore);
 
-                // If WhatNextAfterBallCollision =
+                //uint16_t BallHitWall(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t *brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore) {
+
+                // If return of WhatNextAfterBallCollision =
                 // 0: Ball out of boundary.
-                // 1: Ball hit stricker or wall.
-                // 2: Bal hit a brick.
+                // 1: Ball hit striker or wall.
+                // 2: Ball hit a brick.
+                // 3: Level completed.
                 switch(WhatNextAfterBallCollision) {
 
                     // Ball out of boundary.
@@ -197,79 +201,35 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         // Stop game.
                         gameEnabled = 0;
 
-                        // Return player died.
+                        // Return to main: Player died.
                         return 0;
 
                         break;
 
-                    // Ball hit stricker or wall.
+                    // Ball hit striker or wall.
                     case 1:
-                        UpdateBallAngle(&ball1, gameArray);
+
                         break;
 
                     // Ball hit brick
                     case 2:
 
-                        // Get brick index.
-                        Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
+                        // Update LCD.
+                        sprintf(str1, "Brick counter: %03d", BrickCounter);
+                        LCDWrite(LCDData, str1, 1);
+                        sprintf(str1, "Score: %03d", *PlayerScore);
+                        LCDWrite(LCDData, str1, 2);
+                        lcd_update(Graph, LCDData);
 
-                        // Calculate and set new ball angle.
-                        UpdateBallAngle(&ball1, gameArray);
-
-                        // Prevent brick hit point of being negative.
-                        if (brickArray[Brickindex].currHP > 0) {
-
-                            // Decrement brick hit points.
-                            brickArray[Brickindex].currHP--;
-
-                            // Change brick color.
-                            drawBox(&brickArray[Brickindex], &brickHeight, &brickWidth);
-
-
-                        }
-
-                        // If hit points is zero kill the brick.
-                        if (brickArray[Brickindex].currHP == 0) {
-                            // Decrement brick counter.
-                            BrickCounter--;
-
-                            // Increase score.
-                            *PlayerScore += brickArray[Brickindex].MaxHP;
-
-                            // Kill brick.
-                            KillBrick(Brickindex, gameArray, &brickArray[Brickindex], &brickHeight, &brickWidth);
-
-                            // Print brick counter;
-                            PrintBrickCounter(BrickCounter);
-
-
-
-                            sprintf(str1, "Brick counter: %03d", BrickCounter);
-                            LCDWrite(LCDData, str1, 1);
-                            sprintf(str1, "Score: %03d", *PlayerScore);
-                            LCDWrite(LCDData, str1, 2);
-                            lcd_update(Graph, LCDData);
-
-                        //    // Spawn a powerup!
-                         //   if (brickArray[Brickindex].pwrUP && pwrUp.alive == 0) {
-                         //       spawnPowerup(&pwrUp, brickArray[Brickindex], &brickHeight, &brickWidth);
-                          //  }
-
-
-
-                        }
-
-                        // If all bricks are killed.
-                        if (BrickCounter == 0) {
-                            // Stop game.
-                            gameEnabled = 0;
-
-                            return 1;
-
-                        }
-
-
+    //    // Spawn a powerup!
+     //   if (brickArray[Brickindex].pwrUP && pwrUp.alive == 0) {
+     //       spawnPowerup(&pwrUp, brickArray[Brickindex], &brickHeight, &brickWidth);
+      //  }
                         break;
+                    // Level completed.
+                    case 3:
+                        // Return to main: Level completed.
+                        return 1;
                 }
 
             }
@@ -285,7 +245,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
            // updateStriker(gameArray, &striker);
             StrikerTimeCnt = 0;
 	    }
-                            // Change color to default.
+                       // Change color to default.
                             fgcolor(15);
 
 

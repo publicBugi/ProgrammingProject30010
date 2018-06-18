@@ -16,9 +16,12 @@ void KillBrick(uint16_t Brickindex, uint8_t gameArray[putHeight][putWidth], stru
 }
 
 // Print brick counter
-void PrintBrickCounter(uint16_t BrickCounter) {
+void PrintBrickCounter(uint16_t *BrickCounter) {
+    uint16_t k = *BrickCounter;
+   // Change color to default.
+    fgcolor(15);
     gotoXY(10,80);
-    printf("Brick counter: %d  ", BrickCounter);
+    printf("Brick counter: %d  ", *BrickCounter);
 }
 
 
