@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "ROM.h"
 
 // Print text fra 2D array.
 void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
@@ -236,37 +237,29 @@ void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state) 
         case 1 :
         switch(selection) {
             case 1:
-                PrintOutTextArray(ASCIIArray[0], menuBlock1X, menuBlock1Y, 5, 9);
+                PrintFromASCII("PLAY",0,0);
                 break;
             case 2:
-               PrintOutTextArray(ASCIIArray[1], menuBlock2X, menuBlock2Y, 5, 9);
+               PrintFromASCII("HIGHSCORE",0,5);
                break;
             case 3:
-               PrintOutTextArray(ASCIIArray[2], menuBlock3X, menuBlock3Y, 5, 9);
+               PrintFromASCII("HELP",0,10);
                break;
         }
         break;
         case 2:
         switch(selection) {
             case 1:
-               PrintOutTextArray(ASCIIArray[3], menuBlock1X, menuBlock1Y, 5, 9);
+               PrintFromASCII("SINGLE PLAYER",0,0);
                break;
             case 2:
-               PrintOutTextArray(ASCIIArray[4], menuBlock2X, menuBlock2Y, 5, 9);
+               PrintFromASCII("PLAYER VS PLAYER",0,5);
                break;
         }
         break;
         case 3:
         switch(selection) {
-            case 1:
-               PrintOutTextArray(ASCIIArray[5], menuBlock1X, menuBlock1Y, 5, 9);
-               break;
-            case 2:
-                PrintOutTextArray(ASCIIArray[6], menuBlock2X, menuBlock2Y, 5, 9);
-                break;
-            case 3:
-                PrintOutTextArray(ASCIIArray[7], menuBlock3X, menuBlock3Y, 5, 9);
-                break;
+            PrintScore();
         }
         break;
         case 4:

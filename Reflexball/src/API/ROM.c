@@ -321,17 +321,39 @@ void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY) {
     gotoXY(0,0);
 }
 
-void WriteToFlash(char SCOREARRAY) {
+void WriteToFlash(uint16_t SCOREARRAY) {
     FLASH_Unlock();
     for (uint8_t i = 0; i < 21; i++) {
         FLASH_ProgramHalfWord(ADDRESS+i*2, data[i]);
     }
     FLASH_Lock();
 }
-char * ReadFromFlash(uint32_t address) {
-    char scoreArray[21];
-    for (uint8_t i = 0; i < 21; i++) {
-        scoreArray[i] = *(uint16_t *)(address+i*2);
+uint16_t ReadFromFlash(uint32_t address) {
+    uint16_t data;
+    data = *(uint16_t *)(address);
+    return data;
+}
+
+void PrintScore() {
+    uint16_t scoreArray[12] = {};
+    for (uint8_t i = 0; i < 12; i++) {
+        scoreArray[i] = ReadFromFlash(ADDRESS+i*2);
     }
-    return scoreArray;
+    char HighscorePlayer1[4] = {scoreArray[0],scoreArray[1],scoreArray[2],0};
+    char HighscoreScore1[5];
+    char HighscorePlayer2[4] = {scoreArray[4],scoreArray[5],scoreArray[6],0};
+    char HighscoreScore2[5];
+    char HighscorePlayer3[4] = {scoreArray[8],scoreArray[9],scoreArray[10],0};
+    char HighscoreScore3[5];
+
+    sprintf(HighscoreScore1,"%04d",scoreArray[3]);
+    sprintf(HighscoreScore2,"%04d",scoreArray[7]);
+    sprintf(HighscoreScore3,"%04d",scoreArray[11]);
+
+    PrintFromASCII(HighscorePlayer1,30,10);
+    PrintFromASCII(HighscoreScore1,60,10);
+    PrintFromASCII(HighscorePlayer2,30,20);
+    PrintFromASCII(HighscoreScore2,60,20);
+    PrintFromASCII(HighscorePlayer3,30,30);
+    PrintFromASCII(HighscoreScore3,60,30);
 }

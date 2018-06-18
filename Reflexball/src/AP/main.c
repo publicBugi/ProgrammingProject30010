@@ -103,6 +103,7 @@ void ClearData(char ASCIIARRAYTYPE) {
 
 
 int main(void)   {
+
         // ASCII array.
         char ASCIIARRAYTYPE;
 
@@ -117,11 +118,14 @@ int main(void)   {
         printf("kff");
         ClearData(ASCIIArray);
         // Create menu text
-        CreateMenuText(ASCIIArray, 0, "Play");
-        CreateMenuText(ASCIIArray, 1, "Score");
-        CreateMenuText(ASCIIArray, 2, "Help");
-        CreateMenuText(ASCIIArray, 3, "1 player");
-        CreateMenuText(ASCIIArray, 4, "2 player");
+        PrintFromASCII("PLAY",0,0);
+        PrintFromASCII("HIGHSCORE",0,5);
+        PrintFromASCII("HELP",0,10);
+//        CreateMenuText(ASCIIArray, 0, "Play");
+//        CreateMenuText(ASCIIArray, 1, "Score");
+//        CreateMenuText(ASCIIArray, 2, "Help");
+//        CreateMenuText(ASCIIArray, 3, "1 player");
+//        CreateMenuText(ASCIIArray, 4, "2 player");
 
         // Print main menu.
         PrintMenu(1,ASCIIArray);
@@ -135,21 +139,26 @@ int main(void)   {
         init_usb_uart(115200);
         PrintFromASCII("TESTING 123", 0, 25);
 
-        char tempArray[21] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+        uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
 
         uint8_t tempVal = *(uint16_t *) (0x0800F800);
         gotoXY(30,30);
-        printf("%d", tempVal);
         InitFlash();
         WriteToFlash(tempArray);
 
-        tempVal = *(uint16_t *) (0x0800F80E);
-        printf("%d", tempVal);
+        char tempTestArray;
+        tempVal = *(uint16_t*) (0x0800F806);
+
+
+        PrintScore();
+
+
 
         // MAIN LOOP.
         while(1){
 
-            // Læs joystik indgange.
+
+            // LÃ¦s joystik indgange.
             JoyInput = readJoystick();
 
             // If joystick up or down.
@@ -365,7 +374,7 @@ int main(void)   {
 */
     /*while (1) {
 
-    // Læs joystik indgange.
+    // Lï¿½s joystik indgange.
     JoyInput = readJoystick();
         if (JoyInput == 4) {
           SetLed(1, 0, 0);
@@ -386,7 +395,7 @@ int main(void)   {
         if (JoyInput == 2) {
           SetLed(0, 0, 0);
         }
-    // Hvis ændring i joystik indgange.
+    // Hvis ï¿½ndring i joystik indgange.
     if (JoyInput != old) {
 
 
