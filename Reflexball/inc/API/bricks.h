@@ -11,5 +11,5 @@ struct brick_t {
 
 void KillBrick(uint16_t Brickindex, uint8_t gameArray[putHeight][putWidth], struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth);
 void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth);
-void PrintBrickCounter(uint16_t BrickCounter);
+void PrintBrickCounter(uint16_t *BrickCounter);
  #endif
