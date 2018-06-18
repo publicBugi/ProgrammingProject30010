@@ -166,6 +166,10 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
 	        clk.change = 0;
 	    }
+	    if (powerup.alive) {
+            updatePowerup(&pwrUp);
+            drawPowerup(&pwrUp);
+	    }
 
 	    // Control ball speed.
         if (BallTimeCnt == 4) {
@@ -238,12 +242,21 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                             // Print brick counter;
                             PrintBrickCounter(BrickCounter);
 
+<<<<<<< HEAD
 
         sprintf(str1, "Brick counter: %03d", BrickCounter);
         LCDWrite(LCDData, str1, 1);
         sprintf(str1, "Score: %03d", *PlayerScore);
         LCDWrite(LCDData, str1, 2);
         lcd_update(Graph, LCDData);
+=======
+                            // Spawn a powerup!
+                            if (brickArray[Brickindex].pwrUP && pwrUp.alive == 0) {
+                                spawnPowerup(&pwrUp, brickArray[Brickindex], &brickHeight, &brickWidth);
+                            }
+
+
+>>>>>>> master
                         }
 
                         // If all bricks are killed.
