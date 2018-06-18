@@ -6,7 +6,7 @@ void updateStriker(uint8_t gameArray[putHeight][putWidth], struct striker_t *str
     striker->prevpos = striker->currpos;
 
 
-    striker->currpos = striker->currpos - readRoll(20, 2);
+    striker->currpos = striker->currpos - readRoll(5, 2);
 
     // Keep striker within bounds
     if (striker->currpos < 1 || striker->currpos > (putWidth - striker->strikersize - 1)) {

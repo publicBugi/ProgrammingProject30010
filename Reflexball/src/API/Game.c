@@ -72,7 +72,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
     uint16_t BrickCounter;
 
-
     uint8_t brickHeight = 6;
     uint8_t brickWidth = 30;
   char str1[128];
@@ -85,6 +84,10 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
     striker.strikerinc = striker.strikersize/5;
 
 
+    uint8_t currentHealth = 3;
+    UpdateRGB(currentHealth);
+
+    initPowerup(&powerup);
 
     // Clear screen.
     clrscr();
@@ -141,10 +144,13 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
     fgcolor(15);
     drawBall(&ball1);
 
-    uint16_t BallTimeCnt = 0;
-    uint16_t StrikerTimeCnt = 0;
+    uint32_t prevPowerStart = 0;
+    uint32_t currTime = clk.time_hseconds, deltaTime = 0, prevTime;
     // Print brick counter;
     PrintBrickCounter(&BrickCounter);
+
+    uint8_t ballDifficultyMod = 5;
+    ballDifficultyMod -= ballDifficultyMod - *level > 0 ? 1 : 0;
 
     gotoXY(90,80);
     printf("Level %d  ", *level);
@@ -156,24 +162,19 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
     lcd_update(Graph, LCDData);
 
     //// START GAME ////
+    drawBall(&ball1);
+    CountDown();
+
     uint8_t gameEnabled = 1;
 
     while (gameEnabled) {
-
-        if (clk.change == 1)  { // Timer update 1/100th of a second.
-	        //LCDTimeCnt++;
-	        BallTimeCnt++;
-	        StrikerTimeCnt++;
-
-	        clk.change = 0;
-	    }
-	   // if (powerup.alive) {
-       //     updatePowerup(&pwrUp);
-        //    drawPowerup(&pwrUp);
-	   // }
-
+        __disable_irq();
+        prevTime = currTime;
+        currTime = clk.time_hseconds;
+        deltaTime = currTime - prevTime;
+        __enable_irq();
 	    // Control ball speed.
-        if (BallTimeCnt == 4) {
+        if ((currTime % ballDifficultyMod) == 0 && currTime != prevTime) {
 
             // Calculate and update ball next XY-position.
             updateBall(&ball1, 0);
@@ -199,15 +200,33 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                     // Ball out of boundary.
                     case 0:
                         // Stop game.
-                        gameEnabled = 0;
+                        if (currentHealth > 1){
+                            currentHealth--;
+                            UpdateRGB(currentHealth);
+                            gotoXY(ball1.PrevPos.x >> 14, ball1.PrevPos.y >> 14);
+                            // Draw space char.
+                            putchar(32);
+                            initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
+                            drawBall(&ball1);
+                            CountDown();
 
-                        // Return to main: Player died.
-                        return 0;
+                        }
+                        else {
+                            currentHealth--;
+                            UpdateRGB(currentHealth);
 
+                            gameEnabled = 0;
+                            // Return player died.
+                            return 0;
+                        }
+                    
                         break;
 
                     // Ball hit striker or wall.
                     case 1:
+
+                        playSound(800, 5);
+                        UpdateBallAngle(&ball1, gameArray);
 
                         break;
 
@@ -220,68 +239,95 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         sprintf(str1, "Score: %03d", *PlayerScore);
                         LCDWrite(LCDData, str1, 2);
                         lcd_update(Graph, LCDData);
+                    
+                        playSound(1200, 5);
+                        // Get brick index.
+                        Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
 
-    //    // Spawn a powerup!
-     //   if (brickArray[Brickindex].pwrUP && pwrUp.alive == 0) {
-     //       spawnPowerup(&pwrUp, brickArray[Brickindex], &brickHeight, &brickWidth);
-      //  }
+                        // Calculate and set new ball angle.
+                        UpdateBallAngle(&ball1, gameArray);
+
+                        // Prevent brick hit point of being negative.
+                        if (brickArray[Brickindex].currHP > 0) {
+
+                            // Decrement brick hit points.
+                            brickArray[Brickindex].currHP--;
+
+                            // Change brick color.
+                            drawBox(&brickArray[Brickindex], &brickHeight, &brickWidth);
+                        }
+
+                        // If hit points is zero kill the brick.
+                        if (brickArray[Brickindex].currHP == 0) {
+                            // Decrement brick counter.
+                            BrickCounter--;
+
+                            // Increase score.
+                            *PlayerScore += brickArray[Brickindex].MaxHP;
+
+                            // Kill brick.
+                            KillBrick(Brickindex, gameArray, &brickArray[Brickindex], &brickHeight, &brickWidth);
+
+                            // Print brick counter;
+                            PrintBrickCounter(BrickCounter);
+
+                            // Spawn a powerup!
+                            if (brickArray[Brickindex].pwrUP == 1 && powerup.alive == 0 && powerup.enable == 0) {
+                                spawnPowerup(&powerup, &brickArray[Brickindex], &brickHeight, &brickWidth);
+                            }
+                        }
+
+                        // If all bricks are killed.
+                        if (BrickCounter == 0) {
+                            // Stop game.
+                            gameEnabled = 0;
+                            return 1;
+                        }
+                    
                         break;
                     // Level completed.
                     case 3:
                         // Return to main: Level completed.
                         return 1;
                 }
-
             }
-
-
             // Draw ball in PuTTY console.
             drawBall(&ball1);
-
             // Reset ball speed.
-            BallTimeCnt = 0;
 	    }
-	    if (StrikerTimeCnt == 2) {
-           // updateStriker(gameArray, &striker);
-            StrikerTimeCnt = 0;
+	    if (currTime % 4 == 0 && currTime != prevTime) {
+            updateStriker(gameArray, &striker);
 	    }
-                       // Change color to default.
-                            fgcolor(15);
 
+        if (currTime - prevPowerStart > 1000 && powerup.enable) {
+            prevPowerStart = 0;
+            powerup.enable = 0;
+            ballDifficultyMod--;
+        }
 
+        if (powerup.alive == 1 && currTime % 10 == 0 && currTime != prevTime) {
 
-
+            updatePowerup(&powerup);
+            if (gameArray[powerup.posY][powerup.posX] > 1 && gameArray[powerup.posY][powerup.posX] < 7 && powerup.enable == 0) {
+                gotoXY(powerup.posX, powerup.posY-1);
+                putchar(32);
+                powerup.enable = 1;
+                ballDifficultyMod++;
+                prevPowerStart = currTime;
+            }
+            if (gameArray[powerup.posY][powerup.posX] == 0 && gameArray[powerup.posY - 1][powerup.posX] == 0) {
+                drawPowerup(&powerup);
+            }
+        }
+        // Change color to default.
+        fgcolor(15);
     }
 }
 
-
-//void CountDown(char *numberArray[]){
-//  // Start at 4 to make sure the first second is at least a full second
-//  for (int i = 4; i > 0; i--) {
-//    uint8_t clkSec = clk->time_sec;
-//    while(clkSec == clk->time_sec){}
-//    // For the first value of I, print 3
-//    if (i==4) {
-//      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
-//    }
-//    // Print the rest of the numbers, every time the time_sec changes
-//    else{
-//      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
-//    }
-//  }
-//}
-//void CountDown(char *numberArray[]){
-//  // Start at 4 to make sure the first second is at least a full second
-//  for (int i = 4; i > 0; i--) {
-//    uint8_t clkSec = clk.time_sec;
-//    while(clkSec == clk.time_sec){}
-//    // For the first value of I, print 3
-//    if (i==4) {
-//      PrintOutTextArray(numberArray[3][][], *countDownX, *countDownY, 5, 8);
-//    }
-//    // Print the rest of the numbers, every time the time_sec changes
-//    else{
-//      PrintOutTextArray(numberArray[i][][], *countDownX, *countDownY, 5, 8);
-//    }
-//  }
-//}
+void CountDown(){
+    for (int i = 3; i > 0; i--) {
+        gotoXY(0,0);
+        printf("%d", i);
+        wait(100);
+    }
+}
