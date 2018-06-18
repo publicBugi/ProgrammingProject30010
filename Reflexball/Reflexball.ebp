@@ -102,6 +102,7 @@
 		<Unit filename="inc\API\stm32f30x.h" />
 		<Unit filename="inc\API\striker.h" />
 		<Unit filename="inc\API\vectortrig.h" />
+		<Unit filename="inc\HAL\buzzer.h" />
 		<Unit filename="inc\HAL\GPIO.h" />
 		<Unit filename="inc\HAL\HDInitializering.h" />
 		<Unit filename="inc\HAL\i2c.h" />
@@ -235,6 +236,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\vectortrig.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\buzzer.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\GPIO.c">

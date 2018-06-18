@@ -13,12 +13,6 @@ uint8_t readJoystick() {
 
 /*
 
-uint8_t ReadGyro(){
-
-
-
-}
-
 void UpdateLCD(int playerHP, struct *striker, int score) {
   uint8_t tempHP;
   uint16_t tempScore;
@@ -51,33 +45,25 @@ void UpdateLCD(int playerHP, struct *striker, int score) {
   }
 
 
-}
+}*/
 
 void UpdateRGB(int playerHP) {
   switch(playerHP) {
     case 3:
-    SetLed(0,1,0);
+    SetLed(0,1,0); // Green
     break;
     case 2:
-    SetLed(1,1,0);
+    SetLed(1,1,0); // Yellow
     break;
     case 1:
-    SetLed(1,0,0);
+    SetLed(1,0,0); // Red
     break;
     case 0:
-    SetLed(0,0,0);
+    SetLed(0,0,0); // Black
     break;
   }
 }
 
-void BuzzerSound() {
-
-}
-
-void Potentiometer() {
-
-}
-*/
 
 void initGPIO() {
     // Aktivere klokken for GPIO port A
@@ -246,7 +232,7 @@ void initAnalog() {
     ADC1->SQR1 &= ~ADC_SQR1_L;
 
     ADC1->CR |= 0x10000000;
-	for(int i = 0; i < 1000; i++) {}
+	for(uint16_t i = 0; i < 1000; i++) {}
 
 	ADC1->CR |= 0x80000000;
 	while (!(ADC1->CR & 0x80000000));
@@ -280,6 +266,7 @@ uint16_t analogRand() {
     analogVal = ADC_GetConversionValue(ADC1);
     return analogVal;
 }
+
 
 uint8_t readJoystick2() {
         uint16_t Up = (GPIOA->IDR & (0x0001 << 4)) >> 4;

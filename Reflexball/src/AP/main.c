@@ -26,6 +26,7 @@
 #include "timer.h"
 #include "i2c.h"
 //#include "charset.h"
+#include "buzzer.h"
 
 #define ESC 0x1B
 
@@ -68,7 +69,7 @@ int main(void)    {
 
 	// Output Variables
 	//char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
-	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
+	//char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
 
 	// Game data
 	uint8_t level;
@@ -87,7 +88,7 @@ int main(void)    {
 
     I2C_init();              // Enable I2C Communication
     I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
-
+    initBuzzer();
 
     //initLCD();			// Enable LCD Screen
 

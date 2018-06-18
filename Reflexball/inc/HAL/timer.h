@@ -1,7 +1,9 @@
-#include "30010_io.h"
 
 #ifndef _TIMER_H_
 #define _TIMER_H_
+
+#include "30010_io.h"
+
 
 struct time {
 	uint32_t time_hseconds;
@@ -13,13 +15,13 @@ struct time {
 
 volatile struct time clk;
 
-void TIM2_IRQHandler(void);
+void TIM15_IRQHandler(void);
 void initTime(volatile struct time *clk);
 void incrementTime(volatile struct time *clk);
-void TIM2_IRQHandler(void);
+void wait(uint32_t delay);
 void initInterrupt();
 
-#endif /* _ANSI_H_ */
+#endif
 
 
 

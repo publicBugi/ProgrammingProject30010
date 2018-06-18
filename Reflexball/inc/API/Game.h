@@ -10,6 +10,7 @@
 #include "collision.h"
 #include "powerup.h"
 #include "bricks.h"
+#include "buzzer.h"
 
 #define putHeight 50
 #define putWidth 200
@@ -26,5 +27,5 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 
 uint8_t runGame(uint8_t *level, uint16_t *PlayerScore);
 
-
+void CountDown();
  #endif
