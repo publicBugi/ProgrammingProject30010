@@ -95,14 +95,9 @@ int main(void)   {
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
 
-        // Score data, we need to do this once
-        uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
-        InitFlash();
-        WriteToFlash(tempArray, 0x0800F800);
 
 
-
-    	initGPIO();			   	// Enable GPIO Pins.
+   	initGPIO();			   	// Enable GPIO Pins.
     initLED();
     initJoystick();
     initTime(&clk);			// Reset global time.
@@ -122,33 +117,6 @@ int main(void)   {
     // Run game and return
     // 0: If player died
     // 1: If complete level.
-    while (1) {
-    PrintScore();
-    wait(500);
-    HighscoreCheck(1235);
-    wait(500);
-    clrscr();
-    PrintScore();
-//    uint16_t testChar[12];
-//    for(uint8_t i = 0; i < 12; i++) {
-//        testChar [i] = ReadFromFlash(0x0800F800+i*2);
-//    }
-//    uint16_t test = ReadFromFlash(0x0800F806);
-//    gotoXY(1,1);
-//    printf("%c",testChar[0]);
-//    printf("%c",testChar[1]);
-//    printf("%c",testChar[2]);
-//    printf("%d",testChar[3]);
-//    printf("%c",testChar[4]);
-//    printf("%c",testChar[5]);
-//    printf("%c",testChar[6]);
-//    printf("%d",testChar[7]);
-//    printf("%c",testChar[8]);
-//    printf("%c",testChar[9]);
-//    printf("%c",testChar[10]);
-//    printf("%d",testChar[11]);
-//    while(readJoystick>20){}
-    }
 
     while (ResultsFromGame == 1) {
 

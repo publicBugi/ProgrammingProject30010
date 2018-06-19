@@ -466,9 +466,26 @@ void HighscoreCheck (uint16_t score) {
 void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score) {
 clrscr();
 uint16_t HighscoreArray[12] = {0};
-for (uint8_t i = 0; i < 12; i++) {
+switch (HighscoreLevel) {
+    case 0:
+    for (uint8_t i = 0; i < 12; i++) {
+    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2-8);
+    }
+    break;
+    case 1:
+    for (uint8_t i = 0; i < 4; i++) {
     HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
+    }
+    for (uint8_t i = 8; i < 12; i++) {
+    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2-8);
+    }
+    break;
+    case 2:
+    for (uint8_t i = 0; i < 8; i++) {
+    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
+    }
 }
+
 uint8_t location = 0;
 for (uint8_t i = HighscoreLevel*4; i < HighscoreLevel*4+3; i++) {
     HighscoreArray[i] = CharSelect(85+10*location,23);
