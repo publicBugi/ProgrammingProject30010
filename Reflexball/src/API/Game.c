@@ -256,7 +256,9 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
                         playSound(1200, 5);
 
+
                         break;
+
                     // Level completed.
                     case 3:
                         // Return to main: Level completed.
