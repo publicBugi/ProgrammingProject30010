@@ -90,43 +90,24 @@ int main(void)   {
 	// Output Variables
 
         clrscr();
-         ClearData(ASCIIArray);
-        // Create menu text
-        PrintFromASCII("PLAY",0,0);
-        PrintFromASCII("HIGHSCORE",0,5);
-        PrintFromASCII("HELP",0,10);
-//        CreateMenuText(ASCIIArray, 0, "Play");
-//        CreateMenuText(ASCIIArray, 1, "Score");
-//        CreateMenuText(ASCIIArray, 2, "Help");
-//        CreateMenuText(ASCIIArray, 3, "1 player");
-//        CreateMenuText(ASCIIArray, 4, "2 player");
+        PrintFromASCII("REFLEXBALL",72,7)
 
         // Print main menu.
         PrintMenu(1,ASCIIArray);
         SelectedMenu = 1;
 
         // Selected menu.
-        Select(SelectedMenu, 1, ASCIIArray, 1);
+        Select(SelectedMenu, 1, 1);
 
 
-        // Testing of ROM
+
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
-        PrintFromASCII("TESTING 123", 0, 25);
 
+        // Score data, we need to do this once
         uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
-
-        uint8_t tempVal = *(uint16_t *) (0x0800F800);
-        gotoXY(30,30);
         InitFlash();
         WriteToFlash(tempArray);
-
-        char tempTestArray;
-        tempVal = *(uint16_t*) (0x0800F806);
-
-
-        PrintScore();
-
 
 
     	initGPIO();			   	// Enable GPIO Pins.

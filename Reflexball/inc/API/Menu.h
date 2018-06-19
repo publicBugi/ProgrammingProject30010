@@ -27,5 +27,5 @@ void UpdateState(int state, int selection);
 void ClearLines(uint8_t LineFrom, uint8_t LineTo);
 char ChangeSelection(char Up, char SelectionIndex, char MaxSelection);
 void CreateMenuText(char ASCIIARRAYTYPE, uint8_t i, char* Text);
-void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state);
+void Select(int  selection,  int  highlight, int state);
  #endif
