@@ -67,8 +67,10 @@ void getSerialInput(char* input){
 
 int main(void)   {
 
-    // ASCII array.
-    char ASCIIARRAYTYPE;
+    initDACNoise();
+
+        // ASCII array.
+        char ASCIIARRAYTYPE;
 
     int JoyInput, SelectedMenu;
     int SelectedMenuBlock;

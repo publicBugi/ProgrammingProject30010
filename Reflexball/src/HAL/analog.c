@@ -40,6 +40,7 @@ void initAnalog() {
 
 	ADC1->CR |= 0x00000001;
 	while(!(ADC1->ISR & 0x00000001));
+
 }
 
 uint16_t readAnalog(char channel) {
@@ -65,4 +66,24 @@ uint16_t analogRand() {
     while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
     analogVal = ADC_GetConversionValue(ADC1);
     return analogVal;
+}
+
+void initDACNoise(){
+
+    RCC->APB1ENR |= RCC_APB1Periph_DAC;
+
+    // ENABLE DAC Noise Generation.
+    DAC->CR &= 0x00000000;
+    DAC->CR |= 0x00000B7D;          // Configure DAC: Mask = 1011 (All bits) ; Wave = Noise (01); Trigger = Software (111); Trigger enabled (1); Buffer disabled (0); DAC Channel Enable (1).
+    DAC->DHR8R1 &= 0x00000000;
+    DAC->DHR8R1 |= 0x000000AB;      // Random Data.
+}
+
+uint16_t DACRand(){
+    uint16_t Random;
+    DAC->SWTRIGR |= 0x00000001;     // Set Software trigger (Generate Random Value)
+
+    while (DAC->SWTRIGR == 1);      // Wait until Trigger flag resets (Hardware Reset)
+
+    return Random = DAC->DOR1;      // Return Random data from DOR1 Register.
 }
