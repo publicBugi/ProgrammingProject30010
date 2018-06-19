@@ -6,5 +6,6 @@
 void initAnalog();
 uint16_t readAnalog(char channel);
 uint16_t analogRand();
-
+void initDACNoise();
+void DACRand();
 #endif
