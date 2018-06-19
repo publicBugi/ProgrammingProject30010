@@ -98,16 +98,20 @@
 		<Unit filename="inc\API\Game.h" />
 		<Unit filename="inc\API\lut.h" />
 		<Unit filename="inc\API\Menu.h" />
-		<Unit filename="inc\API\ROM.h" />
 		<Unit filename="inc\API\powerup.h" />
+		<Unit filename="inc\API\ROM.h" />
 		<Unit filename="inc\API\stm32f30x.h" />
 		<Unit filename="inc\API\striker.h" />
 		<Unit filename="inc\API\vectortrig.h" />
+		<Unit filename="inc\HAL\accel.h" />
+		<Unit filename="inc\HAL\analog.h" />
 		<Unit filename="inc\HAL\buzzer.h" />
 		<Unit filename="inc\HAL\GPIO.h" />
 		<Unit filename="inc\HAL\HDInitializering.h" />
 		<Unit filename="inc\HAL\i2c.h" />
+		<Unit filename="inc\HAL\joystick.h" />
 		<Unit filename="inc\HAL\LCD.h" />
+		<Unit filename="inc\HAL\led.h" />
 		<Unit filename="inc\HAL\stm32f30x_conf.h" />
 		<Unit filename="inc\HAL\system_stm32f30x.h" />
 		<Unit filename="inc\HAL\timer.h" />
@@ -230,16 +234,22 @@
 		<Unit filename="src\API\Menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\API\ROM.c">
-    			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src\API\powerup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\API\ROM.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\striker.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\API\vectortrig.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\accel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\analog.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\buzzer.c">
@@ -254,7 +264,13 @@
 		<Unit filename="src\HAL\i2c.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\HAL\joystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\HAL\LCD.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\led.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\system_stm32f30x.c">

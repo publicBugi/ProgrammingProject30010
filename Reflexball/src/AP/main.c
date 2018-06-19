@@ -27,7 +27,6 @@
 #include "Game.h"
 #include "timer.h"
 #include "i2c.h"
-
 //#include "charset.h"
 #include "buzzer.h"
 
@@ -129,7 +128,8 @@ int main(void)   {
 
 
     	initGPIO();			   	// Enable GPIO Pins.
-
+    initLED();
+    initJoystick();
     initTime(&clk);			// Reset global time.
 
     initInterrupt();		// void getStrikerPosition(struct striker_t *striker)Enable Interrupt (1/100 sec Interrupt)
