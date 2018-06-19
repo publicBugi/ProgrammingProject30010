@@ -1,7 +1,7 @@
 #include "Game.h"
 
 //// GAME LOOP AND INITI ///
-uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
+uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[100], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
 	// Size of Screen
 	const int MaxColI = putWidth;
 	const int MaxRowI = putHeight;
@@ -74,7 +74,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
     uint8_t brickHeight = 6;
     uint8_t brickWidth = 30;
-  char str1[128];
+    char str1[128];
 	// Game Instances
 	struct pwrUp powerup;
 	struct ball_t ball1;							// Ball	(Possibly multiple)
@@ -100,7 +100,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 	// 7-256= Brick in BrickArray.
 
     // Generate map for current level (Used for collision detection). Return numbers of bricks created.
-	BrickCounter = initGameArray(gameArray, &brickArray, &striker, level, &DifficultyTime, &brickHeight, &brickWidth);
+	BrickCounter = initGameArray(gameArray, brickArray, &striker, level, &DifficultyTime, &brickHeight, &brickWidth);
 
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
@@ -154,7 +154,11 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
     gotoXY(90,80);
     printf("Level %d  ", *level);
+
+    char LCDHearts[7] = {0x7F, 0x80, 0x7F, 0x80, 0x7F, 0x80, 0x00};
     // Update LCD.
+    ClearLineData(LCDData);
+    LCDWrite(LCDData, LCDHearts, 0);
     sprintf(str1, "Brick counter: %03d", BrickCounter);
     LCDWrite(LCDData, str1, 1);
     sprintf(str1, "Score: %03d", *PlayerScore);
@@ -186,7 +190,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
             if (CollisionDectectReturnAddr != 0) {
 
                 // Call return address and do whats needed. Return what to do next.
-                WhatNextAfterBallCollision = ((uint16_t (*)()) CollisionDectectReturnAddr)(&ball1, gameArray, brickArray, &brickHeight, &brickWidth, &BrickCounter, PlayerScore);
+                WhatNextAfterBallCollision = ((uint16_t (*)()) CollisionDectectReturnAddr)(&ball1, gameArray, brickArray, &brickHeight, &brickWidth, &BrickCounter, PlayerScore, &powerup);
 
                 //uint16_t BallHitWall(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t *brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore) {
 
@@ -202,6 +206,12 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         // Ball out of Bounds: END or RESTART game.
                         if (currentHealth > 1){
                             currentHealth--;
+                            for (uint8_t i = 3; i > currentHealth; i--){
+                                LCDHearts[2*i - 2] = 0x20;
+                                LCDHearts[2*i - 1] = 0x20;
+                            }
+                            LCDWrite(LCDData, LCDHearts, 0);
+                            lcd_update(Graph, LCDData);
                             UpdateRGB(currentHealth);
                             gotoXY(ball1.PrevPos.x >> 14, ball1.PrevPos.y >> 14);
                             // Draw space char.
@@ -214,7 +224,12 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         else {
                             currentHealth--;
                             UpdateRGB(currentHealth);
-
+                            ClearLineData(LCDData);
+                            LCDWrite(LCDData, "You lose!", 0);
+                            sprintf(str1, "Final score: %03d", *PlayerScore);
+                            LCDWrite(LCDData, str1, 1);
+                            LCDWrite(LCDData, "Insert coin to continue", 2);
+                            lcd_update(Graph, LCDData);
                             gameEnabled = 0;
                             // Return player died.
                             return 0;
@@ -239,19 +254,8 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         LCDWrite(LCDData, str1, 2);
                         lcd_update(Graph, LCDData);
 
-                        //playSound(1200, 5);
+                        playSound(1200, 5);
 
-                        // Get brick index.
-                        uint8_t Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
-
-                        // If hit points is zero kill the brick.
-                        if (brickArray[Brickindex].currHP == 0) {
-
-                            // Spawn a powerup!
-                            if (brickArray[Brickindex].pwrUP == 1 && powerup.alive == 0 && powerup.enable == 0) {
-                                spawnPowerup(&powerup, &brickArray[Brickindex], &brickHeight, &brickWidth);
-                            }
-                        }
 
                         break;
                     // Level completed.
@@ -264,7 +268,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
             drawBall(&ball1);
 
 	    }
-	    if (currTime % 4 == 0 && currTime != prevTime) {
+	    if (currTime % 2 == 0 && currTime != prevTime) {
             updateStriker(gameArray, &striker);
 	    }
 
@@ -297,6 +301,8 @@ void CountDown(){
     for (int i = 3; i > 0; i--) {
         gotoXY(0,0);
         printf("%d", i);
-        wait(100);
+        playSound(600, 5);
+        wait(95);
     }
+    playSound(1200, 5);
 }
