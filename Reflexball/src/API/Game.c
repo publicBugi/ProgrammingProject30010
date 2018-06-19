@@ -225,7 +225,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                     // Ball hit striker or wall.
                     case 1:
 
-                        playSound(800, 5);
+                        //playSound(800, 5);
 
                         break;
 
@@ -239,7 +239,8 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         LCDWrite(LCDData, str1, 2);
                         lcd_update(Graph, LCDData);
 
-                        playSound(1200, 5);
+                        //playSound(1200, 5);
+
                         // Get brick index.
                         uint8_t Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
 
