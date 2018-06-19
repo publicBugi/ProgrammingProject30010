@@ -131,72 +131,25 @@ void PrintTitle(char TITLEASCIIARRAYTYPE) {
 }*/
 
 // Print main menu.
-void PrintMainMenu(char ASCIIARRAYTYPE){
-
-  int x = 0;
-  int y = 0;
-
-
-  // Print text from ASCIIArray.
-  for (int i = 0; i <= 2; i++) {
-
-    // Print text.
-    PrintOutTextArray(ASCIIArray[i],x,y,5,9);
-
-    y += 5;
-
-  }
-
+void PrintMainMenu(){
+    PrintFromASCII("PLAY",75,20);
+    PrintFromASCII("HIGHSCORE",75,30);
+    PrintFromASCII("HELP",75,40);
 }
 
 // Player menu.
 void PrintPlayerMenu(char ASCIIARRAYTYPE){
-  int x = 0;
-  int y = 0;
-
-//  // Print text from ASCIIArray.
-//  for (int i = 3; i <= 4; i++) {
-//
-//    // Print text.
-//   PrintOutTextArray(ASCIIArray[i],x,y, 5, 9);
-//
-//    y += 5;
-//
-//  }
-    // Select menu.
-    Select(1, 1, ASCIIArray, 2);
-
-    // Select menu.
-    Select(2, 0, ASCIIArray, 2);
+    PrintFromASCII("SINLGE PLAYER",75,20);
+    PrintFromASCII("PLAYER VS PLAYER",75,30);
 }
 
 // Score menu.
-void PrintScoreMenu(char ASCIIARRAYTYPE){
-
-  int x = 10;
-  int y = 10;
-
-
-  // Run through ASCIIArray.
-  for (int i = 5; i <= 10; i=i+2) {
-    // Print 'inital' text.
-   // PrintOutTextArray(ASCIIArray[i], x, y);
-
-    x += 20;
-
-    // Print 'score' text.
-   // PrintOutTextArray(ASCIIArray[i+1], x, y);
-
-  }
-
-    y += 20;
-
+void PrintScoreMenu(){
+    PrintScore();
 }
 // Help menu.
-void PrintHelp(char ASCIIARRAYTYPE){
-  printf("HELP YOUR SELF! :)");
-
-
+void PrintHelp(){
+  printf("HELP YOURSELF! :)");
 }
 
 // Clear menu Lines.
@@ -247,54 +200,53 @@ void PrintMenu(int state, char ASCIIARRAYTYPE) {
   switch(state) {
 
     case 1: // Main menu.
-    ClearLines(0,30);
-    PrintMainMenu(ASCIIArray);
+    ClearLines(20,45);
+    PrintMainMenu();
     break;
-
     case 2: // Play menu.
-    ClearLines(20,30);
+    ClearLines(20,45);
     PrintPlayerMenu(ASCIIArray);
     break;
     case 3: // Highscore menu.
-    ClearLines(20,30);
-    PrintScoreMenu(ASCIIArray);
+    ClearLines(20,45);
+    PrintScoreMenu();
     break;
     case 4: // Help.
-    ClearLines(20,30);
-    PrintScoreMenu(ASCIIArray);
+    ClearLines(20,45);
+    PrintHelp();
     break;
   }
 
 }
 
-void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state) {
+void Select(int  selection,  int  highlight, int state) {
     if(highlight == 0){
-    bgcolor(0);
+    fgcolor(1);
     }
     else{
-    bgcolor(1);
+    fgcolor(15);
     }
     switch(state) {
         case 1 :
         switch(selection) {
             case 1:
-                PrintFromASCII("PLAY",0,0);
+                PrintFromASCII("PLAY",75,20);
                 break;
             case 2:
-               PrintFromASCII("HIGHSCORE",0,5);
+               PrintFromASCII("HIGHSCORE",75,30);
                break;
             case 3:
-               PrintFromASCII("HELP",0,10);
+               PrintFromASCII("HELP",75,40);
                break;
         }
         break;
         case 2:
         switch(selection) {
             case 1:
-               PrintFromASCII("SINGLE PLAYER",0,0);
+               PrintFromASCII("SINGLE PLAYER",75,20);
                break;
             case 2:
-               PrintFromASCII("PLAYER VS PLAYER",0,5);
+               PrintFromASCII("PLAYER VS PLAYER",75,30);
                break;
         }
         break;
@@ -304,8 +256,9 @@ void Select(int  selection,  int  highlight,   char  ASCIIARRAYTYPE, int state) 
         }
         break;
         case 4:
-            bgcolor(0);
-            PrintOutTextArray(ASCIIArray[8], menuBlock1X, menuBlock1Y, 5, 9);
+
+            fgcolor(15);
+            printf("HELP YOURSELF! :)");
             break;
         }
 }
