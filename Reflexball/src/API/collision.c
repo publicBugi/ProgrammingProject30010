@@ -119,9 +119,9 @@ uint16_t BallOutOfBoundary(struct ball_t *ball1, uint8_t gameArray[putHeight][pu
 gotoXY(40,100);
 
  printf("END GAME!                    ");
-  UpdateBallAngle(ball1, gameArray, 2);
+ // UpdateBallAngle(ball1, gameArray, 2);
     // Return to runGame: Ball out of boundary.
-    return 1;
+    return 0;
 }
 
 // Detects collision.

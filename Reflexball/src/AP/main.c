@@ -67,40 +67,35 @@ void getSerialInput(char* input){
 
 int main(void)   {
 
-        // ASCII array.
-        char ASCIIARRAYTYPE;
+    // ASCII array.
+    char ASCIIARRAYTYPE;
 
-        int JoyInput, SelectedMenu;
-        char EnableSelection = 1;
-        char MenuState = 1;
+    int JoyInput, SelectedMenu;
+    int SelectedMenuBlock;
+    char EnableSelection = 1;
+    char MenuState = 1;
 
-  	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
-	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
 
-	// Input Variables
-    char str1[7];
-  	// Game data
-	uint8_t level;
-    uint16_t PlayerScore = 0;
-    uint8_t ResultsFromGame = 1;
+
 
 
 	// Output Variables
 
-        clrscr();
-        PrintFromASCII("REFLEXBALL",72,7)
-
-        // Print main menu.
-        PrintMenu(1,ASCIIArray);
-        SelectedMenu = 1;
-
-        // Selected menu.
-        Select(SelectedMenu, 1, 1);
 
 
 
 	// Initialize functions
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
+
+    fgcolor(15);
+    clrscr();
+    PrintFromASCII("REFLEXBALL",68,7);
+
+    // Print main menu.
+    PrintMenu(1, &SelectedMenu);
+
+    SelectedMenu = 1;
+    SelectedMenuBlock = 1;
 
         // Score data, we need to do this once
         uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
@@ -123,25 +118,75 @@ int main(void)   {
 
     initLCD();			// Enable LCD Screen
 
-    level = 1;// Level counter; Controls game difficulty. Starts at level 1.
+
     wait(300);
-    // Run game and return
-    // 0: If player died
-    // 1: If complete level.
-    while (ResultsFromGame == 1) {
 
-        ResultsFromGame = runGame(&level, &PlayerScore, Graph, LCDData);
+         // MAIN LOOP.
+        while(1){
 
-        if (ResultsFromGame == 1) {
+            // Read joystik.
+            JoyInput = readJoystick();
 
-        // Clear screen.
-        clrscr();
+            // If joystick up or down.
+            if (EnableSelection == 1 && (JoyInput == 1 || JoyInput == 2)) {
 
-        gotoXY(40,40);
+              // Up
+              if (JoyInput == 2) {
 
-        printf("            GAME LEVEL COMPLETE!                 ");
-        // Increase level.
-        level++;
+                // Deselect menu block.
+                Select(SelectedMenuBlock,  DESELECT, SelectedMenu);
+
+                // Get next menu block number.
+                SelectedMenuBlock = ReturnNextBlockSelectionNumber(UP, SelectedMenuBlock);
+
+                // Select menu block.
+                Select(SelectedMenuBlock,  SELECT, SelectedMenu);
+
+
+              }
+              // Down
+              else if (JoyInput == 1) {
+
+                // Deselect menu block.
+                Select(SelectedMenuBlock,  DESELECT, SelectedMenu);
+
+                // Get next menu block number.
+                SelectedMenuBlock = ReturnNextBlockSelectionNumber(DOWN, SelectedMenuBlock);
+
+                // Select menu block.
+                Select(SelectedMenuBlock,  SELECT, SelectedMenu);
+
+              }
+
+              // Disable joystick selection.
+              EnableSelection = 0;
+            }
+
+
+            // If joystick is in neutral position.
+            if (JoyInput == 0) {
+                // Enable joystick selection.
+                EnableSelection = 1;
+
+            }
+
+            // If joystick click.
+            if (EnableSelection == 1 && JoyInput == 16) {
+                // Get new menu state.
+                UpdateState(SelectedMenu, SelectedMenuBlock, &SelectedMenu);
+                SelectedMenuBlock = 1;
+
+                // Change background to black.
+                bgcolor(0);
+
+                // Print new menu.
+                PrintMenu(SelectedMenu, &SelectedMenu);
+
+                // Disable joystick selection.
+                EnableSelection = 0;
+            }
+
         }
-    }
+
+
 }
