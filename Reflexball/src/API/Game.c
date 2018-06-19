@@ -190,7 +190,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
             if (CollisionDectectReturnAddr != 0) {
 
                 // Call return address and do whats needed. Return what to do next.
-                WhatNextAfterBallCollision = ((uint16_t (*)()) CollisionDectectReturnAddr)(&ball1, gameArray, brickArray, &brickHeight, &brickWidth, &BrickCounter, PlayerScore);
+                WhatNextAfterBallCollision = ((uint16_t (*)()) CollisionDectectReturnAddr)(&ball1, gameArray, brickArray, &brickHeight, &brickWidth, &BrickCounter, PlayerScore, &powerup);
 
                 //uint16_t BallHitWall(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t *brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore) {
 
@@ -255,17 +255,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         lcd_update(Graph, LCDData);
 
                         playSound(1200, 5);
-                        // Get brick index.
-                        uint8_t Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
-
-                        // If hit points is zero kill the brick.
-                        if (brickArray[Brickindex].currHP == 0) {
-
-                            // Spawn a powerup!
-                            if (brickArray[Brickindex].pwrUP == 1 && powerup.alive == 0 && powerup.enable == 0) {
-                                spawnPowerup(&powerup, &brickArray[Brickindex], &brickHeight, &brickWidth);
-                            }
-                        }
 
                         break;
                     // Level completed.
@@ -311,6 +300,8 @@ void CountDown(){
     for (int i = 3; i > 0; i--) {
         gotoXY(0,0);
         printf("%d", i);
-        wait(100);
+        playSound(600, 5);
+        wait(95);
     }
+    playSound(1200, 5);
 }
