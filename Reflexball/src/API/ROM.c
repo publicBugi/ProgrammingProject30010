@@ -335,6 +335,9 @@ uint16_t ReadFromFlash(uint32_t address) {
 }
 
 void PrintScore() {
+
+
+ fgcolor(15);
     uint16_t scoreArray[12] = {};
     for (uint8_t i = 0; i < 12; i++) {
         scoreArray[i] = ReadFromFlash(ADDRESS+i*2);
@@ -355,5 +358,6 @@ void PrintScore() {
     PrintFromASCII(HighscorePlayer2,60,30);
     PrintFromASCII(HighscoreScore2,90,30);
     PrintFromASCII(HighscorePlayer3,60,40);
-    PrintFromASCII(HighscoreScore3,90,50);
+    PrintFromASCII(HighscoreScore3,90,40);
+    wait(500);
 }

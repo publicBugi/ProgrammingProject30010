@@ -130,23 +130,23 @@ void PrintTitle(char TITLEASCIIARRAYTYPE) {
 
 }*/
 
-// Print main menu.
-void PrintMainMenu(){
-    PrintFromASCII("PLAY",75,20);
-    PrintFromASCII("HIGHSCORE",75,30);
-    PrintFromASCII("HELP",75,40);
-}
-
-// Player menu.
-void PrintPlayerMenu(char ASCIIARRAYTYPE){
-    PrintFromASCII("SINLGE PLAYER",75,20);
-    PrintFromASCII("PLAYER VS PLAYER",75,30);
-}
+//// Print main menu.
+//void PrintMainMenu(){
+//    PrintFromASCII("PLAY",75,20);
+//    PrintFromASCII("HIGHSCORE",75,30);
+//    PrintFromASCII("HELP",75,40);
+//}
+//
+//// Player menu.
+//void PrintPlayerMenu(char ASCIIARRAYTYPE){
+//    PrintFromASCII("SINLGE PLAYER",75,20);
+//    PrintFromASCII("PLAYER VS PLAYER",75,30);
+//}
 
 // Score menu.
-void PrintScoreMenu(){
-    PrintScore();
-}
+//void PrintScoreMenu(){
+//
+//}
 // Help menu.
 void PrintHelp(){
   printf("HELP YOURSELF! :)");
@@ -192,35 +192,159 @@ char ChangeSelection(char Up, char SelectionIndex, char MaxSelection) {
 }
 
 // Print the menu options.
-void PrintMenu(int state, char ASCIIARRAYTYPE) {
+void PrintMenu(int state, int *Newmenu) {
 
-  // ASCIIArray[] = ["Play game", "Highscore", "Help", "1 Player", "2 Player", "Initial 1","Score 1", "Initial 2","Score 2", "Initial 3","Score 3"]
+    // Menu sate.
+    switch(state) {
+
+        case 1: // Main menu.
+            clrscr();
+            fgcolor(15);
+            ClearLines(20,45);
+            GotoMenuState(1);
+            //PrintMainMenu();
+            break;
+        case 2: // Play menu.
+            ClearLines(20,45);
+            GotoMenuState(2);
+
+            break;
+        case 3: // Highscore menu.
+            clrscr();
+             fgcolor(15);
+            PrintFromASCII("REFLEXBALL",68,7);
+            PrintScore();
+            clrscr();
+             *Newmenu = 1;
+            GotoMenuState(1);
+
+            break;
+            case 4: // Help.
+                ClearLines(20,45);
+                PrintHelp();
+            break;
+        // Start game loop.
+        case 5:
+            StartGameLoop(1);
+            // Clear screen.
+            clrscr();
+             *Newmenu = 1;
+            GotoMenuState(1);
+
+        break;
+        case 6:
+            StartGameLoop(2);
+            // Clear screen.
+            clrscr();
+            *Newmenu = 1;
+            GotoMenuState(1);
+        break;
+        }
 
 
-  switch(state) {
+}
 
-    case 1: // Main menu.
-    ClearLines(20,45);
-    PrintMainMenu();
-    break;
-    case 2: // Play menu.
-    ClearLines(20,45);
-    PrintPlayerMenu(ASCIIArray);
-    break;
-    case 3: // Highscore menu.
-    ClearLines(20,45);
-    PrintScoreMenu();
-    break;
-    case 4: // Help.
-    ClearLines(20,45);
-    PrintHelp();
-    break;
-  }
+// Print the menu options.
+void GotoMenuState(int state ) {
+
+    // Menu sate.
+    switch(state) {
+
+         // Main menu.
+        case 1:
+          clrscr();
+          fgcolor(15);
+            PrintFromASCII("REFLEXBALL",68,7);
+
+          // Draw and select menu block 1.
+          Select(1, SELECT, 1);
+
+          // Draw menu block 2.
+          Select(2, DESELECT, 1);
+
+          // Draw menu block 3.
+          Select(3, DESELECT, 1);
+        break;
+
+        // Play menu.
+        case 2:
+          clrscr();
+           fgcolor(15);
+            PrintFromASCII("REFLEXBALL",68,7);
+
+          // Draw and select menu block.
+          Select(1, SELECT, 2);
+
+          // Draw menu block.
+          Select(2, DESELECT, 2);
+
+          // Draw menu block.
+          Select(3, DESELECT, 2);
+        break;
+
+        // Highscore menu.
+        case 3:
+          ClearLines(20,30);
+          //PrintScoreMenu(ASCIIArray);
+        break;
+
+        // Help.
+        case 4:
+          ClearLines(20,30);
+          printf("HELP YOUR SELF! :)");
+        break;
+
+
+    }
+
+}
+
+// Return next menu block selection number.
+char GetNextMenuBlockSelection(bool Up, char SelectionIndex, char MaxSelection) {
+
+    // If count up.
+    if (Up == 1) {
+       SelectionIndex++;
+    }
+    else {
+        SelectionIndex--;
+    }
+    // If max menu selection.
+    if (SelectionIndex > MaxSelection) {
+        SelectionIndex = 1;
+    }
+    else if (SelectionIndex < 1) {
+        SelectionIndex = MaxSelection;
+    }
+
+    return SelectionIndex;
+
+
+}
+
+uint8_t ReturnNextBlockSelectionNumber(uint8_t Up, int8_t CurrentBlockSelectionNumer) {
+
+    if (Up == 1) {
+        CurrentBlockSelectionNumer++;
+    }
+    else {
+        CurrentBlockSelectionNumer--;
+    }
+
+
+    if (CurrentBlockSelectionNumer > 3) {
+        CurrentBlockSelectionNumer = 1;
+    }
+    else if (CurrentBlockSelectionNumer < 1) {
+        CurrentBlockSelectionNumer = 3;
+    }
+
+    return CurrentBlockSelectionNumer;
 
 }
 
 void Select(int  selection,  int  highlight, int state) {
-    if(highlight == 0){
+    if(highlight == 1){
     fgcolor(1);
     }
     else{
@@ -248,6 +372,9 @@ void Select(int  selection,  int  highlight, int state) {
             case 2:
                PrintFromASCII("PLAYER VS PLAYER",75,30);
                break;
+            case 3:
+               PrintFromASCII("RETURN",75,40);
+               break;
         }
         break;
         case 3:
@@ -264,32 +391,47 @@ void Select(int  selection,  int  highlight, int state) {
 }
 
 // Call function in Menu, whenever user press Joystick button.
-void UpdateState(int state, int selection) {
+void UpdateState(int state, int selection, int *Newmenu) {
 	switch(state) {
 		case 1 : // Titlepage
 		switch(selection) {
 			case 1 : // Play
-			state = 2;
+			*Newmenu = 2;
             break;
 			case 2 : // Highscore
-			state = 3;
+			*Newmenu  = 3;
             break;
 			case 3 : // Help
-			state = 4;
+			*Newmenu  = 4;
 			break;
 		}
+		break;
+		// Player menu.
+		case 2 :
+            switch(selection) {
+			case 1 : // 1 player
+			*Newmenu = 5;
+            break;
+			case 2 : // 2 player
+			*Newmenu  = 6;
+            break;
+			case 3 : // Return to main menu.
+			*Newmenu  = 1;
+			break;
+		}
+		break;
 		/*
 		* case 2 :
 		* Next state = Game State?
 		*/
-		case 3 : // Highscore
-		state = 1;
-        break;
-		case 4 : // Help
-		state = 1;
-        break;
+//		case 3 : // Highscore
+//		*ChangeSelection  = 1;
+//        break;
+//		case 4 : // Help
+//		*ChangeSelection  = 1;
+//        break;
 	}
-	selection = 1;
+//	selection = 1;
 }
 
 void PrintEnd(char ASCIIEnd, int titleX, int titleY) {

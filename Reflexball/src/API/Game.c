@@ -33,9 +33,9 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
         for (int r = 0; r < Columns; r++) {
             brickArray[index].posX = center + r*(*brickWidth);
 			brickArray[index].posY = 5 + i*(*brickHeight);
-			brickArray[index].MaxHP = 2*(*Level) + analogRand() % 3;
+			brickArray[index].MaxHP = 2*(*Level) + DACRand() % 3;
 			brickArray[index].currHP = brickArray[index].MaxHP;
-			brickArray[index].pwrUP = analogRand() % 2; // Rand requires stdio.h; Alternative is analogread noise.
+			brickArray[index].pwrUP =  DACRand() % 2; // Rand requires stdio.h; Alternative is analogread noise.
             for (int x = 0; x < (*brickWidth); x++){
                 for(int y = 0; y < (*brickHeight); y++) {
                     gameArray[brickArray[index].posY + y][brickArray[index].posX + x] = index;
@@ -56,6 +56,118 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
         value++;
 	}
 	return index - 7;
+}
+
+// Print end status.
+void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore2) {
+    char str1[19];
+
+    // Clear screen.
+    clrscr();
+    // Write ready text.
+    gotoXY(20,40);
+    fgcolor(15);
+
+    // If two player.
+    if (MaxPlayer == 2) {
+
+       if (PlayerScore1 > PlayerScore2) {
+            //sprintf(str1, "GET READY PLAYER %d", i);
+              PrintFromASCII("PLAYER 1 WINS",60,20);
+        }
+       else if (PlayerScore1 < PlayerScore2) {
+            //sprintf(str1, "GET READY PLAYER %d", i);
+              PrintFromASCII("PLAYER 2 WINS",60,20);
+        }
+       else if (PlayerScore1 == PlayerScore2) {
+            //sprintf(str1, "GET READY PLAYER %d", i);
+              PrintFromASCII("BOTH PLAYERS WIN",60,20);
+        }
+        wait(200);
+    }
+
+}
+
+void StartGameLoop(uint8_t MaxPlayer) {
+  	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
+	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
+
+	// Input Variables
+    char str1[19];
+  	// Game data
+	uint8_t level;
+    uint16_t PlayerScore = 0;
+    uint16_t PlayerScore1 = 0;
+    uint16_t PlayerScore2 = 0;
+    uint8_t ResultsFromGame = 1;
+
+    level = 1;// Level counter; Controls game difficulty. Starts at level 1.
+
+
+
+    // Run game and return
+    // 0: If player died
+    // 1: If complete level.
+    for (int i = 1; i <= MaxPlayer; i++) {
+        // Clear screen.
+        clrscr();
+
+        fgcolor(15);
+
+        // Write ready text.
+        gotoXY(10,40);
+
+        sprintf(str1, "GET READY PLAYER %d", i);
+
+        PrintFromASCII(str1,60,20);
+
+        wait(200);
+
+        // Run game until player die.
+        while (ResultsFromGame == 1) {
+
+            ResultsFromGame = runGame(&level, &PlayerScore, Graph, LCDData);
+
+            // Run game and return
+            // 0: If player died
+            // 1: If complete level.
+            if (ResultsFromGame == 1) {
+
+                // Clear screen.
+                clrscr();
+
+                fgcolor(15);
+
+                // Write ready text.
+                gotoXY(10,40);
+
+                PrintFromASCII("GAME LEVEL COMPLETED.",60,20);
+
+                wait(200);
+
+                // Increase level.
+                level++;
+            }
+
+        }
+
+        // Reset for 2 player (if 2 players).
+        ResultsFromGame = 1;
+
+
+        if (i == 1) {
+                PlayerScore1 = PlayerScore;
+        }
+        else if (i == 2) {
+                PlayerScore2 = PlayerScore;
+        }
+        // Reset score.
+        PlayerScore = 0;
+
+    }
+
+    // Print victory.
+    PrintVictory(MaxPlayer, PlayerScore1, PlayerScore2);
 }
 
 // Run game. Return
