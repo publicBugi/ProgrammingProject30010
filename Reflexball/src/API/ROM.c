@@ -350,10 +350,10 @@ void PrintScore() {
     sprintf(HighscoreScore2,"%04d",scoreArray[7]);
     sprintf(HighscoreScore3,"%04d",scoreArray[11]);
 
-    PrintFromASCII(HighscorePlayer1,30,10);
-    PrintFromASCII(HighscoreScore1,60,10);
-    PrintFromASCII(HighscorePlayer2,30,20);
-    PrintFromASCII(HighscoreScore2,60,20);
-    PrintFromASCII(HighscorePlayer3,30,30);
-    PrintFromASCII(HighscoreScore3,60,30);
+    PrintFromASCII(HighscorePlayer1,60,20);
+    PrintFromASCII(HighscoreScore1,90,20);
+    PrintFromASCII(HighscorePlayer2,60,30);
+    PrintFromASCII(HighscoreScore2,90,30);
+    PrintFromASCII(HighscorePlayer3,60,40);
+    PrintFromASCII(HighscoreScore3,90,50);
 }

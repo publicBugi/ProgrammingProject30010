@@ -293,9 +293,21 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 }
 
 void CountDown(){
-    for (int i = 3; i > 0; i--) {
-        gotoXY(0,0);
-        printf("%d", i);
+    for (uint8_t i = 3; i > 0; i--) {
+			switch (i) {
+				case 3:
+				PrintFromASCII("3",97,40);
+				break;
+				case 2:
+				PrintFromASCII("    ",97,40);
+				PrintFromASCII("2",97,40);
+				break;
+				case 1:
+				PrintFromASCII("    ",97,40);
+				PrintFromASCII("1",97,40);
+				break;
+			}
         wait(100);
     }
+PrintFromASCII("    ",97,40);
 }
