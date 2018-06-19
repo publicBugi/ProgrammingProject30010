@@ -467,17 +467,20 @@ void SubmitHighscore(uint8_t HighscoreLevel) {
 }
 
 char CharSelect() {
+    char valDraw[2]={0,0};
     char switchVal = 0;
     char tempVal = 0;
-    while (readJoystick < 16) {
-        switchVal = readAnalog(1)/163;
-        while (switchVal == tempVal){}
-        tempVal = switchVal;
+    while (readJoystick() < 16) {
+        switchVal = (readAnalog(1)/160);
+        if(switchVal!=tempVal) {
+            tempVal = switchVal;
         }
-        tempVal+=65;
-        PrintFromASCII(tempVal,10,10);
-        tempVal-=65;
-
+        if(valDraw[0]!=tempVal+65) {
+            valDraw[0]=tempVal+65;
+            PrintFromASCII("      ",10,10);
+            PrintFromASCII(valDraw,10,10);
+        }
+    }
     switchVal = tempVal+65;
     return switchVal;
 }

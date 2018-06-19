@@ -122,7 +122,7 @@ int main(void)   {
     // 0: If player died
     // 1: If complete level.
     while (1) {
-    Bosskey();
+    CharSelect();
     while(readJoystick>20){}
     }
 
