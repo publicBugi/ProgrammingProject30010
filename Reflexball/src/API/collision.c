@@ -7,7 +7,7 @@
 uint16_t BallHitWall(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup) {
 
 gotoXY(40,100);
- printf("Ball hit the wall          ");
+ printf("Last ball hit: The wall              ");
   UpdateBallAngle(ball1, gameArray, 1);
 // Return to runGame: Ball hit wall.
   return  1;
@@ -19,7 +19,7 @@ uint16_t BallHitBrick(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidt
 
 
     gotoXY(40,100);
-    printf("Ball will hit the bricks           ");
+    printf("Last ball hit: A brick           ");
 
      // Get brick index.
     uint16_t Brickindex = gameArray[(ball1->NextPos.y) >> 14][(ball1->NextPos.x) >> 14];
@@ -75,7 +75,7 @@ uint16_t BallHitBrick(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidt
 uint16_t BallHitStricker1(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
 
- printf("Ball the striker left end");
+ printf("Last ball hit: Striker left end    ");
  UpdateBallAngle(ball1, gameArray, 2);
  // Return to runGame: Ball hit a striker.
   return 1;
@@ -84,7 +84,7 @@ gotoXY(40,100);
 uint16_t BallHitStricker2(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 3);
- printf("Ball the striker left medium");
+ printf("Last ball hit: Striker left medium  ");
   // Return to runGame: Ball hit a striker.
   return 1;
 }
@@ -92,7 +92,7 @@ gotoXY(40,100);
 uint16_t BallHitStricker3(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 4);
- printf("Ball the striker central");
+ printf("Last ball hit: Striker central     ");
   // Return to runGame: Ball hit a striker.
   return 1;
 }
@@ -100,7 +100,7 @@ gotoXY(40,100);
 uint16_t BallHitStricker4(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 5);
- printf("Ball hit striker right medium");
+ printf("Last ball hit: Striker right medium");
   // Return to runGame: Ball hit a striker.
   return 1;
 }
@@ -108,7 +108,7 @@ gotoXY(40,100);
 uint16_t BallHitStricker5(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 6);
- printf("Ball hit striker right end");
+ printf("Last ball hit: Striker right end   ");
   // Return to runGame: Ball hit a striker.
   return 1;
 }

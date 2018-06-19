@@ -330,7 +330,7 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
 //
 //    }
     gotoXY(150,100);
-    printf("Grader: %d    ", (ball->DegreeIndex*360)/512);
+    printf("Ball angle: %d     ", ((ball->DegreeIndex & 0x1FF)*360)/512);
      gotoXY(40,100);
     // Update next ball position.
     ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y);

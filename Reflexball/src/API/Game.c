@@ -240,7 +240,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                     // Ball hit striker or wall.
                     case 1:
 
-                        //playSound(800, 5);
+                        playSound(800, 5);
 
                         break;
 
@@ -258,6 +258,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
 
                         break;
+
                     // Level completed.
                     case 3:
                         // Return to main: Level completed.
