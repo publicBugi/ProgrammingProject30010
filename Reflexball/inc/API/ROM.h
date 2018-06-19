@@ -23,7 +23,7 @@ uint16_t ReadFromFlash(uint32_t address);
 void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY);
 void PrintScore();
 void Bosskey();
-uint8_t HighscoreCheck (uint16_t score);
+void HighscoreCheck (uint16_t score);
 void SubmitHighscore(uint8_t HighscoreLevel);
 char CharSelect();
 

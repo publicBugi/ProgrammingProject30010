@@ -447,10 +447,10 @@ void Bosskey() {
     bgcolor(0);
 }
 
-uint8_t HighscoreCheck (uint16_t score) {
-    if(score > *(uint16_t *)(0x0800F816)){
-        if (score > *(uint16_t *)(0x0800F80E)) {
-            if (score > *(uint16_t *)(0x0800F806)) {
+void HighscoreCheck (uint16_t score) {
+    if(score >= *(uint16_t *)(0x0800F816)){
+        if (score >= *(uint16_t *)(0x0800F80E)) {
+            if (score >= *(uint16_t *)(0x0800F806)) {
                 SubmitHighscore(1);
                 return 0;
             }
@@ -458,6 +458,7 @@ uint8_t HighscoreCheck (uint16_t score) {
             return 0;
         }
         SubmitHighscore(3);
+        return 0;
     }
     PrintFromASCII("TRY AGAIN",75,23);
 }
