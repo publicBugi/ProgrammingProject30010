@@ -119,8 +119,6 @@ int main(void)   {
     initLCD();			// Enable LCD Screen
 
 
-    wait(300);
-
          // MAIN LOOP.
         while(1){
 
