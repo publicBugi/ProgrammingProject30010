@@ -88,8 +88,6 @@ int main(void)   {
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
 
     fgcolor(15);
-    clrscr();
-    PrintFromASCII("REFLEXBALL",68,7);
 
     // Print main menu.
     PrintMenu(1, &SelectedMenu);

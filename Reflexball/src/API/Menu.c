@@ -130,23 +130,23 @@ void PrintTitle(char TITLEASCIIARRAYTYPE) {
 
 }*/
 
-// Print main menu.
-void PrintMainMenu(){
-    PrintFromASCII("PLAY",75,20);
-    PrintFromASCII("HIGHSCORE",75,30);
-    PrintFromASCII("HELP",75,40);
-}
-
-// Player menu.
-void PrintPlayerMenu(char ASCIIARRAYTYPE){
-    PrintFromASCII("SINLGE PLAYER",75,20);
-    PrintFromASCII("PLAYER VS PLAYER",75,30);
-}
+//// Print main menu.
+//void PrintMainMenu(){
+//    PrintFromASCII("PLAY",75,20);
+//    PrintFromASCII("HIGHSCORE",75,30);
+//    PrintFromASCII("HELP",75,40);
+//}
+//
+//// Player menu.
+//void PrintPlayerMenu(char ASCIIARRAYTYPE){
+//    PrintFromASCII("SINLGE PLAYER",75,20);
+//    PrintFromASCII("PLAYER VS PLAYER",75,30);
+//}
 
 // Score menu.
-void PrintScoreMenu(){
-    PrintScore();
-}
+//void PrintScoreMenu(){
+//
+//}
 // Help menu.
 void PrintHelp(){
   printf("HELP YOURSELF! :)");
@@ -198,6 +198,8 @@ void PrintMenu(int state, int *Newmenu) {
     switch(state) {
 
         case 1: // Main menu.
+            clrscr();
+            fgcolor(15);
             ClearLines(20,45);
             GotoMenuState(1);
             //PrintMainMenu();
@@ -205,19 +207,26 @@ void PrintMenu(int state, int *Newmenu) {
         case 2: // Play menu.
             ClearLines(20,45);
             GotoMenuState(2);
+
             break;
         case 3: // Highscore menu.
-            ClearLines(20,45);
-            PrintScoreMenu();
+            clrscr();
+             fgcolor(15);
+            PrintFromASCII("REFLEXBALL",68,7);
+            PrintScore();
+            clrscr();
+             *Newmenu = 1;
+            GotoMenuState(1);
+
             break;
             case 4: // Help.
-            ClearLines(20,45);
-            PrintHelp();
+                ClearLines(20,45);
+                PrintHelp();
             break;
         // Start game loop.
         case 5:
             StartGameLoop(1);
-                        // Clear screen.
+            // Clear screen.
             clrscr();
              *Newmenu = 1;
             GotoMenuState(1);
@@ -238,13 +247,14 @@ void PrintMenu(int state, int *Newmenu) {
 // Print the menu options.
 void GotoMenuState(int state ) {
 
-
     // Menu sate.
     switch(state) {
 
          // Main menu.
         case 1:
-          ClearLines(20,30);
+          clrscr();
+          fgcolor(15);
+            PrintFromASCII("REFLEXBALL",68,7);
 
           // Draw and select menu block 1.
           Select(1, SELECT, 1);
@@ -258,8 +268,10 @@ void GotoMenuState(int state ) {
 
         // Play menu.
         case 2:
+          clrscr();
+           fgcolor(15);
+            PrintFromASCII("REFLEXBALL",68,7);
 
-          ClearLines(20,30);
           // Draw and select menu block.
           Select(1, SELECT, 2);
 

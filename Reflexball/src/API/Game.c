@@ -58,6 +58,7 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 	return index - 7;
 }
 
+// Print end status.
 void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore2) {
     char str1[19];
 
@@ -66,19 +67,21 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
     // Write ready text.
     gotoXY(20,40);
     fgcolor(15);
+
+    // If two player.
     if (MaxPlayer == 2) {
 
        if (PlayerScore1 > PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
-              PrintFromASCII("PLAYER 1 WINS",75,20);
+              PrintFromASCII("PLAYER 1 WINS",60,20);
         }
        else if (PlayerScore1 < PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
-              PrintFromASCII("PLAYER 2 WINS",75,20);
+              PrintFromASCII("PLAYER 2 WINS",60,20);
         }
-       else if (PlayerScore1 = PlayerScore2) {
+       else if (PlayerScore1 == PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
-              PrintFromASCII("BOTH PLAYERS WINS",75,20);
+              PrintFromASCII("BOTH PLAYERS WIN",60,20);
         }
         wait(200);
     }
@@ -112,11 +115,15 @@ void StartGameLoop(uint8_t MaxPlayer) {
         fgcolor(15);
 
         // Write ready text.
-        gotoXY(20,40);
+        gotoXY(10,40);
+
         sprintf(str1, "GET READY PLAYER %d", i);
-        PrintFromASCII(str1,75,20);
+
+        PrintFromASCII(str1,60,20);
+
         wait(200);
 
+        // Run game until player die.
         while (ResultsFromGame == 1) {
 
             ResultsFromGame = runGame(&level, &PlayerScore, Graph, LCDData);
@@ -129,9 +136,12 @@ void StartGameLoop(uint8_t MaxPlayer) {
                 // Clear screen.
                 clrscr();
 
-                gotoXY(40,40);
+                fgcolor(15);
 
-                PrintFromASCII("GAME LEVEL COMPLETE",75,20);
+                // Write ready text.
+                gotoXY(10,40);
+
+                PrintFromASCII("GAME LEVEL COMPLETED.",60,20);
 
                 wait(200);
 
@@ -141,8 +151,9 @@ void StartGameLoop(uint8_t MaxPlayer) {
 
         }
 
-        // Reset for 2 player (if 2 player.
+        // Reset for 2 player (if 2 players).
         ResultsFromGame = 1;
+
 
         if (i == 1) {
                 PlayerScore1 = PlayerScore;
@@ -150,6 +161,8 @@ void StartGameLoop(uint8_t MaxPlayer) {
         else if (i == 2) {
                 PlayerScore2 = PlayerScore;
         }
+        // Reset score.
+        PlayerScore = 0;
 
     }
 
