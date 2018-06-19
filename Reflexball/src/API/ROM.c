@@ -431,7 +431,7 @@ void PrintScore() {
     PrintFromASCII(HighscorePlayer2,60,30);
     PrintFromASCII(HighscoreScore2,90,30);
     PrintFromASCII(HighscorePlayer3,60,40);
-    PrintFromASCII(HighscoreScore3,90,50);
+    PrintFromASCII(HighscoreScore3,90,40);
 }
 
 void Bosskey() {
@@ -469,8 +469,10 @@ uint16_t HighscoreArray[12] = {0};
 for (uint8_t i = 0; i < 12; i++) {
     HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
 }
+uint8_t location = 0;
 for (uint8_t i = HighscoreLevel*4; i < HighscoreLevel*4+3; i++) {
-    HighscoreArray[i] = CharSelect(i*10,0);
+    HighscoreArray[i] = CharSelect(85+10*location,23);
+    location++;
     wait(30);
 }
 HighscoreArray[HighscoreLevel*4+3] = score;
