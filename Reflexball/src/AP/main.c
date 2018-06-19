@@ -98,7 +98,7 @@ int main(void)   {
         // Score data, we need to do this once
         uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
         InitFlash();
-        WriteToFlash(tempArray);
+        WriteToFlash(tempArray, 0x0800F800);
 
 
     	initGPIO();			   	// Enable GPIO Pins.
@@ -122,7 +122,17 @@ int main(void)   {
     // 0: If player died
     // 1: If complete level.
     while (1) {
-    HighscoreCheck(11);
+    HighscoreCheck(1000);
+    char testChar[3];
+    for(uint8_t i = 0; i < 3; i++) {
+        testChar [i] = ReadFromFlash(0x0800F808+i*2);
+    }
+    uint16_t test = ReadFromFlash(0x0800F80E);
+    gotoXY(1,1);
+    printf("%c",testChar[0]);
+    printf("%c",testChar[1]);
+    printf("%c : ",testChar[2]);
+    printf("%d",test);
     while(readJoystick>20){}
     }
 

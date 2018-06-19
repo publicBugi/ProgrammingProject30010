@@ -18,13 +18,13 @@ extern const char BOSSKEY_BSOD[943];
 
 
 void InitFlash();
-void WriteToFlash(uint16_t SCOREARRAY);
+void WriteToFlash(uint16_t SCOREARRAY, uint32_t address);
 uint16_t ReadFromFlash(uint32_t address);
 void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY);
 void PrintScore();
 void Bosskey();
 void HighscoreCheck (uint16_t score);
-void SubmitHighscore(uint8_t HighscoreLevel);
-char CharSelect();
+void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score);
+char CharSelect(uint8_t xPos, uint8_t yPos);
 
  #endif
