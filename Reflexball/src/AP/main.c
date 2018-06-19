@@ -88,14 +88,7 @@ int main(void)   {
 	// Output Variables
 
         clrscr();
-        PrintFromASCII("REFLEXBALL",72,7)
 
-        // Print main menu.
-        PrintMenu(1,ASCIIArray);
-        SelectedMenu = 1;
-
-        // Selected menu.
-        Select(SelectedMenu, 1, 1);
 
 
 
@@ -124,10 +117,15 @@ int main(void)   {
     initLCD();			// Enable LCD Screen
 
     level = 1;// Level counter; Controls game difficulty. Starts at level 1.
-    wait(300);
+
     // Run game and return
     // 0: If player died
     // 1: If complete level.
+    while (1) {
+    Bosskey();
+    while(readJoystick>20){}
+    }
+
     while (ResultsFromGame == 1) {
 
         ResultsFromGame = runGame(&level, &PlayerScore, Graph, LCDData);
