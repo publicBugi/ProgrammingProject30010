@@ -199,7 +199,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 
                     // Ball out of boundary.
                     case 0:
-                        // Stop game.
+                        // Ball out of Bounds: END or RESTART game.
                         if (currentHealth > 1){
                             currentHealth--;
                             UpdateRGB(currentHealth);
@@ -219,14 +219,13 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                             // Return player died.
                             return 0;
                         }
-                    
+
                         break;
 
                     // Ball hit striker or wall.
                     case 1:
 
                         playSound(800, 5);
-                        UpdateBallAngle(&ball1, gameArray);
 
                         break;
 
@@ -239,37 +238,13 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                         sprintf(str1, "Score: %03d", *PlayerScore);
                         LCDWrite(LCDData, str1, 2);
                         lcd_update(Graph, LCDData);
-                    
+
                         playSound(1200, 5);
                         // Get brick index.
-                        Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
-
-                        // Calculate and set new ball angle.
-                        UpdateBallAngle(&ball1, gameArray);
-
-                        // Prevent brick hit point of being negative.
-                        if (brickArray[Brickindex].currHP > 0) {
-
-                            // Decrement brick hit points.
-                            brickArray[Brickindex].currHP--;
-
-                            // Change brick color.
-                            drawBox(&brickArray[Brickindex], &brickHeight, &brickWidth);
-                        }
+                        uint8_t Brickindex = gameArray[ball1.NextPos.y >> 14][ball1.NextPos.x >> 14];
 
                         // If hit points is zero kill the brick.
                         if (brickArray[Brickindex].currHP == 0) {
-                            // Decrement brick counter.
-                            BrickCounter--;
-
-                            // Increase score.
-                            *PlayerScore += brickArray[Brickindex].MaxHP;
-
-                            // Kill brick.
-                            KillBrick(Brickindex, gameArray, &brickArray[Brickindex], &brickHeight, &brickWidth);
-
-                            // Print brick counter;
-                            PrintBrickCounter(BrickCounter);
 
                             // Spawn a powerup!
                             if (brickArray[Brickindex].pwrUP == 1 && powerup.alive == 0 && powerup.enable == 0) {
@@ -277,13 +252,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                             }
                         }
 
-                        // If all bricks are killed.
-                        if (BrickCounter == 0) {
-                            // Stop game.
-                            gameEnabled = 0;
-                            return 1;
-                        }
-                    
                         break;
                     // Level completed.
                     case 3:
@@ -293,7 +261,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
             }
             // Draw ball in PuTTY console.
             drawBall(&ball1);
-            // Reset ball speed.
+
 	    }
 	    if (currTime % 4 == 0 && currTime != prevTime) {
             updateStriker(gameArray, &striker);

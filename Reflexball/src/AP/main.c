@@ -74,7 +74,7 @@ int main(void)   {
         int JoyInput, SelectedMenu;
         char EnableSelection = 1;
         char MenuState = 1;
-  
+
   	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
 	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
 
@@ -84,13 +84,12 @@ int main(void)   {
 	uint8_t level;
     uint16_t PlayerScore = 0;
     uint8_t ResultsFromGame = 1;
-  
-  
+
+
 	// Output Variables
 
         clrscr();
-        printf("kff");
-        ClearData(ASCIIArray);
+         ClearData(ASCIIArray);
         // Create menu text
         PrintFromASCII("PLAY",0,0);
         PrintFromASCII("HIGHSCORE",0,5);
@@ -144,7 +143,7 @@ int main(void)   {
     initLCD();			// Enable LCD Screen
 
     level = 1;// Level counter; Controls game difficulty. Starts at level 1.
-
+    wait(300);
     // Run game and return
     // 0: If player died
     // 1: If complete level.
@@ -164,3 +163,4 @@ int main(void)   {
         level++;
         }
     }
+}

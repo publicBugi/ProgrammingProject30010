@@ -3,6 +3,7 @@
 #define _MENU_H_
 #include "ansi.h"
 #include "charset.h"
+#include "ROM.h"
 #define ASCIIARRAYTYPE ASCIIArray[12][5][9]
 #define TITLEASCIIARRAYTYPE ASCIITitleArray[9][9]
 #define TEXTARRAYTYPE TextArray[9][9]
@@ -19,6 +20,7 @@
 
 static  const char MenuDataArray[4][2] = {{0,0},{2,3},{1,2},{3,3}};
 void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal);
+void ClearData(char ASCIIARRAYTYPE);
 void PrintMenu(int state, char ASCIIARRAYTYPE);
 void PrintTitle(char TITLEASCIIARRAYTYPE);
 void UpdateState(int state, int selection);

@@ -112,7 +112,7 @@ gotoXY(40,100);
  printf("END GAME!                    ");
   UpdateBallAngle(ball1, gameArray, 2);
     // Return to runGame: Ball out of boundary.
-    return 1;
+    return 0;
 }
 
 // Detects collision.

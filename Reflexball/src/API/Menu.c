@@ -1,29 +1,29 @@
 #include "Menu.h"
-#include "ROM.h"
 
-//// Print text fra 2D array.
-//void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
-//
-//  // Move cursor to (xCor,yCor)
-//  gotoXY(xCor,yCor);
-//
-//  // Run through rows
-//  for (int RowI = 0 ; RowI < RowTotal ; RowI++) {
-//
-//    // Run trough columns.
-//    for (int ColI = 0 ; ColI < ColTotal ; ColI++) {
-//
-//        // Print out text.
-//        printf("%c ", *(TextArray + RowI*ColTotal + ColI));
-//
-//    }
-//
-//    yCor++;
-//
-//    // Go to new row.
-//    gotoXY(xCor, yCor);
-//  }
-//}
+
+// Print text fra 2D array.
+void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
+
+  // Move cursor to (xCor,yCor)
+  gotoXY(xCor,yCor);
+
+  // Run through rows
+  for (int RowI = 0 ; RowI < RowTotal ; RowI++) {
+
+    // Run trough columns.
+    for (int ColI = 0 ; ColI < ColTotal ; ColI++) {
+
+        // Print out text.
+        printf("%c ", *(TextArray + RowI*ColTotal + ColI));
+
+    }
+
+    yCor++;
+
+    // Go to new row.
+    gotoXY(xCor, yCor);
+  }
+}
 //// Print text fra 2D array.
 //void PrintOutTextArray(char *TextArray, uint8_t xCor, uint8_t yCor, uint8_t RowTotal, uint8_t ColTotal) {
 //
@@ -70,6 +70,27 @@
 ////
 ////  }
 //}
+
+
+void ClearData(char ASCIIARRAYTYPE) {
+
+
+
+    for (int i=0; i<12; i++) {
+
+        for (int j=0; j<5; j++) {
+
+            for (int g=0; g<9; g++) {
+
+            ASCIIArray[i][j][g] = ' ';
+
+            }
+
+        }
+
+    }
+
+}
 
 void CreateMenuText(char ASCIIARRAYTYPE, uint8_t i, char* Text) {
 

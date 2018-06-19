@@ -94,9 +94,9 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
     GameDataLeft = gameArray[Left.y][Left.x];
 
      // If no controller TEMPEARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
-    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
-        return 1;
-   }
+//    if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop == 0  && GameDataBottom == 0) {
+//        return 1;
+//   }
 
      // Check for up attack.
     if (GameDataRight == 0 && GameDataLeft == 0 && GameDataTop != 0  && GameDataBottom == 0) {
