@@ -3,7 +3,11 @@
 
 
 
-
+/**
+  * Descripton: This function write type of hit in the PuTTY console and update ball angle.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallHitWall(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup) {
 
 gotoXY(40,100);
@@ -14,6 +18,12 @@ gotoXY(40,100);
 
 }
 
+/**
+  * Descripton: This function updates ball angle, kill a brick if hit points is zero and spawn a powerup.
+  *             If the brick is killed the player score is increased..
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 // Return type of hit.
 uint16_t BallHitBrick(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup) {
 
@@ -72,6 +82,11 @@ uint16_t BallHitBrick(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidt
     return 2;
 }
 
+/**
+  * Descripton: This function write type of hit in the PuTTY console and update ball angle.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallHitStricker1(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
 
@@ -81,6 +96,11 @@ gotoXY(40,100);
   return 1;
 }
 
+/**
+  * Descripton: This function write type of hit in the PuTTY console and update ball angle.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallHitStricker2(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 3);
@@ -89,6 +109,11 @@ gotoXY(40,100);
   return 1;
 }
 
+/**
+  * Descripton: This function write type of hit in the PuTTY console and update ball angle.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallHitStricker3(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 4);
@@ -97,6 +122,11 @@ gotoXY(40,100);
   return 1;
 }
 
+/**
+  * Descripton: This function write type of hit in the PuTTY console and update ball angle.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallHitStricker4(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 5);
@@ -105,6 +135,11 @@ gotoXY(40,100);
   return 1;
 }
 
+/**
+  * Descripton: This function write type of hit in the PuTTY console and update ball angle.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallHitStricker5(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
  UpdateBallAngle(ball1, gameArray, 6);
@@ -114,7 +149,11 @@ gotoXY(40,100);
 }
 
 
-
+/**
+  * Descripton: This function write type of hit in the PuTTY console and end the game.
+  * Argument:  Many
+  * Return value: Type of ball hit.
+  */
 uint16_t BallOutOfBoundary(struct ball_t *ball1, uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[maxBricks], uint8_t *brickHeight, uint8_t *brickWidth, uint16_t *BrickCounter, uint16_t *PlayerScore, struct pwrUp *powerup){
 gotoXY(40,100);
 
@@ -124,6 +163,11 @@ gotoXY(40,100);
     return 0;
 }
 
+/**
+  * Descripton: Detects type of ball collision.
+  * Argument:  gameArray: Game world data, ball: Ball data.
+  * Return value: Address of a function.
+  */
 // Detects collision.
 // gameArray:
 // 0 = Air
@@ -164,5 +208,3 @@ char* CollisionDetect(uint8_t gameArray[putHeight][putWidth], struct ball_t *bal
         return BallHitBrick;
     }
 }
-
-

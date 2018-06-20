@@ -8,7 +8,11 @@ void initLCD(){
 
 
 }
-
+/**
+  * Descripton:T his function inserts Text argument in the LCDData array.
+  * Argument: char LCDData[4][128], char* Text, int Line
+  * Return value: None.
+  */
 void LCDWrite(char LCDData[4][128], char* Text, int Line) {
 
     int Location = 0;
@@ -26,6 +30,11 @@ void LCDWrite(char LCDData[4][128], char* Text, int Line) {
     }
 }
 
+/**
+  * Descripton: This function replace the Graph array with LCDData array. .
+  * Argument: char *Graph, char LCDData[4][128]
+  * Return value: None.
+  */
 void CollectGraph(char *Graph, char LCDData[4][128]){
 
     for (int i=0; i<4; i++) {
@@ -84,6 +93,11 @@ void Shift(char LCDData[4][128], uint8_t Line) {
 //    Graph[0] = LastElement;
 //}
 
+/**
+  * Descripton: This function push the Graph data to LCD buffer.
+  * Argument: char *Graph, char LCDData[4][128].
+  * Return value: None.
+  */
 void lcd_update(char *Graph, char LCDData[4][128]) {
     //Shift(LineData, 0);
     //Shift(LineData, 1);

@@ -29,7 +29,11 @@ void initJoystick() {
 
 
 }
-
+/**
+  * Descripton:  This function reads position of the joystick.
+  * Argument:
+  * Return value:
+  */
 uint8_t readJoystick() {
         uint16_t Up = (GPIOA->IDR & (0x0001 << 4)) >> 4;
         uint16_t Down = (GPIOB->IDR & (0x0001 << 0)) << 1;
@@ -39,4 +43,3 @@ uint8_t readJoystick() {
 
         return Up + Down + Left + Right + Center;
 }
-

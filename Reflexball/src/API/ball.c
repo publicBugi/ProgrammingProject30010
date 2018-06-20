@@ -24,14 +24,9 @@ void updateBall(struct ball_t *ball, uint8_t velMod) {
     ball->PrevPos = ball->NextPos;
     // Calculate next x position using direction vector (velMod divedes)
     ball->NextPos.x = ball->PrevPos.x + (ball->DirVec.x >> velMod);
-    // Calculate next y position using direction vector (velMod divedes)
-   // if ((ball->NextPos.y) >> 14 < putStrikerPos) {
-        ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
-   // }
-    //else {
-    //    ball->NextPos.y = (putStrikerPos - 1) << 14;
+    
+    ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
 
-    //}
 
 }
 
@@ -47,6 +42,20 @@ void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
 	}
 }
 
+
+/**
+  * Descripton: Checks the direction of ball hit. The game world data is compared to current ball position.
+  * Argument:  gameArray: Game world data, *ball: Ball struct.
+  * Return value:
+  *               0: Direction of ball attack is up.
+  *               1: Direction of ball attack is down.
+  *               2: Direction of ball attack }is right.
+  *               3: Direction of ball attack is left.
+  *               4: Direction of ball attack is upper left corner.
+  *               5: Direction of ball attack is upper right corner.
+  *               6: Direction of ball attack is lower left corner.
+  *               7: Direction of ball attack is lower right corner.
+  */
 // gameArray:
 // 0 = Air
 // 1 = Wall
@@ -148,18 +157,30 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
     //return 4;
 }
 
+/**
+  * Descripton: Checks the direction of ball hit. The game world data is compared to current ball position.
+  *             A random fraction angle are added to the reflection angle.
+  * Argument:  Up: Select the up/bottom reflection formula, Factor: Add factor to the new angle,
+  *            DegreeIndex: Current angle
+  * Return value: The reflection angle.
+  */
 int32_t GetDegree(uint8_t Up, int32_t Factor, int16_t DegreeIndex){
     int32_t Rand = (DACRand() % 64)-32;
     // Two formulas for calculating new ball angle.
     if (Up == 1) {
         return (( (128 * ( (3 << 14) + (Factor)) ) - ( (DegreeIndex & 0x1FF) * Factor ) ) >> 14) + Rand;
-       // return ( (128 * ( (1 << 14) + Factor) ) - ( (DegreeIndex & 0x1FF) * Factor ) ) >> 14;
     }
     else {
         return ((Factor * (256 -  (DegreeIndex & 0x1FF) ) )  >> 14) + Rand;
     }
 }
 
+/**
+  * Descripton: This functions checks the reflection angle. If the angle is invalid it return 0.
+  *             The ball is restricted to use two quadrant at the same time.
+  * Argument:  DirectionOfBallAttack: The direction of ball attack, Angles: Current ball angle.
+  * Return value: 1 if angle is ok.
+  */
 // Check new angle depeding on hit ball direction. This function prevents invalid ball angle.
 // Return 1 if angle is ok.
 char CheckAngle(char DirectionOfBallAttack, int32_t Angles) {
@@ -228,7 +249,13 @@ char CheckAngle(char DirectionOfBallAttack, int32_t Angles) {
  return 0;
 
 }
-
+/**
+  * Descripton: This function update the ball angle. First the reflecion angle is calculated.
+  *             If this angle is invalid the reflection angle is calculated ones more.
+  *             If this angle is valid the ball angle will be updated.
+  * Argument:  ball: Ball data, gameArray: Game world data, TypeOfHit: Type of hit.
+  * Return value: None
+  */
 void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth], uint8_t TypeOfHit) {
     char DirectionOfBallAttack_Var;
     //uint16_t DegreeRef[2] = {512, 256};
@@ -330,7 +357,7 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
 //
 //    }
     gotoXY(150,100);
-    printf("Ball angle: %d     ", ((ball->DegreeIndex & 0x1FF)*360)/512);
+    printf("Ball angle: %d degree(s)      ", ((ball->DegreeIndex & 0x1FF)*360)/512);
      gotoXY(40,100);
     // Update next ball position.
     ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y);

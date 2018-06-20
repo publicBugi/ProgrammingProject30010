@@ -65,7 +65,11 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 
 	return index - 7;
 }
-
+/**
+  * Descripton: Determines which player won.
+  * Argument:  MaxPlayer: Number of players, PlayerScore1: Player one score, PlayerScore2: Player two socre
+  * Return value: None.
+  */
 // Print end status.
 void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore2) {
     char str1[19];
@@ -104,9 +108,14 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
         wait(200);
         HighscoreCheck(PlayerScore1);
     }
-
+		// Wait 3 seconds.
+		wait(300);
 }
-
+/**
+  * Descripton: Keeps track of player score and controlles creation of new levels with increasing degree of difficulty.
+  * Argument:  MaxPlayer: Number of players.
+  * Return value: None.
+  */
 void StartGameLoop(uint8_t MaxPlayer) {
   	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
 	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
@@ -188,7 +197,12 @@ void StartGameLoop(uint8_t MaxPlayer) {
     // Print victory.
     PrintVictory(MaxPlayer, PlayerScore1, PlayerScore2);
 }
-
+/**
+  * Descripton: This function is the game kernel. This function calculate ball position, calls collision detection,
+	*							update LCD, generate game world, update powerup.
+  * Argument:  level: Level of game world, PlayerScore: Score of player, Graph[512]: LCD 512 bytes data, LCDData[4][128]: LCD Line array.
+  * Return value: Return 0 (player died) or 1 (player completed level)
+  */
 // Run game. Return
 // 0: If player died
 // 1: If complete level.
