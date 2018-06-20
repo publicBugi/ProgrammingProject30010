@@ -91,9 +91,10 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
             //sprintf(str1, "GET READY PLAYER %d", i);
               PrintFromASCII("BOTH PLAYERS WIN",60,20);
         }
-        wait(300);
-    }
 
+    }
+		// Wait 3 seconds.
+		wait(300);
 }
 /**
   * Descripton: Keeps track of player score and controlles creation of new levels with increasing degree of difficulty.
