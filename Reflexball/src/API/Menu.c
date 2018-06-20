@@ -149,7 +149,8 @@ void PrintTitle(char TITLEASCIIARRAYTYPE) {
 //}
 // Help menu.
 void PrintHelp(){
-  printf("HELP YOURSELF! :)");
+    gotoXY(75,20);
+  printf("To navigate the menu, use the joystick to highlight menu items and press the joystick to select a menu. When in the play menu, select either single player or player vs player. The player vs player mode will start the game first for player 1 where, after player one has lost, player 2 plays his game. After the game the player(s) with the most points win, and if eligible, will be submitted to highscore. Entering the highscore menu will show the current highscores for 5 second and then return to the main menu. ");
 }
 
 // Clear menu Lines.
@@ -212,7 +213,7 @@ void PrintMenu(int state, int *Newmenu) {
         case 3: // Highscore menu.
             clrscr();
              fgcolor(15);
-            PrintFromASCII("REFLEXBALL",68,7);
+            PrintFromASCII("REFLEXBALL",69,7);
             PrintScore();
             clrscr();
              *Newmenu = 1;
@@ -222,10 +223,15 @@ void PrintMenu(int state, int *Newmenu) {
             case 4: // Help.
                 ClearLines(20,45);
                 PrintHelp();
+                wait(500);
+                clrscr();
+                *Newmenu = 1;
+                GotoMenuState(1);
             break;
         // Start game loop.
         case 5:
             StartGameLoop(1);
+
             // Clear screen.
             clrscr();
              *Newmenu = 1;
@@ -234,6 +240,7 @@ void PrintMenu(int state, int *Newmenu) {
         break;
         case 6:
             StartGameLoop(2);
+
             // Clear screen.
             clrscr();
             *Newmenu = 1;
@@ -254,7 +261,7 @@ void GotoMenuState(int state ) {
         case 1:
           clrscr();
           fgcolor(15);
-            PrintFromASCII("REFLEXBALL",68,7);
+            PrintFromASCII("REFLEXBALL",69,7);
 
           // Draw and select menu block 1.
           Select(1, SELECT, 1);
@@ -270,7 +277,7 @@ void GotoMenuState(int state ) {
         case 2:
           clrscr();
            fgcolor(15);
-            PrintFromASCII("REFLEXBALL",68,7);
+            PrintFromASCII("REFLEXBALL",69,7);
 
           // Draw and select menu block.
           Select(1, SELECT, 2);
@@ -354,26 +361,26 @@ void Select(int  selection,  int  highlight, int state) {
         case 1 :
         switch(selection) {
             case 1:
-                PrintFromASCII("PLAY",75,20);
+                PrintFromASCII("PLAY",86,20);
                 break;
             case 2:
-               PrintFromASCII("HIGHSCORE",75,30);
+               PrintFromASCII("HIGHSCORE",72,30);
                break;
             case 3:
-               PrintFromASCII("HELP",75,40);
+               PrintFromASCII("HELP",88,40);
                break;
         }
         break;
         case 2:
         switch(selection) {
             case 1:
-               PrintFromASCII("SINGLE PLAYER",75,20);
+               PrintFromASCII("SINGLE PLAYER",62,20);
                break;
             case 2:
-               PrintFromASCII("PLAYER VS PLAYER",75,30);
+               PrintFromASCII("PLAYER VS PLAYER",53,30);
                break;
             case 3:
-               PrintFromASCII("RETURN",75,40);
+               PrintFromASCII("RETURN",81,40);
                break;
         }
         break;

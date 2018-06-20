@@ -1,4 +1,4 @@
-cscope 15 M:\GitHub\ProgrammingProject30010\Reflexball"               0000931243
+cscope 15 M:\GitHub\ProgrammingProject30010\Reflexball"               0000949591
 	@M:\GitHub\ProgrammingProject30010\Reflexball\SPL\inc\stm32f30x_adc.h
 
 30 #i‚de‡
@@ -100349,19 +100349,23 @@ _GAME_H_
 	~"bricks.h
 "
 
-14 
+13 
+	~"buzzî.h
+"
+
+15 
 	#putHeight
  50
 
 	)
 
-15 
+16 
 	#putWidth
  200
 
 	)
 
-16 
+17 
 	#putSåikîPos
  
 putHeight
@@ -100369,13 +100373,13 @@ putHeight
 
 	)
 
-17 
+18 
 	#maxBricks
  100
 
 	)
 
-24 
+25 
 uöt8_t
  
 öôGameAºay
@@ -100389,7 +100393,7 @@ putWidth
 brick_t
  
 brickAºay
-[], 
+[100], 
 °rikî_t
  *
 Såikî
@@ -100403,7 +100407,15 @@ brickHeight
 brickWidth
 );
 
-27 
+27 
+SèπGameLo›
+(
+uöt8_t
+ 
+MaxPœyî
+);
+
+28 
 uöt8_t
  
 runGame
@@ -100413,9 +100425,35 @@ runGame
 uöt16_t
  *
 PœyîSc‹e
-);
+, 
+Gøph
+[512] , 
+LCDD©a
+[4][128]);
 
 29 
+døwGame
+(
+brick_t
+ 
+brickAºay
+[], 
+uöt8_t
+ *
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+°rikî_t
+ *
+°rikî
+, 
+bÆl_t
+ *
+bÆl
+);
+
+30 
 Cou¡Down
 ();
 
@@ -100439,7 +100477,11 @@ _MENU_H_
 	~"ch¨£t.h
 "
 
-6 
+6 
+	~"ROM.h
+"
+
+7 
 	#ASCIIARRAYTYPE
  
 ASCIIAºay
@@ -100447,7 +100489,7 @@ ASCIIAºay
 
 	)
 
-7 
+8 
 	#TITLEASCIIARRAYTYPE
  
 ASCIITôÀAºay
@@ -100455,7 +100497,7 @@ ASCIITôÀAºay
 
 	)
 
-8 
+9 
 	#TEXTARRAYTYPE
  
 TextAºay
@@ -100463,20 +100505,14 @@ TextAºay
 
 	)
 
-10 
-	#míuBlock1X
- 0
-
-	)
-
 11 
-	#míuBlock1Y
+	#míuBlockX
  0
 
 	)
 
 12 
-	#míuBlock2X
+	#míuBlock1Y
  0
 
 	)
@@ -100488,22 +100524,72 @@ TextAºay
 	)
 
 14 
-	#míuBlock3X
- 0
-
-	)
-
-15 
 	#míuBlock3Y
  10
 
 	)
 
-20 c⁄° 
+16 
+	tboﬁ
+;
+
+17 
+	#åue
+ 1
+
+	)
+
+18 
+	#Ál£
+ 0
+
+	)
+
+20 
+	#SELECT
+ 1
+
+	)
+
+21 
+	#DESELECT
+ 0
+
+	)
+
+23 
+	#UP
+ 1
+
+	)
+
+24 
+	#DOWN
+ 0
+
+	)
+
+26 
+	#ASCIIARRAYTYPE
+ 
+ASCIIAºay
+[12][5][9]
+
+	)
+
+27 
+	#TITLEASCIIARRAYTYPE
+ 
+ASCIITôÀAºay
+[9][9]
+
+	)
+
+34 c⁄° 
 	gMíuD©aAºay
 [4][2] = {{0,0},{2,3},{1,2},{3,3}};
 
-21 
+36 
 PrötOutTextAºay
 (*
 TextAºay
@@ -100519,29 +100605,27 @@ RowTŸÆ
 CﬁTŸÆ
 );
 
-22 
-PrötMíu
-(
-°©e
-, 
+37 
+CÀ¨D©a
+(
 ASCIIARRAYTYPE
 );
 
-23 
+38 
+PrötMíu
+(
+°©e
+, *
+Newmíu
+);
+
+39 
 PrötTôÀ
 (
 TITLEASCIIARRAYTYPE
 );
 
-24 
-Upd©eSèã
-(
-°©e
-, 
-£À˘i⁄
-);
-
-25 
+40 
 CÀ¨Löes
 (
 uöt8_t
@@ -100551,7 +100635,7 @@ LöeFrom
 LöeTo
 );
 
-26 
+41 
 Ch™geSñe˘i⁄
 (
 Up
@@ -100561,7 +100645,7 @@ Sñe˘i⁄Index
 MaxSñe˘i⁄
 );
 
-27 
+42 
 Cª©eMíuText
 (
 ASCIIARRAYTYPE
@@ -100573,17 +100657,193 @@ i
 Text
 );
 
-28 
+43 
 Sñe˘
 (
 £À˘i⁄
 , 
 highlight
-, 
-ASCIIARRAYTYPE
 , 
 °©e
 );
+
+44 
+GëNextMíuBlockSñe˘i⁄
+(
+boﬁ
+ 
+Up
+, 
+Sñe˘i⁄Index
+, 
+MaxSñe˘i⁄
+);
+
+45 
+GŸoMíuSèã
+(
+°©e
+);
+
+46 
+Upd©eSèã
+(
+°©e
+, 
+£À˘i⁄
+, *
+Ch™geSñe˘i⁄
+);
+
+47 
+uöt8_t
+ 
+Rëu∫NextBlockSñe˘i⁄Numbî
+(uöt8_à
+Up
+, 
+öt8_t
+ 
+CuºítBlockSñe˘i⁄Numî
+);
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\ROM.h
+
+2 #i‚de‡
+_ROM_H_
+
+
+3 
+	#_ROM_H_
+
+
+	)
+
+6 
+	~"°m32f30x_c⁄f.h
+"
+
+7 
+	~"™si.h
+"
+
+8 
+	~"30010_io.h
+"
+
+9 
+	~"míu.h
+"
+
+10 
+	~"joy°ick.h
+"
+
+11 
+	~"™Æog.h
+"
+
+13 
+	#ADDRESS
+ 0x0800F800
+
+	)
+
+14 
+	#SCOREARRAY
+ 
+d©a
+[12]
+
+	)
+
+16 c⁄° 
+ASCII_èbÀ
+[43][4][11];
+
+17 c⁄° 
+BOSSKEY_BSOD
+[943];
+
+20 
+InôFœsh
+();
+
+21 
+WrôeToFœsh
+(
+uöt16_t
+ 
+SCOREARRAY
+, 
+uöt32_t
+ 
+addªss
+);
+
+22 
+uöt16_t
+ 
+RódFromFœsh
+(
+uöt32_t
+ 
+addªss
+);
+
+23 
+PrötFromASCII
+(* 
+ãxt
+, 
+uöt8_t
+ 
+døwX
+, uöt8_à
+døwY
+);
+
+24 
+PrötSc‹e
+();
+
+25 
+Bosskey
+();
+
+26 
+Highsc‹eCheck
+ (
+uöt16_t
+ 
+sc‹e
+);
+
+27 
+SubmôHighsc‹e
+(
+uöt8_t
+ 
+Highsc‹eLevñ
+, 
+uöt16_t
+ 
+sc‹e
+);
+
+28 
+Ch¨Sñe˘
+(
+uöt8_t
+ 
+xPos
+, uöt8_à
+yPos
+);
+
+29 
+˛órSc‹e
+();
 
 	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\ansi.h
 
@@ -100733,19 +100993,23 @@ _BALL_H_
 	~"ve˘‹åig.h
 "
 
-7 
+7 
+	~"game.h
+"
+
+8 
 	#putHeight
  50
 
 	)
 
-8 
+9 
 	#putWidth
  200
 
 	)
 
-9 
+10 
 	#putSåikîPos
  
 putHeight
@@ -100753,11 +101017,11 @@ putHeight
 
 	)
 
-12 
+13 
 	sbÆl_t
  {
 
-13 
+14 
 ve˘‹_t
  
 	mPªvPos
@@ -100767,13 +101031,13 @@ ve˘‹_t
 	mDúVec
 ;
 
-14 
-uöt16_t
+15 
+öt16_t
  
 	mDegªeIndex
 ;
 
-18 
+19 
 öôBÆl
 (
 bÆl_t
@@ -100791,7 +101055,7 @@ Vx
 Vy
 );
 
-21 
+22 
 upd©eBÆl
 (
 bÆl_t
@@ -100803,7 +101067,7 @@ uöt8_t
 vñMod
 );
 
-22 
+23 
 upd©eBÆlS≥ed
 (
 bÆl_t
@@ -100815,7 +101079,7 @@ bÆl
 vñMod
 );
 
-23 
+24 
 Upd©eBÆlAngÀ
 (
 bÆl_t
@@ -100829,9 +101093,11 @@ gameAºay
 putHeight
 ][
 putWidth
-]);
+], uöt8_à
+Ty≥OfHô
+);
 
-26 
+27 
 døwBÆl
 (
 bÆl_t
@@ -100927,7 +101193,7 @@ brickWidth
 PrötBrickCou¡î
 (
 uöt16_t
- 
+ *
 BrickCou¡î
 );
 
@@ -100999,7 +101265,7 @@ putHeight
 
 	)
 
-15 * 
+16 * 
 Cﬁlisi⁄Dëe˘
 (
 uöt8_t
@@ -101015,7 +101281,7 @@ bÆl_t
 bÆl
 );
 
-17 
+19 
 BÆlHôSåickî
 (
 k
@@ -139469,63 +139735,37 @@ _GPIO_H
 	~"°m32f30x_c⁄f.h
 "
 
-5 
-	~"i2c.h
-"
-
-7 
+6 
 öôGPIO
 ();
 
-8 
-öôLED
-();
+8 
+	~"™Æog.h
+"
 
-9 
-SëLed
-(
-R
-, 
-G
-, 
-B
-);
+9 
+	~"ac˚l.h
+"
 
-10 
-uöt8_t
- 
-ªadJoy°ick
-();
+10 
+	~"joy°ick.h
+"
 
-11 
-öôA«log
-();
+11 
+	~"Àd.h
+"
 
-12 
-uöt16_t
- 
-ªadA«log
-(
-ch™√l
-);
+12 
+	~"LCD.h
+"
 
-13 
-uöt16_t
- 
-™ÆogR™d
-();
+13 
+	~"timî.h
+"
 
-14 
-öt32_t
- 
-ªadRﬁl
-(
-uöt8_t
- 
-Avîage
-, uöt8_à
-Sísôivôy
-);
+14 
+	~"buzzî.h
+"
 
 	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\HDInitializering.h
 
@@ -139542,10 +139782,6 @@ _HDINIT_H_
 3 
 	~"30010_io.h
 "
-
-6 
-HDInôüliz©i⁄
-();
 
 	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\LCD.h
 
@@ -139613,6 +139849,134 @@ Löe
 lcd_upd©e
 ();
 
+	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\accel.h
+
+1 #i‚de‡
+_ACCEL_H
+
+
+2 
+	#_ACCEL_H
+
+
+	)
+
+4 
+	~"30010_io.h
+"
+
+5 
+	~"°m32f30x_c⁄f.h
+"
+
+6 
+	~"i2c.h
+"
+
+9 
+öt32_t
+ 
+ªadRﬁl
+(
+uöt8_t
+ 
+Avîage
+, uöt8_à
+Sísôivôy
+) ;
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\analog.h
+
+1 #i‚de‡
+_ANALOG_H
+
+
+2 
+	#_ANALOG_H
+
+
+	)
+
+4 
+	~"°m32f30x_c⁄f.h
+"
+
+6 
+öôA«log
+();
+
+7 
+uöt16_t
+ 
+ªadA«log
+(
+ch™√l
+);
+
+8 
+uöt16_t
+ 
+™ÆogR™d
+();
+
+9 
+öôDACNoi£
+();
+
+10 
+uöt16_t
+ 
+DACR™d
+();
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\buzzer.h
+
+1 #i‚de‡
+_BUZZER_H
+
+
+2 
+	#_BUZZER_H
+
+
+	)
+
+4 
+	~"°m32f30x_c⁄f.h
+"
+
+5 
+	~"30010_io.h
+"
+
+6 
+	~"timî.h
+"
+
+7 
+öôBuzzî
+();
+
+8 
+£tFªq
+(
+uöt16_t
+ 
+‰eq
+);
+
+9 
+∂aySound
+(
+uöt16_t
+ 
+‰eq
+, 
+uöt8_t
+ 
+duøti⁄
+);
+
 	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\i2c.h
 
 1 #i‚de‡
@@ -139668,6 +140032,76 @@ n
 10 
 I2C_öô
 ();
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\joystick.h
+
+1 #i‚de‡
+_JOYSTICK_H
+
+
+2 
+	#_JOYSTICK_H
+
+
+	)
+
+3 
+	~"30010_io.h
+"
+
+4 
+	~"°m32f30x_c⁄f.h
+"
+
+6 
+öôJoy°ick
+();
+
+8 
+uöt8_t
+ 
+ªadJoy°ick
+();
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\led.h
+
+1 #i‚de‡
+_LED_H
+
+
+2 
+	#_LED_H
+
+
+	)
+
+3 
+	~"30010_io.h
+"
+
+4 
+	~"°m32f30x_c⁄f.h
+"
+
+6 
+öôLED
+();
+
+7 
+SëLed
+(
+R
+, 
+G
+, 
+B
+);
+
+8 
+Upd©eRGB
+(
+∂ayîHP
+);
 
 	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\stm32f30x_conf.h
 
@@ -139845,65 +140279,65 @@ __˝lu•lus
 
 	@M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\timer.h
 
-1 
-	~"30010_io.h
-"
-
-3 #i‚de‡
+2 #i‚de‡
 _TIMER_H_
 
 
-4 
+3 
 	#_TIMER_H_
 
 
 	)
 
-6 
+5 
+	~"30010_io.h
+"
+
+8 
 	stime
  {
 
-7 
+9 
 uöt32_t
  
 	mtime_h£c⁄ds
 ;
 
-8 
+10 
 uöt8_t
  
 	mtime_£c
 ;
 
-9 
+11 
 uöt8_t
  
 	mtime_mö
 ;
 
-10 
+12 
 uöt8_t
  
 	mtime_hour
 ;
 
-11 
+13 
 uöt8_t
  
 	mch™ge
 ;
 
-14 vﬁ©ûê
+16 vﬁ©ûê
 time
  
 	g˛k
 ;
 
-16 
-TIM2_IRQH™dÀr
+18 
+TIM15_IRQH™dÀr
 ();
 
-17 
+19 
 öôTime
 (vﬁ©ûê
 time
@@ -139911,7 +140345,7 @@ time
 ˛k
 );
 
-18 
+20 
 ö¸emítTime
 (vﬁ©ûê
 time
@@ -139919,11 +140353,15 @@ time
 ˛k
 );
 
-19 
-TIM2_IRQH™dÀr
-();
+21 
+waô
+(
+uöt32_t
+ 
+dñay
+);
 
-20 
+22 
 öôI¡îru±
 ();
 
@@ -141047,7 +141485,7 @@ putWidth
 brick_t
  
 brickAºay
-[], 
+[100], 
 °rikî_t
  *
 Såikî
@@ -141157,23 +141595,35 @@ Rows
 Levñ
 ;
 
-31 
+29 
+JoyI≈ut
+ = 
+	`ªadJoy°ick
+();
+
+33 
+uöt8_t
+ 
 ödex
  = 7;
 
-32 
+34 
+uöt8_t
+ 
 i
  = 0; i < 
 Rows
 ; i++){
 
-33 
+35 
+uöt8_t
+ 
 r
  = 0;Ñ < 
 Cﬁumns
 ;Ñ++) {
 
-34 
+37 
 brickAºay
 [
 ödex
@@ -141187,7 +141637,7 @@ r
 brickWidth
 );
 
-35 
+38 
 brickAºay
 [
 ödex
@@ -141199,47 +141649,29 @@ i
 brickHeight
 );
 
-36 
-brickAºay
-[
-ödex
-].
-MaxHP
- = 2*(*
-Levñ
-Ë+ 
-	`™ÆogR™d
-() % 3;
-
-37 
+40 
 brickAºay
 [
 ödex
 ].
 cuºHP
- = 1;
+ = brickAºay[ödex].
+MaxHP
+;
 
-38 
-brickAºay
-[
-ödex
-].
-pwrUP
- = 1 ;
-
-39 
+44 
 x
  = 0; x < (*
 brickWidth
 ); x++){
 
-40 
+45 
 y
  = 0; y < (*
 brickHeight
 ); y++) {
 
-41 
+46 
 gameAºay
 [
 brickAºay
@@ -141255,11 +141687,17 @@ posX
 x
 ] = index;
 
-44 
+50 
 ödex
 ++;
 
-49 
+52 
+JoyI≈ut
+ = 
+	`ªadJoy°ick
+();
+
+57 
 Såikî
 ->
 cuºpos
@@ -141269,13 +141707,13 @@ putWidth
 °rikîsize
 /2);
 
-51 
+59 
 uöt8_t
  
 vÆue
  = 2;
 
-52 
+60 
 uöt8_t
  
 i
@@ -141287,7 +141725,7 @@ Såikî
 °rikîöc
 ){
 
-53 
+61 
 uöt8_t
  
 s
@@ -141297,7 +141735,7 @@ Såikî
 °rikîöc
 ; s++){
 
-54 
+62 
 gameAºay
 [
 putSåikîPos
@@ -141313,19 +141751,321 @@ s
 vÆue
 ;
 
-56 
+64 
 vÆue
 ++;
 
-58  
+68  
 ödex
  - 7;
 
-59 
+69 
 	}
 }
 
-64 
+72 
+	$PrötVi˘‹y
+(
+uöt8_t
+ 
+MaxPœyî
+, 
+uöt16_t
+ 
+PœyîSc‹e1
+, uöt16_à
+PœyîSc‹e2
+) {
+
+73 
+°r1
+[19];
+
+76 
+	`˛rs¸
+();
+
+78 
+	`gŸoXY
+(20,40);
+
+79 
+	`fgcﬁ‹
+(15);
+
+82 i‡(
+MaxPœyî
+ == 2) {
+
+84 i‡(
+PœyîSc‹e1
+ > 
+PœyîSc‹e2
+) {
+
+86 
+	`PrötFromASCII
+("PLAYER 1 WINS",60,20);
+
+87 
+	`Highsc‹eCheck
+(
+PœyîSc‹e1
+);
+
+89 i‡(
+PœyîSc‹e1
+ < 
+PœyîSc‹e2
+) {
+
+91 
+	`PrötFromASCII
+("PLAYER 2 WINS",60,20);
+
+92 
+	`Highsc‹eCheck
+(
+PœyîSc‹e2
+);
+
+94 i‡(
+PœyîSc‹e1
+ =
+PœyîSc‹e2
+) {
+
+96 
+	`PrötFromASCII
+("BOTH PLAYERS WIN",60,20);
+
+97 
+	`Highsc‹eCheck
+(
+PœyîSc‹e1
+);
+
+98 
+	`Highsc‹eCheck
+(
+PœyîSc‹e2
+);
+
+100 
+	`waô
+(200);
+
+103 
+	`PrötFromASCII
+("GAME OVER", 60, 20);
+
+104 
+	`•rötf
+(
+°r1
+, "SCORE: %04d", 
+PœyîSc‹e1
+);
+
+105 
+	`PrötFromASCII
+(
+°r1
+, 60, 30);
+
+106 
+	`waô
+(200);
+
+107 
+	`Highsc‹eCheck
+(
+PœyîSc‹e1
+);
+
+110 
+	}
+}
+
+112 
+	$SèπGameLo›
+(
+uöt8_t
+ 
+MaxPœyî
+) {
+
+113 
+Gøph
+[512] = {0};
+
+114 
+LCDD©a
+[4][128] = { {0} };
+
+117 
+°r1
+[19];
+
+119 
+uöt8_t
+ 
+Àvñ
+;
+
+120 
+uöt16_t
+ 
+PœyîSc‹e
+ = 0;
+
+121 
+uöt16_t
+ 
+PœyîSc‹e1
+ = 0;
+
+122 
+uöt16_t
+ 
+PœyîSc‹e2
+ = 0;
+
+123 
+uöt8_t
+ 
+Resu…sFromGame
+ = 1;
+
+125 
+Àvñ
+ = 1;
+
+132 
+i
+ = 1; i <
+MaxPœyî
+; i++) {
+
+134 
+	`˛rs¸
+();
+
+136 
+	`fgcﬁ‹
+(15);
+
+139 
+	`gŸoXY
+(10,40);
+
+141 
+	`•rötf
+(
+°r1
+, "GET READY PLAYER %d", 
+i
+);
+
+143 
+	`PrötFromASCII
+(
+°r1
+,60,20);
+
+145 
+	`waô
+(200);
+
+148 
+Resu…sFromGame
+ == 1) {
+
+150 
+Resu…sFromGame
+ = 
+	`runGame
+(&
+Àvñ
+, &
+PœyîSc‹e
+, 
+Gøph
+, 
+LCDD©a
+);
+
+155 i‡(
+Resu…sFromGame
+ == 1) {
+
+158 
+	`˛rs¸
+();
+
+160 
+	`fgcﬁ‹
+(15);
+
+163 
+	`gŸoXY
+(10,40);
+
+165 
+	`PrötFromASCII
+("GAME LEVEL COMPLETED.",60,20);
+
+167 
+	`waô
+(200);
+
+170 
+Àvñ
+++;
+
+176 
+Resu…sFromGame
+ = 1;
+
+179 i‡(
+i
+ == 1) {
+
+180 
+PœyîSc‹e1
+ = 
+PœyîSc‹e
+;
+
+182 i‡(
+i
+ == 2) {
+
+183 
+PœyîSc‹e2
+ = 
+PœyîSc‹e
+;
+
+186 
+PœyîSc‹e
+ = 0;
+
+191 
+	`PrötVi˘‹y
+(
+MaxPœyî
+, 
+PœyîSc‹e1
+, 
+PœyîSc‹e2
+);
+
+192 
+	}
+}
+
+197 
 uöt8_t
  
 	$runGame
@@ -141337,9 +142077,13 @@ uöt8_t
 uöt16_t
  *
 PœyîSc‹e
-) {
+, 
+Gøph
+[512] , 
+LCDD©a
+[4][128]) {
 
-66 
+199 
 brick_t
  
 brickAºay
@@ -141347,7 +142091,7 @@ brickAºay
 maxBricks
 ] = { };
 
-67 
+200 
 uöt8_t
  
 gameAºay
@@ -141357,63 +142101,61 @@ putHeight
 putWidth
 ] = { { } };
 
-68 
+201 
 uöt8_t
  
 Difficu…yTime
 ;
 
-70 * 
-Cﬁlisi⁄De˘e˘Rëu∫Addr
-;
-
-71 
+203 
 Wh©NextA·îBÆlCﬁlisi⁄
  = 0;
 
-72 
-uöt16_t
- 
-Bricködex
-;
-
-74 
+205 
 uöt16_t
  
 BrickCou¡î
 ;
 
-76 
+207 
 uöt8_t
  
 brickHeight
  = 6;
 
-77 
+208 
 uöt8_t
  
 brickWidth
  = 30;
 
-80 
+209 
+°r1
+[128];
+
+211 
 pwrUp
  
 powîup
 ;
 
-81 
+212 
 bÆl_t
  
 bÆl1
 ;
 
-82 
+213 
 °rikî_t
  
 °rikî
 ;
 
-83 
+214 * 
+Cﬁlisi⁄De˘e˘Rëu∫Addr
+;
+
+215 
 °rikî
 .
 °rikîsize
@@ -141421,7 +142163,7 @@ bÆl1
 putWidth
 /10;
 
-84 
+216 
 °rikî
 .
 °rikîöc
@@ -141429,17 +142171,29 @@ putWidth
 °rikîsize
 /5;
 
-86 
+219 
+uöt8_t
+ 
+cuºítHó…h
+ = 3;
+
+220 
+	`Upd©eRGB
+(
+cuºítHó…h
+);
+
+222 
 	`öôPowîup
 (&
 powîup
 );
 
-89 
+225 
 	`˛rs¸
 ();
 
-99 
+235 
 BrickCou¡î
  = 
 	`öôGameAºay
@@ -141459,7 +142213,7 @@ brickHeight
 brickWidth
 );
 
-101 
+237 
 	`öôBÆl
 (&
 bÆl1
@@ -141469,111 +142223,27 @@ putWidth
 putSåikîPos
  - 10, -1, -1);
 
-116 
-	`fgcﬁ‹
-(15);
-
-117 
-i
- = 0; i < 
-putWidth
-; i++){
-
-118 
-	`putch¨
-(178);
-
-120 
-i
- = 1; i < 
-putHeight
-; i++){
-
-121 
-	`putch¨
-(178);
-
-122 
-	`gŸoXY
+251 
+	`døwGame
 (
-putWidth
-, 
-i
-);
-
-123 
-	`putch¨
-(178);
-
-127 
-i
- = 7; i < 
-maxBricks
-; i++) {
-
-128 i‡(
 brickAºay
-[
-i
-].
-cuºHP
- != 0){
-
-129 
-	`døwBox
-(&
-brickAºay
-[
-i
-], &
+, &
 brickHeight
 , &
 brickWidth
-);
-
-134 
-	`fgcﬁ‹
-(8);
-
-135 
-	`gŸoXY
-(
+, &
 °rikî
-.
-cuºpos
-, 
-putSåikîPos
-);
-
-136 
-i
- = 0; i < 
-°rikî
-.
-°rikîsize
-; i++){
-
-137 
-	`putch¨
-(223);
-
-140 
-	`fgcﬁ‹
-(15);
-
-141 
-	`døwBÆl
-(&
+, &
 bÆl1
 );
 
-143 
+253 
 uöt32_t
  
 ¥evPowîSèπ
  = 0;
 
-144 
+254 
 uöt32_t
  
 cuºTime
@@ -141581,47 +142251,129 @@ cuºTime
 ˛k
 .
 time_h£c⁄ds
+, 
+dñèTime
+ = 0, 
+¥evTime
 ;
 
-146 
+256 
 	`PrötBrickCou¡î
-(
+(&
 BrickCou¡î
 );
 
-148 
+258 
 uöt8_t
  
 bÆlDifficu…yMod
- = 5 - *
-Àvñ
-;
+ = 5;
 
-150 
+259 
+bÆlDifficu…yMod
+ -bÆlDifficu…yMod - *
+Àvñ
+ > 0 ? 1 : 0;
+
+261 
 	`gŸoXY
 (90,80);
 
-151 
+262 
 	`¥ötf
 ("Levñ %d ", *
 Àvñ
 );
 
-156 
+264 
+LCDHóπs
+[7] = {0x7F, 0x80, 0x7F, 0x80, 0x7F, 0x80, 0x00};
+
+266 
+	`CÀ¨LöeD©a
+(
+LCDD©a
+);
+
+267 
+	`LCDWrôe
+(
+LCDD©a
+, 
+LCDHóπs
+, 0);
+
+268 
+	`•rötf
+(
+°r1
+, "Brick cou¡î: %03d", 
+BrickCou¡î
+);
+
+269 
+	`LCDWrôe
+(
+LCDD©a
+, 
+°r1
+, 1);
+
+270 
+	`•rötf
+(
+°r1
+, "Sc‹e: %03d", *
+PœyîSc‹e
+);
+
+271 
+	`LCDWrôe
+(
+LCDD©a
+, 
+°r1
+, 2);
+
+272 
+	`lcd_upd©e
+(
+Gøph
+, 
+LCDD©a
+);
+
+275 
+	`døwBÆl
+(&
+bÆl1
+);
+
+276 
+	`Cou¡Down
+();
+
+278 
 uöt8_t
  
 gameE«bÀd
  = 1;
 
-157 
+280 
 gameE«bÀd
 ) {
 
-158 
+282 
 	`__dißbÀ_úq
 ();
 
-159 
+283 
+¥evTime
+ = 
+cuºTime
+;
+
+284 
 cuºTime
  = 
 ˛k
@@ -141629,23 +142381,33 @@ cuºTime
 time_h£c⁄ds
 ;
 
-160 
+285 
+dñèTime
+ = 
+cuºTime
+ - 
+¥evTime
+;
+
+286 
 	`__íabÀ_úq
 ();
 
-163 i‡(
+288 i‡((
 cuºTime
  % 
 bÆlDifficu…yMod
- == 0) {
+Ë=0 && cuºTimê!
+¥evTime
+) {
 
-167 
+291 
 	`upd©eBÆl
 (&
 bÆl1
 , 0);
 
-170 
+294 
 Cﬁlisi⁄De˘e˘Rëu∫Addr
  = 
 	`Cﬁlisi⁄Dëe˘
@@ -141655,169 +142417,241 @@ gameAºay
 bÆl1
 );
 
-173 i‡(
+297 i‡(
 Cﬁlisi⁄De˘e˘Rëu∫Addr
  != 0) {
 
-176 
+300 
 Wh©NextA·îBÆlCﬁlisi⁄
- = (((*)()Ë
+ = ((
+	`uöt16_t
+ (*)()Ë
 Cﬁlisi⁄De˘e˘Rëu∫Addr
-)();
+)(&
+bÆl1
+, 
+gameAºay
+, 
+brickAºay
+, &
+brickHeight
+, &
+brickWidth
+, &
+BrickCou¡î
+, 
+PœyîSc‹e
+, &
+powîup
+);
 
-182 
+309 
 Wh©NextA·îBÆlCﬁlisi⁄
 ) {
 
-187 
-gameE«bÀd
- = 0;
+314 i‡(
+cuºítHó…h
+ > 1){
 
-196 
-	`Upd©eBÆlAngÀ
-(&
-bÆl1
+315 
+cuºítHó…h
+--;
+
+316 
+uöt8_t
+ 
+i
+ = 3; i > 
+cuºítHó…h
+; i--){
+
+317 
+LCDHóπs
+[2*
+i
+ - 2] = 0x20;
+
+318 
+LCDHóπs
+[2*
+i
+ - 1] = 0x20;
+
+320 
+	`LCDWrôe
+(
+LCDD©a
 , 
-gameAºay
+LCDHóπs
+, 0);
+
+321 
+	`lcd_upd©e
+(
+Gøph
+, 
+LCDD©a
 );
 
-203 
-Bricködex
- = 
-gameAºay
-[
+322 
+	`Upd©eRGB
+(
+cuºítHó…h
+);
+
+323 
+	`gŸoXY
+(
 bÆl1
 .
-NextPos
+PªvPos
 .
-y
- >> 14][bÆl1.NextPos.
 x
- >> 14];
+ >> 14, bÆl1.PªvPos.
+y
+ >> 14);
 
-206 
-	`Upd©eBÆlAngÀ
+325 
+	`putch¨
+(32);
+
+326 
+	`öôBÆl
 (&
 bÆl1
 , 
-gameAºay
-);
+putWidth
+/2, 
+putSåikîPos
+ - 10, -1, -1);
 
-209 i‡(
-brickAºay
-[
-Bricködex
-].
-cuºHP
- > 0) {
-
-212 
-brickAºay
-[
-Bricködex
-].
-cuºHP
---;
-
-215 
-	`døwBox
-(&
-brickAºay
-[
-Bricködex
-], &
-brickHeight
-, &
-brickWidth
-);
-
-221 i‡(
-brickAºay
-[
-Bricködex
-].
-cuºHP
- == 0) {
-
-223 
-BrickCou¡î
---;
-
-226 *
-PœyîSc‹e
- +
-brickAºay
-[
-Bricködex
-].
-MaxHP
-;
-
-229 
-	`KûlBrick
-(
-Bricködex
-, 
-gameAºay
-, &
-brickAºay
-[Bricködex], &
-brickHeight
-, &
-brickWidth
-);
-
-232 
-	`PrötBrickCou¡î
-(
-BrickCou¡î
-);
-
-235 i‡(
-brickAºay
-[
-Bricködex
-].
-pwrUP
- =1 && 
-powîup
-.
-Æive
- == 0) {
-
-236 
-	`•awnPowîup
-(&
-powîup
-, &
-brickAºay
-[
-Bricködex
-], &
-brickHeight
-, &
-brickWidth
-);
-
-243 i‡(
-BrickCou¡î
- == 0) {
-
-245 
-gameE«bÀd
- = 0;
-
-259 
+327 
 	`døwBÆl
 (&
 bÆl1
 );
 
-263 i‡(
-cuºTime
- % 2 == 0) {
+328 
+	`Cou¡Down
+();
 
-264 
+332 
+cuºítHó…h
+--;
+
+333 
+	`Upd©eRGB
+(
+cuºítHó…h
+);
+
+334 
+	`CÀ¨LöeD©a
+(
+LCDD©a
+);
+
+335 
+	`LCDWrôe
+(
+LCDD©a
+, "YouÜose!", 0);
+
+336 
+	`•rötf
+(
+°r1
+, "FöÆ sc‹e: %03d", *
+PœyîSc‹e
+);
+
+337 
+	`LCDWrôe
+(
+LCDD©a
+, 
+°r1
+, 1);
+
+338 
+	`LCDWrôe
+(
+LCDD©a
+, "Insert coinÅo continue", 2);
+
+339 
+	`lcd_upd©e
+(
+Gøph
+, 
+LCDD©a
+);
+
+340 
+gameE«bÀd
+ = 0;
+
+350 
+	`∂aySound
+(800, 5);
+
+358 
+	`•rötf
+(
+°r1
+, "Brick cou¡î: %03d", 
+BrickCou¡î
+);
+
+359 
+	`LCDWrôe
+(
+LCDD©a
+, 
+°r1
+, 1);
+
+360 
+	`•rötf
+(
+°r1
+, "Sc‹e: %03d", *
+PœyîSc‹e
+);
+
+361 
+	`LCDWrôe
+(
+LCDD©a
+, 
+°r1
+, 2);
+
+362 
+	`lcd_upd©e
+(
+Gøph
+, 
+LCDD©a
+);
+
+364 
+	`∂aySound
+(1200, 5);
+
+376 
+	`døwBÆl
+(&
+bÆl1
+);
+
+379 i‡(
+cuºTime
+ % 2 =0 && cuºTimê!
+¥evTime
+) {
+
+380 
 	`upd©eSåikî
 (
 gameAºay
@@ -141825,7 +142659,7 @@ gameAºay
 °rikî
 );
 
-267 i‡(
+383 i‡(
 cuºTime
  - 
 ¥evPowîSèπ
@@ -141835,35 +142669,37 @@ powîup
 íabÀ
 ) {
 
-268 
+384 
 ¥evPowîSèπ
  = 0;
 
-269 
+385 
 powîup
 .
 íabÀ
  = 0;
 
-270 
+386 
 bÆlDifficu…yMod
 --;
 
-274 i‡(
+389 i‡(
 powîup
 .
 Æive
  =1 && 
 cuºTime
- % 10 == 0) {
+ % 10 =0 && cuºTimê!
+¥evTime
+) {
 
-276 
+391 
 	`upd©ePowîup
 (&
 powîup
 );
 
-277 i‡(
+392 i‡(
 gameAºay
 [
 powîup
@@ -141875,23 +142711,37 @@ posX
 íabÀ
  == 0) {
 
-278 
+393 
+	`gŸoXY
+(
+powîup
+.
+posX
+,Öowîup.
+posY
+-1);
+
+394 
+	`putch¨
+(32);
+
+395 
 powîup
 .
 íabÀ
  = 1;
 
-279 
+396 
 bÆlDifficu…yMod
 ++;
 
-280 
+397 
 ¥evPowîSèπ
  = 
 cuºTime
 ;
 
-282 i‡(
+399 i‡(
 gameAºay
 [
 powîup
@@ -141901,61 +142751,225 @@ posY
 posX
 ] == 0 && gameArray[powerup.posY - 1][powerup.posX] == 0) {
 
-283 
+400 
 	`døwPowîup
 (&
 powîup
 );
 
-288 
+404 
+uöt16_t
+ 
+joyöput
+ = 
+	`ªadJoy°ick
+() & 0x10;
+
+405 i‡(
+joyöput
+ == 16){
+
+406 
+	`Bosskey
+();
+
+407 
+	`døwGame
+(
+brickAºay
+, &
+brickHeight
+, &
+brickWidth
+, &
+°rikî
+, &
+bÆl1
+);
+
+412 
 	`fgcﬁ‹
 (15);
 
-294 
+416 
 	}
 }
 
-297 
-	$Cou¡Down
-(){
-
-298 
-uöt32_t
+418 
+	$døwGame
+(
+brick_t
  
-¥ev˛k
- = 
-˛k
-.
-time_h£c⁄ds
-;
+brickAºay
+[], 
+uöt8_t
+ *
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+°rikî_t
+ *
+°rikî
+, 
+bÆl_t
+ *
+bÆl
+){
 
-299 
+420 
+	`fgcﬁ‹
+(15);
+
+421 
 i
- = 3; i > 0; i--) {
+ = 0; i < 
+putWidth
+; i++){
 
-300 
-¥ev˛k
- - 
-˛k
-.
-time_h£c⁄ds
- != 100){}
+422 
+	`putch¨
+(178);
 
-301 
-	`¥ötf
-("%d", 
+424 
+i
+ = 1; i < 
+putHeight
+; i++){
+
+425 
+	`putch¨
+(178);
+
+426 
+	`gŸoXY
+(
+putWidth
+, 
 i
 );
 
-302 
-¥ev˛k
- = 
-˛k
-.
-time_h£c⁄ds
-;
+427 
+	`putch¨
+(178);
 
-304 
+431 
+i
+ = 7; i < 
+maxBricks
+; i++) {
+
+432 i‡(
+brickAºay
+[
+i
+].
+cuºHP
+ != 0){
+
+433 
+	`døwBox
+(&
+brickAºay
+[
+i
+], 
+brickHeight
+, 
+brickWidth
+);
+
+438 
+	`fgcﬁ‹
+(15);
+
+439 
+	`gŸoXY
+(
+°rikî
+->
+cuºpos
+, 
+putSåikîPos
+);
+
+440 
+i
+ = 0; i < 
+°rikî
+->
+°rikîsize
+; i++){
+
+441 
+	`putch¨
+(223);
+
+444 
+	`fgcﬁ‹
+(15);
+
+445 
+	`døwBÆl
+(
+bÆl
+);
+
+446 
+	}
+}
+
+448 
+	$Cou¡Down
+(){
+
+449 
+uöt8_t
+ 
+i
+ = 3; i > 0; i--) {
+
+450 
+i
+) {
+
+452 
+	`PrötFromASCII
+("3",97,40);
+
+455 
+	`PrötFromASCII
+(" ",97,40);
+
+456 
+	`PrötFromASCII
+("2",97,40);
+
+459 
+	`PrötFromASCII
+(" ",97,40);
+
+460 
+	`PrötFromASCII
+("1",97,40);
+
+463 
+	`∂aySound
+(600,5);
+
+464 
+	`waô
+(100);
+
+466 
+	`∂aySound
+(1200,5);
+
+467 
+	`PrötFromASCII
+(" ",97,40);
+
+468 
 	}
 }
 
@@ -141965,7 +142979,103 @@ time_h£c⁄ds
 	~"Míu.h
 "
 
-73 
+5 
+	$PrötOutTextAºay
+(*
+TextAºay
+, 
+uöt8_t
+ 
+xC‹
+, uöt8_à
+yC‹
+, uöt8_à
+RowTŸÆ
+, uöt8_à
+CﬁTŸÆ
+) {
+
+8 
+	`gŸoXY
+(
+xC‹
+,
+yC‹
+);
+
+11 
+RowI
+ = 0 ; RowI < 
+RowTŸÆ
+ ; RowI++) {
+
+14 
+CﬁI
+ = 0 ; CﬁI < 
+CﬁTŸÆ
+ ; ColI++) {
+
+17 
+	`¥ötf
+("%¯", *(
+TextAºay
+ + 
+RowI
+*
+CﬁTŸÆ
+ + 
+CﬁI
+));
+
+21 
+yC‹
+++;
+
+24 
+	`gŸoXY
+(
+xC‹
+, 
+yC‹
+);
+
+26 
+	}
+}
+
+75 
+	$CÀ¨D©a
+(
+ASCIIARRAYTYPE
+) {
+
+79 
+i
+=0; i<12; i++) {
+
+81 
+j
+=0; j<5; j++) {
+
+83 
+g
+=0; g<9; g++) {
+
+85 
+ASCIIAºay
+[
+i
+][
+j
+][
+g
+] = ' ';
+
+93 
+	}
+}
+
+95 
 	$Cª©eMíuText
 (
 ASCIIARRAYTYPE
@@ -141977,11 +143087,11 @@ i
 Text
 ) {
 
-76 
+98 
 g
 =0; g < 9; g++) {
 
-77 
+99 
 ASCIIAºay
 [
 i
@@ -141989,11 +143099,11 @@ i
 g
 ] = '*';
 
-81 
+103 
 g
 =1; g < 4; g++) {
 
-82 
+104 
 ASCIIAºay
 [
 i
@@ -142001,7 +143111,7 @@ i
 g
 ][0] = '*';
 
-83 
+105 
 ASCIIAºay
 [
 i
@@ -142009,11 +143119,11 @@ i
 g
 ][8] = '*';
 
-87 
+109 
 g
 =0; g < 9; g++) {
 
-88 
+110 
 ASCIIAºay
 [
 i
@@ -142021,7 +143131,7 @@ i
 g
 ] = '*';
 
-93 
+115 
 j
 =0; j< 
 	`°æí
@@ -142029,7 +143139,7 @@ j
 Text
 ); j++) {
 
-94 
+116 
 t
  = 
 Text
@@ -142037,7 +143147,7 @@ Text
 j
 ];
 
-96 
+118 
 ASCIIAºay
 [
 i
@@ -142047,123 +143157,23 @@ j
 t
 ;
 
-100 
-	}
-}
-
-112 
-	$PrötMaöMíu
-(
-ASCIIARRAYTYPE
-){
-
-114 
-x
- = 0;
-
-115 
-y
- = 0;
-
-119 
-i
- = 0; i <= 2; i++) {
-
 122 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[
-i
-],
-x
-,
-y
-,5,9);
-
-124 
-y
- += 5;
-
-128 
 	}
 }
 
-131 
-	$PrötPœyîMíu
-(
-ASCIIARRAYTYPE
-){
-
-132 
-x
- = 0;
-
-133 
-y
- = 0;
-
-145 
-	`Sñe˘
-(1, 1, 
-ASCIIAºay
-, 2);
-
-148 
-	`Sñe˘
-(2, 0, 
-ASCIIAºay
-, 2);
-
-149 
-	}
-}
-
-152 
-	$PrötSc‹eMíu
-(
-ASCIIARRAYTYPE
-){
-
-154 
-x
- = 10;
-
-155 
-y
- = 10;
-
-159 
-i
- = 5; i <= 10; i=i+2) {
-
-163 
-x
- += 20;
-
-170 
-y
- += 20;
-
-172 
-	}
-}
-
-174 
+151 
 	$PrötHñp
-(
-ASCIIARRAYTYPE
-){
+(){
 
-175 
+152 
 	`¥ötf
-("HELP YOUR SELF! :)");
+("HELP YOURSELF! :)");
 
-178 
+153 
 	}
 }
 
-181 
+156 
 	$CÀ¨Löes
 (
 uöt8_t
@@ -142173,7 +143183,7 @@ LöeFrom
 LöeTo
 ) {
 
-183 
+158 
 i
  = 
 LöeFrom
@@ -142181,21 +143191,21 @@ LöeFrom
 LöeTo
 ; i++) {
 
-186 
+161 
 	`gŸoXY
 (0,
 i
 );
 
-189 
+164 
 	`˛ªﬁ
 ();
 
-194 
+169 
 	}
 }
 
-197 
+172 
 	$Ch™geSñe˘i⁄
 (
 Up
@@ -142205,285 +143215,471 @@ Sñe˘i⁄Index
 MaxSñe˘i⁄
 ) {
 
-200 i‡(
+175 i‡(
 Up
  == 1) {
 
-201 
+176 
 Sñe˘i⁄Index
 ++;
 
-204 
+179 
 Sñe˘i⁄Index
 --;
 
-207 i‡(
+182 i‡(
 Sñe˘i⁄Index
  > 
 MaxSñe˘i⁄
 ) {
 
-208 
+183 
 Sñe˘i⁄Index
  = 1;
 
-210 i‡(
+185 i‡(
 Sñe˘i⁄Index
  < 1) {
 
-211 
+186 
 Sñe˘i⁄Index
  = 
 MaxSñe˘i⁄
 ;
 
-214  
+189  
 Sñe˘i⁄Index
 ;
 
-217 
+192 
 	}
 }
 
-220 
+195 
 	$PrötMíu
 (
 °©e
-, 
-ASCIIARRAYTYPE
+, *
+Newmíu
 ) {
 
-225 
+198 
 °©e
 ) {
 
-228 
-	`CÀ¨Löes
-(0,30);
+201 
+	`˛rs¸
+();
 
-229 
-	`PrötMaöMíu
-(
-ASCIIAºay
-);
+202 
+	`fgcﬁ‹
+(15);
+
+203 
+	`CÀ¨Löes
+(20,45);
+
+204 
+	`GŸoMíuSèã
+(1);
+
+208 
+	`CÀ¨Löes
+(20,45);
+
+209 
+	`GŸoMíuSèã
+(2);
+
+213 
+	`˛rs¸
+();
+
+214 
+	`fgcﬁ‹
+(15);
+
+215 
+	`PrötFromASCII
+("REFLEXBALL",69,7);
+
+216 
+	`PrötSc‹e
+();
+
+217 
+	`˛rs¸
+();
+
+218 *
+Newmíu
+ = 1;
+
+219 
+	`GŸoMíuSèã
+(1);
+
+223 
+	`CÀ¨Löes
+(20,45);
+
+224 
+	`PrötHñp
+();
+
+228 
+	`SèπGameLo›
+(1);
+
+231 
+	`˛rs¸
+();
+
+232 *
+Newmíu
+ = 1;
 
 233 
-	`CÀ¨Löes
-(20,30);
-
-234 
-	`PrötPœyîMíu
-(
-ASCIIAºay
-);
+	`GŸoMíuSèã
+(1);
 
 237 
-	`CÀ¨Löes
-(20,30);
+	`SèπGameLo›
+(2);
 
-238 
-	`PrötSc‹eMíu
-(
-ASCIIAºay
-);
+240 
+	`˛rs¸
+();
 
-241 
-	`CÀ¨Löes
-(20,30);
+241 *
+Newmíu
+ = 1;
 
 242 
-	`PrötSc‹eMíu
-(
-ASCIIAºay
-);
+	`GŸoMíuSèã
+(1);
 
-246 
+247 
 	}
 }
 
-248 
+250 
+	$GŸoMíuSèã
+(
+°©e
+ ) {
+
+253 
+°©e
+) {
+
+257 
+	`˛rs¸
+();
+
+258 
+	`fgcﬁ‹
+(15);
+
+259 
+	`PrötFromASCII
+("REFLEXBALL",69,7);
+
+262 
+	`Sñe˘
+(1, 
+SELECT
+, 1);
+
+265 
+	`Sñe˘
+(2, 
+DESELECT
+, 1);
+
+268 
+	`Sñe˘
+(3, 
+DESELECT
+, 1);
+
+273 
+	`˛rs¸
+();
+
+274 
+	`fgcﬁ‹
+(15);
+
+275 
+	`PrötFromASCII
+("REFLEXBALL",69,7);
+
+278 
+	`Sñe˘
+(1, 
+SELECT
+, 2);
+
+281 
+	`Sñe˘
+(2, 
+DESELECT
+, 2);
+
+284 
+	`Sñe˘
+(3, 
+DESELECT
+, 2);
+
+289 
+	`CÀ¨Löes
+(20,30);
+
+295 
+	`CÀ¨Löes
+(20,30);
+
+296 
+	`¥ötf
+("HELP YOUR SELF! :)");
+
+302 
+	}
+}
+
+305 
+	$GëNextMíuBlockSñe˘i⁄
+(
+boﬁ
+ 
+Up
+, 
+Sñe˘i⁄Index
+, 
+MaxSñe˘i⁄
+) {
+
+308 i‡(
+Up
+ == 1) {
+
+309 
+Sñe˘i⁄Index
+++;
+
+312 
+Sñe˘i⁄Index
+--;
+
+315 i‡(
+Sñe˘i⁄Index
+ > 
+MaxSñe˘i⁄
+) {
+
+316 
+Sñe˘i⁄Index
+ = 1;
+
+318 i‡(
+Sñe˘i⁄Index
+ < 1) {
+
+319 
+Sñe˘i⁄Index
+ = 
+MaxSñe˘i⁄
+;
+
+322  
+Sñe˘i⁄Index
+;
+
+325 
+	}
+}
+
+327 
+uöt8_t
+ 
+	$Rëu∫NextBlockSñe˘i⁄Numbî
+(
+uöt8_t
+ 
+Up
+, 
+öt8_t
+ 
+CuºítBlockSñe˘i⁄Numî
+) {
+
+329 i‡(
+Up
+ == 1) {
+
+330 
+CuºítBlockSñe˘i⁄Numî
+++;
+
+333 
+CuºítBlockSñe˘i⁄Numî
+--;
+
+337 i‡(
+CuºítBlockSñe˘i⁄Numî
+ > 3) {
+
+338 
+CuºítBlockSñe˘i⁄Numî
+ = 1;
+
+340 i‡(
+CuºítBlockSñe˘i⁄Numî
+ < 1) {
+
+341 
+CuºítBlockSñe˘i⁄Numî
+ = 3;
+
+344  
+CuºítBlockSñe˘i⁄Numî
+;
+
+346 
+	}
+}
+
+348 
 	$Sñe˘
 (
 £À˘i⁄
 , 
 highlight
-, 
-ASCIIARRAYTYPE
 , 
 °©e
 ) {
 
-249 if(
+349 if(
 highlight
- == 0){
+ == 1){
 
-250 
-	`bgcﬁ‹
-(0);
-
-253 
-	`bgcﬁ‹
+350 
+	`fgcﬁ‹
 (1);
 
-255 
+353 
+	`fgcﬁ‹
+(15);
+
+355 
 °©e
 ) {
 
-257 
+357 
 £À˘i⁄
 ) {
 
-259 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[0], 
-míuBlock1X
-, 
-míuBlock1Y
-, 5, 9);
+359 
+	`PrötFromASCII
+("PLAY",86,20);
 
-262 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[1], 
-míuBlock2X
-, 
-míuBlock2Y
-, 5, 9);
+362 
+	`PrötFromASCII
+("HIGHSCORE",72,30);
 
-265 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[2], 
-míuBlock3X
-, 
-míuBlock3Y
-, 5, 9);
+365 
+	`PrötFromASCII
+("HELP",88,40);
 
-270 
+370 
 £À˘i⁄
 ) {
 
-272 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[3], 
-míuBlock1X
-, 
-míuBlock1Y
-, 5, 9);
+372 
+	`PrötFromASCII
+("SINGLE PLAYER",62,20);
 
-275 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[4], 
-míuBlock2X
-, 
-míuBlock2Y
-, 5, 9);
+375 
+	`PrötFromASCII
+("PLAYER VS PLAYER",53,30);
 
-280 
+378 
+	`PrötFromASCII
+("RETURN",81,40);
+
+383 
 £À˘i⁄
 ) {
 
-282 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[5], 
-míuBlock1X
-, 
-míuBlock1Y
-, 5, 9);
+384 
+	`PrötSc‹e
+();
 
-285 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[6], 
-míuBlock2X
-, 
-míuBlock2Y
-, 5, 9);
+389 
+	`fgcﬁ‹
+(15);
 
-288 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[7], 
-míuBlock3X
-, 
-míuBlock3Y
-, 5, 9);
+390 
+	`¥ötf
+("HELP YOURSELF! :)");
 
-293 
-	`bgcﬁ‹
-(0);
-
-294 
-	`PrötOutTextAºay
-(
-ASCIIAºay
-[8], 
-míuBlock1X
-, 
-míuBlock1Y
-, 5, 9);
-
-297 
+393 
 	}
 }
 
-300 
+396 
 	$Upd©eSèã
 (
 °©e
 , 
 £À˘i⁄
+, *
+Newmíu
 ) {
 
-301 
+397 
 °©e
 ) {
 
-303 
+399 
 £À˘i⁄
 ) {
 
-305 
-°©e
+401 *
+Newmíu
  = 2;
 
-308 
-°©e
+404 *
+Newmíu
  = 3;
 
-311 
-°©e
+407 *
+Newmíu
  = 4;
 
-319 
-°©e
- = 1;
-
-322 
-°©e
- = 1;
-
-325 
+413 
 £À˘i⁄
+) {
+
+415 *
+Newmíu
+ = 5;
+
+418 *
+Newmíu
+ = 6;
+
+421 *
+Newmíu
  = 1;
 
-326 
+437 
 	}
 }
 
-328 
+439 
 	$PrötEnd
 (
 ASCIIEnd
@@ -142493,7 +143689,7 @@ tôÀX
 tôÀY
 ) {
 
-330 
+441 
 	`PrötOutTextAºay
 (
 ASCIIEnd
@@ -142503,7 +143699,781 @@ tôÀX
 tôÀY
 -10, 5, 9);
 
-332 
+443 
+	}
+}
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\src\API\ROM.c
+
+1 
+	~"ROM.h
+"
+
+3 c⁄° 
+	gASCII_èbÀ
+[43][4][11] = {
+
+273 c⁄° 
+	gBOSSKEY_BSOD
+[943] = {
+
+371 
+	$InôFœsh
+() {
+
+372 
+	`FLASH_U∆ock
+();
+
+373 
+	`FLASH_CÀ¨Fœg
+–
+FLASH_FLAG_EOP
+ | 
+FLASH_FLAG_PGERR
+ | 
+FLASH_FLAG_WRPERR
+ );
+
+374 
+	`FLASH_Eø£Page
+(
+ADDRESS
+);
+
+375 
+	`FLASH_Lock
+();
+
+376 
+	}
+}
+
+378 
+	$PrötFromASCII
+(* 
+ãxt
+, 
+uöt8_t
+ 
+døwX
+, uöt8_à
+døwY
+) {
+
+379 
+ãmpCh¨
+ = 0x20;
+
+380 
+uöt8_t
+ 
+i
+ = 0; i < 4; i++) {
+
+381 
+	`gŸoXY
+(
+døwX
+,
+døwY
++
+i
+);
+
+382 
+uöt8_t
+ 
+j
+ = 0; j < 
+	`°æí
+(
+ãxt
+); j++) {
+
+383 
+uöt8_t
+ 
+k
+ = 0; k < 11; k++) {
+
+384 
+uöt8_t
+ 
+l
+;
+
+385 
+l
+ = 
+ãxt
+[
+j
+]-0x30;
+
+386 if(
+ãxt
+[
+j
+]==0x20){
+
+387 
+l
+ = 10;
+
+389 if(
+ASCII_èbÀ
+[
+l
+][
+i
+][
+k
+] == 0){
+
+392 
+ãmpCh¨
+ = 
+ASCII_èbÀ
+[
+l
+][
+i
+][
+k
+];
+
+393 
+	`¥ötf
+("%c", 
+ãmpCh¨
+);
+
+397 
+	`gŸoXY
+(0,0);
+
+398 
+	}
+}
+
+400 
+	$WrôeToFœsh
+(
+uöt16_t
+ 
+SCOREARRAY
+, 
+uöt32_t
+ 
+addªss
+) {
+
+401 
+	`FLASH_U∆ock
+();
+
+402 
+uöt8_t
+ 
+i
+ = 0; i < 12; i++) {
+
+403 
+	`FLASH_ProgømHÆfW‹d
+(
+addªss
++
+i
+*2, 
+d©a
+[i]);
+
+405 
+	`FLASH_Lock
+();
+
+406 
+	}
+}
+
+407 
+uöt16_t
+ 
+	$RódFromFœsh
+(
+uöt32_t
+ 
+addªss
+) {
+
+408 
+uöt16_t
+ 
+d©a
+;
+
+409 
+d©a
+ = *(
+uöt16_t
+ *)(
+addªss
+);
+
+410  
+d©a
+;
+
+411 
+	}
+}
+
+413 
+	$PrötSc‹e
+() {
+
+416 
+	`fgcﬁ‹
+(15);
+
+417 
+uöt16_t
+ 
+sc‹eAºay
+[12] = {};
+
+418 
+uöt8_t
+ 
+i
+ = 0; i < 12; i++) {
+
+419 
+sc‹eAºay
+[
+i
+] = 
+	`RódFromFœsh
+(
+ADDRESS
++i*2);
+
+421 
+Highsc‹ePœyî1
+[4] = {
+sc‹eAºay
+[0],scoreArray[1],scoreArray[2],0};
+
+422 
+Highsc‹eSc‹e1
+[5];
+
+423 
+Highsc‹ePœyî2
+[4] = {
+sc‹eAºay
+[4],scoreArray[5],scoreArray[6],0};
+
+424 
+Highsc‹eSc‹e2
+[5];
+
+425 
+Highsc‹ePœyî3
+[4] = {
+sc‹eAºay
+[8],scoreArray[9],scoreArray[10],0};
+
+426 
+Highsc‹eSc‹e3
+[5];
+
+428 
+	`•rötf
+(
+Highsc‹eSc‹e1
+,"%04d",
+sc‹eAºay
+[3]);
+
+429 
+	`•rötf
+(
+Highsc‹eSc‹e2
+,"%04d",
+sc‹eAºay
+[7]);
+
+430 
+	`•rötf
+(
+Highsc‹eSc‹e3
+,"%04d",
+sc‹eAºay
+[11]);
+
+432 
+	`PrötFromASCII
+(
+Highsc‹ePœyî1
+,60,20);
+
+433 
+	`PrötFromASCII
+(
+Highsc‹eSc‹e1
+,90,20);
+
+434 
+	`PrötFromASCII
+(
+Highsc‹ePœyî2
+,60,30);
+
+435 
+	`PrötFromASCII
+(
+Highsc‹eSc‹e2
+,90,30);
+
+436 
+	`PrötFromASCII
+(
+Highsc‹ePœyî3
+,60,40);
+
+437 
+	`PrötFromASCII
+(
+Highsc‹eSc‹e3
+,90,40);
+
+438 
+	`waô
+(500);
+
+439 
+	}
+}
+
+441 
+	$Bosskey
+() {
+
+442 
+	`bgcﬁ‹
+(4);
+
+443 
+uöt16_t
+ 
+i
+ = 0; i < 100; i++) {
+
+444 
+	`¥ötf
+("\n");
+
+446 
+	`gŸoXY
+(0,0);
+
+447 
+uöt16_t
+ 
+i
+ = 0; i < 941; i++) {
+
+448 
+	`¥ötf
+("%c", 
+BOSSKEY_BSOD
+[
+i
+]);
+
+450 
+	`waô
+(50);
+
+451 
+uöt16_t
+ 
+joyöput
+ = 
+	`ªadJoy°ick
+() & 0x10;
+
+452 
+joyöput
+ != 16) {
+
+453 
+joyöput
+ = 
+	`ªadJoy°ick
+() & 0x10;
+
+455 
+	`bgcﬁ‹
+(0);
+
+456 
+	`gŸoXY
+(0,0);
+
+457 
+	`˛rs¸
+();
+
+458 
+	}
+}
+
+460 
+	$Highsc‹eCheck
+ (
+uöt16_t
+ 
+sc‹e
+)
+
+462 if(
+sc‹e
+ >*(
+uöt16_t
+ *)(0x0800F816))
+
+464 i‡(
+sc‹e
+ >*(
+uöt16_t
+ *)(0x0800F80E))
+
+466 i‡(
+sc‹e
+ >*(
+uöt16_t
+ *)(0x0800F806))
+
+468 
+	`SubmôHighsc‹e
+(0, 
+sc‹e
+);
+
+471 
+	`SubmôHighsc‹e
+(1, 
+sc‹e
+);
+
+474 
+	`SubmôHighsc‹e
+(2, 
+sc‹e
+);
+
+477 
+	`˛rs¸
+();
+
+478 
+	`PrötFromASCII
+("TRY AGAIN",75,23);
+
+479 
+	`waô
+(200);
+
+480 
+	`˛rs¸
+();
+
+481 
+	}
+}
+
+483 
+	$SubmôHighsc‹e
+(
+uöt8_t
+ 
+Highsc‹eLevñ
+, 
+uöt16_t
+ 
+sc‹e
+)
+
+485 
+	`˛rs¸
+();
+
+486 
+	`PrötFromASCII
+("NEW HIGHSCORE", 70, 10);
+
+487 
+uöt16_t
+ 
+Highsc‹eAºay
+[12] = {0};
+
+488 
+Highsc‹eLevñ
+)
+
+491 
+uöt8_t
+ 
+i
+ = 0; i < 12; i++)
+
+493 
+Highsc‹eAºay
+[
+i
+] = 
+	`RódFromFœsh
+ (0x0800F800+i*2-8);
+
+497 
+uöt8_t
+ 
+i
+ = 0; i < 4; i++)
+
+499 
+Highsc‹eAºay
+[
+i
+] = 
+	`RódFromFœsh
+ (0x0800F800+i*2);
+
+501 
+uöt8_t
+ 
+i
+ = 8; i < 12; i++)
+
+503 
+Highsc‹eAºay
+[
+i
+] = 
+	`RódFromFœsh
+ (0x0800F800+i*2-8);
+
+507 
+uöt8_t
+ 
+i
+ = 0; i < 8; i++)
+
+509 
+Highsc‹eAºay
+[
+i
+] = 
+	`RódFromFœsh
+ (0x0800F800+i*2);
+
+513 
+uöt8_t
+ 
+loˇti⁄
+ = 0;
+
+514 
+uöt8_t
+ 
+i
+ = 
+Highsc‹eLevñ
+*4; i < HighscoreLevel*4+3; i++)
+
+516 
+Highsc‹eAºay
+[
+i
+] = 
+	`Ch¨Sñe˘
+(85+10*
+loˇti⁄
+,23);
+
+517 
+loˇti⁄
+++;
+
+518 
+	`waô
+(30);
+
+520 
+Highsc‹eAºay
+[
+Highsc‹eLevñ
+*4+3] = 
+sc‹e
+;
+
+521 
+	`InôFœsh
+();
+
+522 
+	`WrôeToFœsh
+(
+Highsc‹eAºay
+, (0x0800F800));
+
+523 
+	`FLASH_U∆ock
+();
+
+524 
+	`FLASH_ProgømHÆfW‹d
+(0x0800F81A, 0);
+
+525 
+	`FLASH_Lock
+();
+
+526 
+	}
+}
+
+528 
+	$˛órSc‹e
+(){
+
+529 if(
+	`RódFromFœsh
+(0x0800F81A) != 0) {
+
+530 
+	`InôFœsh
+();
+
+531 
+uöt16_t
+ 
+ãmpAºay
+[12] = {65, 65, 65, 0, 66, 66, 66, 0, 67, 67, 67, 0};
+
+532 
+	`WrôeToFœsh
+(
+ãmpAºay
+, 
+ADDRESS
+);
+
+534 
+	`FLASH_U∆ock
+();
+
+535 
+	`FLASH_ProgømHÆfW‹d
+(0x0800F81A, 0);
+
+536 
+	`FLASH_Lock
+();
+
+537 
+	}
+}
+
+539 
+	$Ch¨Sñe˘
+(
+uöt8_t
+ 
+xPos
+, uöt8_à
+yPos
+) {
+
+540 
+vÆDøw
+[2]={0,0};
+
+541 
+swôchVÆ
+ = 0;
+
+542 
+ãmpVÆ
+ = 0;
+
+543 
+	`ªadJoy°ick
+() < 16) {
+
+544 
+swôchVÆ
+ = (
+	`ªadA«log
+(1)/160);
+
+545 if(
+swôchVÆ
+!=
+ãmpVÆ
+) {
+
+546 
+ãmpVÆ
+ = 
+swôchVÆ
+;
+
+548 if(
+vÆDøw
+[0]!=
+ãmpVÆ
++65) {
+
+549 
+vÆDøw
+[0]=
+ãmpVÆ
++65;
+
+550 
+	`PrötFromASCII
+(" ",
+xPos
+,
+yPos
+);
+
+551 
+	`PrötFromASCII
+(
+vÆDøw
+,
+xPos
+,
+yPos
+);
+
+554 
+swôchVÆ
+ = 
+ãmpVÆ
++65;
+
+555  
+swôchVÆ
+;
+
+556 
 	}
 }
 
@@ -143037,7 +145007,69 @@ DownRight
 	~"bÆl.h
 "
 
-4 
+2 
+	#FIX14_SHIFT
+ 14
+
+	)
+
+3 
+	#FIX14_MULT
+(
+a
+, 
+b
+Ë–◊)*(bË>> 
+FIX14_SHIFT
+ )
+
+	)
+
+5 
+	#FIX14_DIV
+(
+a
+, 
+b
+Ë–(◊Ë<< 
+FIX14_SHIFT
+Ë/ b )
+
+	)
+
+6 
+	#FIRST_QUADRANT
+ (
+AngÀ
+ > 384 && AngÀ < 512)
+
+	)
+
+7 
+	#SECOND_QUADRANT
+ (
+AngÀ
+ > 256 && AngÀ < 384)
+
+	)
+
+8 
+	#THIRD_QUADRANT
+ (
+AngÀ
+ > 128 && AngÀ < 256)
+
+	)
+
+9 
+	#FOURT_QUADRANT
+ (
+AngÀ
+ > 0 && AngÀ < 128)
+
+	)
+
+12 
 	$öôBÆl
 (
 bÆl_t
@@ -143055,13 +145087,13 @@ Vx
 Vy
 ) {
 
-5 
+13 
 bÆl
 ->
 DegªeIndex
  = 320;
 
-6 
+14 
 	`öôVe˘‹
 (&
 bÆl
@@ -143073,7 +145105,7 @@ XPos
 YPos
 );
 
-7 
+15 
 bÆl
 ->
 DúVec
@@ -143085,7 +145117,7 @@ y
 DegªeIndex
 );
 
-8 
+16 
 bÆl
 ->
 DúVec
@@ -143097,7 +145129,7 @@ x
 DegªeIndex
 );
 
-9 
+17 
 	`öôVe˘‹
 (&
 bÆl
@@ -143109,11 +145141,11 @@ XPos
 YPos
 );
 
-10 
+18 
 	}
 }
 
-13 
+21 
 	$upd©eBÆl
 (
 bÆl_t
@@ -143125,27 +145157,7 @@ uöt8_t
 vñMod
 ) {
 
-14 
-ã°x
- = 
-bÆl
-->
-NextPos
-.
-x
- >> 14;
-
-15 
-ã°y
- = 
-bÆl
-->
-NextPos
-.
-y
- >> 14;
-
-17 
+24 
 bÆl
 ->
 PªvPos
@@ -143153,7 +145165,7 @@ PªvPos
 NextPos
 ;
 
-19 
+26 
 bÆl
 ->
 NextPos
@@ -143167,17 +145179,7 @@ DúVec
 vñMod
 );
 
-21 i‡((
-bÆl
-->
-NextPos
-.
-y
-Ë>> 14 < 
-putSåikîPos
-) {
-
-22 
+29 
 bÆl
 ->
 NextPos
@@ -143191,41 +145193,11 @@ DúVec
 vñMod
 );
 
-25 
-bÆl
-->
-NextPos
-.
-y
- = (
-putSåikîPos
- - 1) << 14;
-
-28 
-ã°x2
- = 
-bÆl
-->
-NextPos
-.
-x
- >> 14;
-
-29 
-ã°y2
- = 
-bÆl
-->
-NextPos
-.
-y
- >> 14;
-
-30 
+36 
 	}
 }
 
-33 
+39 
 	$upd©eBÆlS≥ed
 (
 bÆl_t
@@ -143237,55 +145209,439 @@ bÆl
 vñMod
 ) {
 
-34 i‡(
+40 i‡(
 vñMod
  < 0) {
 
-35 
+41 
 bÆl
 ->
 DúVec
 .
 x
  >>
-vñMod
-;
-
-36 
-bÆl
-->
-DúVec
-.
-y
- >>
-vñMod
-;
-
-39 
-bÆl
-->
-DúVec
-.
-x
- <<
-vñMod
-;
-
-40 
-bÆl
-->
-DúVec
-.
-y
- <<
 vñMod
 ;
 
 42 
+bÆl
+->
+DúVec
+.
+y
+ >>
+vñMod
+;
+
+45 
+bÆl
+->
+DúVec
+.
+x
+ <<
+vñMod
+;
+
+46 
+bÆl
+->
+DúVec
+.
+y
+ <<
+vñMod
+;
+
+48 
 	}
 }
 
-45 
+68 
+	$Dúe˘i⁄OfBÆlAâack
+(
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+bÆl_t
+ *
+bÆl
+) {
+
+71 
+uöt16_t
+ 
+xPos
+ = 
+bÆl
+->
+PªvPos
+.
+x
+ >> 14;
+
+72 
+uöt16_t
+ 
+yPos
+ = 
+bÆl
+->
+PªvPos
+.
+y
+ >> 14;
+
+74 
+ve˘‹_t
+ 
+T›
+, 
+BŸtom
+;
+
+75 
+ve˘‹_t
+ 
+Le·
+, 
+Right
+;
+
+76 
+uöt16_t
+ 
+GameD©aT›
+, 
+GameD©aBŸtom
+, 
+GameD©aLe·
+, 
+GameD©aRight
+;
+
+80 
+T›
+.
+x
+ = 
+xPos
+;
+
+81 
+T›
+.
+y
+ = 
+yPos
+ - 1 >= 0 ? yPos - 1 : 0;
+
+84 
+BŸtom
+.
+x
+ = 
+xPos
+;
+
+85 
+BŸtom
+.
+y
+ = 
+yPos
+ + 1 < 
+putHeight
+ ? yPos + 1 :ÖutHeight - 1;
+
+88 
+Le·
+.
+x
+ = 
+xPos
+ - 1 >= 0 ? xPos - 1 : 0;
+
+89 
+Le·
+.
+y
+ = 
+yPos
+;
+
+92 
+Right
+.
+x
+ = 
+xPos
+ + 1 < 
+putWidth
+ ? xPos + 1 :0;
+
+93 
+Right
+.
+y
+ = 
+yPos
+;
+
+97 
+GameD©aT›
+ = 
+gameAºay
+[
+T›
+.
+y
+][T›.
+x
+];
+
+98 
+GameD©aBŸtom
+ = 
+gameAºay
+[
+BŸtom
+.
+y
+][BŸtom.
+x
+];
+
+99 
+GameD©aRight
+ = 
+gameAºay
+[
+Right
+.
+y
+][Right.
+x
+];
+
+100 
+GameD©aLe·
+ = 
+gameAºay
+[
+Le·
+.
+y
+][Le·.
+x
+];
+
+108 i‡(
+GameD©aRight
+ =0 && 
+GameD©aLe·
+ =0 && 
+GameD©aT›
+ !0 && 
+GameD©aBŸtom
+ == 0) {
+
+113 i‡(
+GameD©aRight
+ =0 && 
+GameD©aLe·
+ =0 && 
+GameD©aT›
+ =0 && 
+GameD©aBŸtom
+ != 0) {
+
+118 i‡(
+GameD©aRight
+ !0 && 
+GameD©aLe·
+ =0 && 
+GameD©aT›
+ =0 && 
+GameD©aBŸtom
+ == 0) {
+
+123 i‡(
+GameD©aRight
+ =0 && 
+GameD©aLe·
+ !0 && 
+GameD©aT›
+ =0 && 
+GameD©aBŸtom
+ == 0) {
+
+128 i‡(
+GameD©aRight
+ =0 && 
+GameD©aLe·
+ !0 && 
+GameD©aT›
+ !0 && 
+GameD©aBŸtom
+ == 0) {
+
+133 i‡(
+GameD©aRight
+ !0 && 
+GameD©aLe·
+ =0 && 
+GameD©aT›
+ !0 && 
+GameD©aBŸtom
+ == 0) {
+
+138 i‡(
+GameD©aRight
+ =0 && 
+GameD©aLe·
+ !0 && 
+GameD©aT›
+ =0 && 
+GameD©aBŸtom
+ != 0) {
+
+143 i‡(
+GameD©aRight
+ !0 && 
+GameD©aLe·
+ =0 && 
+GameD©aT›
+ =0 && 
+GameD©aBŸtom
+ != 0) {
+
+149 
+	}
+}
+
+151 
+öt32_t
+ 
+	$GëDegªe
+(
+uöt8_t
+ 
+Up
+, 
+öt32_t
+ 
+Fa˘‹
+, 
+öt16_t
+ 
+DegªeIndex
+){
+
+152 
+öt32_t
+ 
+R™d
+ = (
+	`DACR™d
+() % 64)-32;
+
+154 i‡(
+Up
+ == 1) {
+
+155  (–(128 * ( (3 << 14Ë+ (
+Fa˘‹
+)ËË- ( (
+DegªeIndex
+ & 0x1FFË* Fa˘‹ ) ) >> 14Ë+ 
+R™d
+;
+
+159  ((
+Fa˘‹
+ * (256 - (
+DegªeIndex
+ & 0x1FFËËË>> 14Ë+ 
+R™d
+;
+
+161 
+	}
+}
+
+165 
+	$CheckAngÀ
+(
+Dúe˘i⁄OfBÆlAâack
+, 
+öt32_t
+ 
+AngÀs
+) {
+
+174 
+öt32_t
+ 
+AngÀ
+ = 
+AngÀs
+ & 0x1FF;
+
+176 
+Dúe˘i⁄OfBÆlAâack
+) {
+
+179 i‡(
+THIRD_QUADRANT
+ || 
+FOURT_QUADRANT
+) {
+
+185 i‡(
+FIRST_QUADRANT
+ || 
+SECOND_QUADRANT
+) {
+
+191 i‡(
+SECOND_QUADRANT
+ || 
+THIRD_QUADRANT
+) {
+
+197 i‡(
+FIRST_QUADRANT
+ || 
+FOURT_QUADRANT
+) {
+
+203 i‡(
+FOURT_QUADRANT
+) {
+
+209 i‡(
+THIRD_QUADRANT
+) {
+
+215 i‡(
+FIRST_QUADRANT
+) {
+
+221 i‡(
+SECOND_QUADRANT
+) {
+
+230 
+	}
+}
+
+232 
 	$Upd©eBÆlAngÀ
 (
 bÆl_t
@@ -143299,13 +145655,69 @@ gameAºay
 putHeight
 ][
 putWidth
-]) {
+], uöt8_à
+Ty≥OfHô
+) {
 
-46 
+233 
 Dúe˘i⁄OfBÆlAâack_V¨
 ;
 
-52 
+236 
+uöt8_t
+ 
+FromI
+, 
+ToI
+;
+
+237 
+öt32_t
+ 
+Fa˘‹
+ = 0b00000000000000000100000000000000;
+
+238 
+öt32_t
+ 
+AngÀ
+;
+
+247 
+uöt8_t
+ 
+RunTime
+ = 0;
+
+250 
+Ty≥OfHô
+) {
+
+254 
+Fa˘‹
+ = 0b00000000000000000100000000000000;
+
+259 
+Fa˘‹
+ = 0b00000000000000000001010101010101;
+
+264 
+Fa˘‹
+ = 0b00000000000000000010101010101010;
+
+269 
+Fa˘‹
+ = 0b00000000000000000100000000000000;
+
+274 
+Fa˘‹
+ = 0b00000000000000000110000000000000;
+
+280 
+Fa˘‹
+ = 0b00000000000000001100000000000000;
+
+285 
 Dúe˘i⁄OfBÆlAâack_V¨
  = 
 	`Dúe˘i⁄OfBÆlAâack
@@ -143315,17 +145727,71 @@ gameAºay
 bÆl
 );
 
-55 
+287 
 Dúe˘i⁄OfBÆlAâack_V¨
 ) {
 
-58 
+290 
+FromI
+ = 0;
+
+291 
+ToI
+ = 0;
+
+295 
+FromI
+ = 1;
+
+296 
+ToI
+ = 1;
+
+300 
+FromI
+ = 0;
+
+301 
+ToI
+ = 1;
+
+305 
+i
+ = 
+FromI
+; i <
+ToI
+; i ++) {
+
+309 
 bÆl
 ->
 DegªeIndex
- = 512 - (ball->DegreeIndex) & 0x1FF;
+ = (
+i
+ =0Ë? 
+	`GëDegªe
+(1, 
+Fa˘‹
+, ball->DegreeIndex) : GetDegree(0, Factor, ball->DegreeIndex);
 
-59 
+313 i‡(–(
+FromI
+ =0 && 
+ToI
+ =1Ë&& 
+i
+ !1Ë|| 
+	`CheckAngÀ
+(
+Dúe˘i⁄OfBÆlAâack_V¨
+, 
+bÆl
+->
+DegªeIndex
+) == 1 ) {
+
+320 
 bÆl
 ->
 DúVec
@@ -143337,7 +145803,7 @@ x
 DegªeIndex
 );
 
-60 
+321 
 bÆl
 ->
 DúVec
@@ -143349,97 +145815,23 @@ y
 DegªeIndex
 );
 
-64 
+332 
+	`gŸoXY
+(150,100);
+
+333 
+	`¥ötf
+("BÆ»™gÀ: %d ", ((
 bÆl
 ->
 DegªeIndex
- = 256 - (ball->DegreeIndex) & 0x1FF;
+ & 0x1FF)*360)/512);
 
-65 
-bÆl
-->
-DúVec
-.
-x
- = 
-	`gëCos
-(bÆl->
-DegªeIndex
-);
+334 
+	`gŸoXY
+(40,100);
 
-66 
-bÆl
-->
-DúVec
-.
-y
- = 
-	`gëSö
-(bÆl->
-DegªeIndex
-);
-
-70 
-bÆl
-->
-DegªeIndex
- = 256 - (ball->DegreeIndex) & 0x1FF;
-
-71 
-bÆl
-->
-DúVec
-.
-x
- = 
-	`gëCos
-(bÆl->
-DegªeIndex
-);
-
-72 
-bÆl
-->
-DúVec
-.
-y
- = 
-	`gëSö
-(bÆl->
-DegªeIndex
-);
-
-74 
-bÆl
-->
-DegªeIndex
- = 512 - (ball->DegreeIndex) & 0x1FF;
-
-75 
-bÆl
-->
-DúVec
-.
-x
- = 
-	`gëCos
-(bÆl->
-DegªeIndex
-);
-
-76 
-bÆl
-->
-DúVec
-.
-y
- = 
-	`gëSö
-(bÆl->
-DegªeIndex
-);
-
-80 
+336 
 bÆl
 ->
 NextPos
@@ -143451,7 +145843,7 @@ PªvPos
 DúVec
 .y);
 
-81 
+337 
 bÆl
 ->
 NextPos
@@ -143463,11 +145855,11 @@ PªvPos
 DúVec
 .x);
 
-84 
+340 
 	}
 }
 
-87 
+343 
 	$døwBÆl
 (
 bÆl_t
@@ -143475,7 +145867,7 @@ bÆl_t
 bÆl
 ){
 
-89 
+345 
 	`gŸoXY
 (
 bÆl
@@ -143487,11 +145879,11 @@ x
 y
  >> 14);
 
-91 
+347 
 	`putch¨
 (32);
 
-93 
+349 
 	`gŸoXY
 (
 bÆl
@@ -143503,11 +145895,11 @@ x
 y
  >> 14);
 
-95 
+351 
 	`putch¨
 (111);
 
-96 
+352 
 	}
 }
 
@@ -143575,25 +145967,37 @@ x
 	$PrötBrickCou¡î
 (
 uöt16_t
- 
+ *
 BrickCou¡î
 ) {
 
 20 
+uöt16_t
+ 
+k
+ = *
+BrickCou¡î
+;
+
+22 
+	`fgcﬁ‹
+(15);
+
+23 
 	`gŸoXY
 (10,80);
 
-21 
+24 
 	`¥ötf
-("Brick cou¡î: %d ", 
+("Brick cou¡î: %d ", *
 BrickCou¡î
 );
 
-22 
+25 
 	}
 }
 
-25 
+28 
 	$døwBox
 (
 brick_t
@@ -143607,7 +146011,7 @@ brickHeight
 brickWidth
 ){
 
-26 
+29 
 	`fgcﬁ‹
 (
 brick
@@ -143615,13 +146019,13 @@ brick
 cuºHP
 );
 
-28 
+31 
 y
  = 0; y < *
 brickHeight
 ; y++){
 
-29 
+32 
 	`gŸoXY
 (
 brick
@@ -143633,17 +146037,17 @@ posY
 y
 );
 
-30 
+33 
 x
  = 0; x < *
 brickWidth
 ; x++) {
 
-31 
+34 
 	`putch¨
 (178);
 
-34 
+37 
 	}
 }
 
@@ -143663,9 +146067,15 @@ brickWidth
 	~"cﬁlisi⁄.h
 "
 
-19 
-	$Dúe˘i⁄OfBÆlAâack
-(
+7 
+uöt16_t
+ 
+	$BÆlHôWÆl
+(
+bÆl_t
+ *
+bÆl1
+, 
 uöt8_t
  
 gameAºay
@@ -143674,368 +146084,564 @@ putHeight
 ][
 putWidth
 ], 
-bÆl_t
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
  *
-bÆl
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
 ) {
 
-22 
-uöt16_t
- 
-xPos
- = 
-bÆl
-->
-PªvPos
-.
-x
- >> 14;
-
-23 
-uöt16_t
- 
-yPos
- = 
-bÆl
-->
-PªvPos
-.
-y
- >> 14;
-
-25 
-ve˘‹_t
- 
-T›
-, 
-BŸtom
-;
-
-26 
-ve˘‹_t
- 
-Le·
-, 
-Right
-;
-
-27 
-uöt16_t
- 
-GameD©aT›
-, 
-GameD©aBŸtom
-, 
-GameD©aLe·
-, 
-GameD©aRight
-;
-
-31 
-T›
-.
-x
- = 
-xPos
-;
-
-32 
-T›
-.
-y
- = 
-yPos
- - 1 >= 0 ? yPos - 1 : 0;
-
-35 
-BŸtom
-.
-x
- = 
-xPos
-;
-
-36 
-BŸtom
-.
-y
- = 
-yPos
- + 1 < 
-putHeight
- ? yPos + 1 :ÖutHeight - 1;
-
-39 
-Le·
-.
-x
- = 
-xPos
- - 1 >= 0 ? xPos - 1 : 0;
-
-40 
-Le·
-.
-y
- = 
-yPos
-;
-
-43 
-Right
-.
-x
- = 
-xPos
- + 1 < 
-putWidth
- ? xPos + 1 :0;
-
-44 
-Right
-.
-y
- = 
-yPos
-;
-
-48 
-GameD©aT›
- = 
-gameAºay
-[
-T›
-.
-y
-][T›.
-x
-];
-
-49 
-GameD©aBŸtom
- = 
-gameAºay
-[
-BŸtom
-.
-y
-][BŸtom.
-x
-];
-
-50 
-GameD©aRight
- = 
-gameAºay
-[
-Right
-.
-y
-][Right.
-x
-];
-
-51 
-GameD©aLe·
- = 
-gameAºay
-[
-Le·
-.
-y
-][Le·.
-x
-];
-
-59 i‡(
-GameD©aRight
- =0 && 
-GameD©aLe·
- =0 && 
-GameD©aT›
- !0 && 
-GameD©aBŸtom
- == 0) {
-
-64 i‡(
-GameD©aRight
- =0 && 
-GameD©aLe·
- =0 && 
-GameD©aT›
- =0 && 
-GameD©aBŸtom
- != 0) {
-
-69 i‡(
-GameD©aRight
- !0 && 
-GameD©aLe·
- =0 && 
-GameD©aT›
- =0 && 
-GameD©aBŸtom
- == 0) {
-
-74 i‡(
-GameD©aRight
- =0 && 
-GameD©aLe·
- !0 && 
-GameD©aT›
- =0 && 
-GameD©aBŸtom
- == 0) {
-
-80 
-	}
-}
-
-85 
-	$BÆlHôWÆl
-() {
-
-86 
+9 
 	`gŸoXY
 (40,100);
 
-87 
+10 
 	`¥ötf
-("Ball will hitÅhe border ");
+("Last ball hit: The wall ");
 
-89 
+11 
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 1);
+
+15 
 	}
 }
 
-92 
+18 
+uöt16_t
+ 
 	$BÆlHôBrick
-() {
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+) {
+
+21 
+	`gŸoXY
+(40,100);
+
+22 
+	`¥ötf
+("Last ball hit: A brick ");
+
+25 
+uöt16_t
+ 
+Bricködex
+ = 
+gameAºay
+[(
+bÆl1
+->
+NextPos
+.
+y
+Ë>> 14][(bÆl1->NextPos.
+x
+) >> 14];
+
+28 
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 1);
+
+31 i‡(
+brickAºay
+[
+Bricködex
+].
+cuºHP
+ > 0) {
+
+34 
+brickAºay
+[
+Bricködex
+].
+cuºHP
+--;
+
+37 
+	`døwBox
+(&
+brickAºay
+[
+Bricködex
+], 
+brickHeight
+, 
+brickWidth
+);
+
+43 i‡(
+brickAºay
+[
+Bricködex
+].
+cuºHP
+ == 0) {
+
+46 (*
+BrickCou¡î
+)--;
+
+49 (*
+PœyîSc‹e
+Ë+
+brickAºay
+[
+Bricködex
+].
+MaxHP
+;
+
+52 
+	`KûlBrick
+(
+Bricködex
+, 
+gameAºay
+, &
+brickAºay
+[Bricködex], 
+brickHeight
+, 
+brickWidth
+);
+
+55 
+	`PrötBrickCou¡î
+(
+BrickCou¡î
+);
+
+58 i‡(
+brickAºay
+[
+Bricködex
+].
+pwrUP
+ =1 && 
+powîup
+->
+Æive
+ =0 &&Öowîup->
+íabÀ
+ == 0) {
+
+59 
+	`•awnPowîup
+(
+powîup
+, &
+brickAºay
+[
+Bricködex
+], 
+brickHeight
+, 
+brickWidth
+);
+
+66 i‡((*
+BrickCou¡î
+) == 0) {
+
+73 
+	}
+}
+
+75 
+uöt16_t
+ 
+	$BÆlHôSåickî1
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+){
+
+76 
+	`gŸoXY
+(40,100);
+
+78 
+	`¥ötf
+("Last ball hit: StrikerÜeftÉnd ");
+
+79 
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 2);
+
+82 
+	}
+}
+
+84 
+uöt16_t
+ 
+	$BÆlHôSåickî2
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+){
+
+85 
+	`gŸoXY
+(40,100);
+
+86 
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 3);
+
+87 
+	`¥ötf
+("Last ball hit: StrikerÜeft medium ");
+
+90 
+	}
+}
+
+92 
+uöt16_t
+ 
+	$BÆlHôSåickî3
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+){
 
 93 
 	`gŸoXY
 (40,100);
 
 94 
-	`¥ötf
-("Ball will hitÅhe bricks ");
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 4);
 
-96 
+95 
+	`¥ötf
+("Last ball hit: Striker central ");
+
+98 
 	}
 }
 
-98 
-	$BÆlHôSåickî1
-(){
-
-99 
-	`gŸoXY
-(40,100);
+100 
+uöt16_t
+ 
+	$BÆlHôSåickî4
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+){
 
 101 
-	`¥ötf
-("Ball will hitÅhe stricker 1");
+	`gŸoXY
+(40,100);
+
+102 
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 5);
 
 103 
-	}
-}
-
-105 
-	$BÆlHôSåickî2
-(){
+	`¥ötf
+("Last ball hit: StrikerÑight medium");
 
 106 
-	`gŸoXY
-(40,100);
+	}
+}
 
 108 
-	`¥ötf
-("Ball will hitÅhe stricker 2");
+uöt16_t
+ 
+	$BÆlHôSåickî5
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+){
+
+109 
+	`gŸoXY
+(40,100);
 
 110 
-	}
-}
+	`Upd©eBÆlAngÀ
+(
+bÆl1
+, 
+gameAºay
+, 6);
 
-112 
-	$BÆlHôSåickî3
-(){
-
-113 
-	`gŸoXY
-(40,100);
-
-115 
+111 
 	`¥ötf
-("Ball will hitÅhe stricker 3");
+("Last ball hit: StrikerÑightÉnd ");
 
-117 
+114 
 	}
 }
 
-119 
-	$BÆlHôSåickî4
-(){
-
-120 
-	`gŸoXY
-(40,100);
-
-122 
-	`¥ötf
-("Ball will hitÅhe stricker 4");
-
-124 
-	}
-}
-
-126 
-	$BÆlHôSåickî5
-(){
-
-127 
-	`gŸoXY
-(40,100);
-
-129 
-	`¥ötf
-("Ball will hitÅhe stricker 5");
-
-131 
-	}
-}
-
-133 
-	$BÆlHôSåickî6
-(){
-
-134 
-	`gŸoXY
-(40,100);
-
-136 
-	`¥ötf
-("Ball will hitÅhe stricker 6");
-
-138 
-	}
-}
-
-140 
+118 
+uöt16_t
+ 
 	$BÆlOutOfBound¨y
-(){
+(
+bÆl_t
+ *
+bÆl1
+, 
+uöt8_t
+ 
+gameAºay
+[
+putHeight
+][
+putWidth
+], 
+brick_t
+ 
+brickAºay
+[
+maxBricks
+], uöt8_à*
+brickHeight
+, uöt8_à*
+brickWidth
+, 
+uöt16_t
+ *
+BrickCou¡î
+, uöt16_à*
+PœyîSc‹e
+, 
+pwrUp
+ *
+powîup
+){
 
-141 
+119 
 	`gŸoXY
 (40,100);
 
-143 
+121 
 	`¥ötf
 ("END GAME! ");
 
-145 
+125 
 	}
 }
 
-157 * 
+137 * 
 	$Cﬁlisi⁄Dëe˘
 (
 uöt8_t
@@ -144051,7 +146657,7 @@ bÆl_t
 bÆl
 ) {
 
-160 
+140 
 uöt8_t
  
 xPos
@@ -144063,7 +146669,7 @@ NextPos
 x
  >> 14;
 
-161 
+141 
 uöt8_t
  
 yPos
@@ -144075,7 +146681,7 @@ NextPos
 y
  >> 14;
 
-164 
+144 
 uöt8_t
  
 gameD©a
@@ -144087,35 +146693,35 @@ yPos
 xPos
 ];
 
-167 
+147 
 gameD©a
 ) {
 
-168 1:  
+148 1:  
 BÆlHôWÆl
 ;
 
-169 2:  
+149 2:  
 BÆlHôSåickî1
 ;
 
-170 3:  
+150 3:  
 BÆlHôSåickî2
 ;
 
-171 4:  
+151 4:  
 BÆlHôSåickî3
 ;
 
-172 5:  
+152 5:  
 BÆlHôSåickî4
 ;
 
-173 6:  
+153 6:  
 BÆlHôSåickî5
 ;
 
-177 i‡((
+157 i‡((
 yPos
  < 
 putSåikîPos
@@ -144123,7 +146729,7 @@ putSåikîPos
 gameD©a
  == 0)) {
 
-180 i‡((
+160 i‡((
 yPos
  >
 putSåikîPos
@@ -144131,15 +146737,15 @@ putSåikîPos
 gameD©a
  == 0)) {
 
-181  
+161  
 BÆlOutOfBound¨y
 ;
 
-184  
+164  
 BÆlHôBrick
 ;
 
-186 
+166 
 	}
 }
 
@@ -144376,14 +146982,30 @@ cuºpos
 ;
 
 9 
+uöt32_t
+ 
+Rﬁl
+ = 
+	`ªadRﬁl
+(5,3);
+
+10 i‡(
+Rﬁl
+ < 5 && Roll > -5){
+
+11 
+Rﬁl
+ = 0;
+
+13 
 °rikî
 ->
 cuºpos
  = såikî->cuºpo†- 
-	`ªadRﬁl
-(20, 2);
+Rﬁl
+;
 
-12 i‡(
+16 i‡(
 °rikî
 ->
 cuºpos
@@ -144393,7 +147015,7 @@ putWidth
 °rikîsize
  - 1)) {
 
-13 
+17 
 °rikî
 ->
 cuºpos
@@ -144401,11 +147023,11 @@ cuºpos
 ¥evpos
 ;
 
-18 
+20 
 	`fgcﬁ‹
 (0);
 
-19 
+21 
 	`gŸoXY
 (
 °rikî
@@ -144415,15 +147037,77 @@ cuºpos
 putSåikîPos
 );
 
-20 
-i
- = 0; i < 
+23 
+öt8_t
+ 
+diff
+ = 
 °rikî
 ->
+cuºpos
+ - såikî->
+¥evpos
+;
+
+24 i‡(
+diff
+ < 0){
+
+25 
+	`gŸoXY
+(
+°rikî
+->
+¥evpos
++°rikî->
 °rikîsize
+ + 
+diff
+, 
+putSåikîPos
+);
+
+26 
+i
+ = 0; i > 
+diff
+; i--){
+
+27 
+gameAºay
+[
+putSåikîPos
+][
+°rikî
+->
+¥evpos
+ - 
+i
+ + såikî->
+°rikîsize
+] = 0;
+
+28 
+	`putch¨
+(32);
+
+32 
+	`gŸoXY
+(
+°rikî
+->
+¥evpos
+, 
+putSåikîPos
+);
+
+33 
+i
+ = 0; i < 
+diff
 ; i++){
 
-21 
+34 
 gameAºay
 [
 putSåikîPos
@@ -144435,15 +147119,15 @@ putSåikîPos
 i
 ] = 0;
 
-22 
+35 
 	`putch¨
 (32);
 
-25 
+40 
 	`fgcﬁ‹
-(8);
+(15);
 
-26 
+41 
 	`gŸoXY
 –
 °rikî
@@ -144453,13 +147137,13 @@ cuºpos
 putSåikîPos
 );
 
-27 
+42 
 uöt8_t
  
 vÆue
  = 2;
 
-28 
+43 
 uöt8_t
  
 i
@@ -144471,7 +147155,7 @@ i
 °rikîöc
 ){
 
-29 
+44 
 uöt8_t
  
 s
@@ -144481,7 +147165,7 @@ s
 °rikîöc
 ; s++){
 
-30 
+45 
 gameAºay
 [
 putSåikîPos
@@ -144497,15 +147181,15 @@ s
 vÆue
 ;
 
-31 
+46 
 	`putch¨
 (223);
 
-33 
+48 
 vÆue
 ++;
 
-35 
+50 
 	}
 }
 
@@ -144890,78 +147574,90 @@ y
 "
 
 25 
-	~"Game.h
+	~"Míu.h
 "
 
 26 
-	~"timî.h
+	~"ROM.h
 "
 
 27 
+	~"Game.h
+"
+
+28 
+	~"timî.h
+"
+
+29 
 	~"i2c.h
 "
 
-30 
+31 
+	~"buzzî.h
+"
+
+33 
 	#ESC
  0x1B
 
 	)
 
-32 
+35 
 	$bö¨y_c⁄vîsi⁄
 (
 num
 )
 
-34 i‡(
+37 i‡(
 num
  == 0)
 
-40  (
+43  (
 num
  % 2Ë+ 10 * 
 	`bö¨y_c⁄vîsi⁄
 (num / 2);
 
-42 
+45 
 	}
 }
 
-46 
+49 
 	$gëSîülI≈ut
 (* 
 öput
 ){
 
-47 
+50 
 i
 ;
-
-48 
-i
-=0; i < 6; i++) {
-
-49 
-öput
-[
-i
-] = 0x00;
 
 51 
 i
 =0; i < 6; i++) {
 
-52 
+52 
+öput
+[
+i
+] = 0x00;
+
+54 
+i
+=0; i < 6; i++) {
+
+55 
 öputch¨
  = 
 	`u¨t_gëc
 ();
 
-53 i‡(
+56 i‡(
 öputch¨
  == 0x0D ) {
 
-57 
+60 
 öput
 [
 i
@@ -144969,135 +147665,237 @@ i
 öputch¨
 ;
 
-60 
+63 
 	}
 }
 
-64 
+66 
 	#MMA7660Adªss
  0x4C << 1
 
 	)
 
-65 
+68 
 	$maö
 () {
 
-71 
-LCDD©a
-[4][128] = { {0} };
+70 
+	`öôDACNoi£
+();
 
-74 
-uöt8_t
- 
-Àvñ
+71 
+	`˛órSc‹e
+();
+
+73 
+ASCIIARRAYTYPE
 ;
 
-75 
-uöt16_t
- 
-PœyîSc‹e
- = 0;
+75 
+JoyI≈ut
+, 
+Sñe˘edMíu
+;
 
-76 
-uöt8_t
- 
-Resu…sFromGame
+76 
+Sñe˘edMíuBlock
+;
+
+77 
+E«bÀSñe˘i⁄
  = 1;
 
-78 
+78 
+MíuSèã
+ = 1;
+
+89 
 	`öô_usb_u¨t
 (115200);
 
-80 
+91 
+	`fgcﬁ‹
+(15);
+
+94 
+	`PrötMíu
+(1, &
+Sñe˘edMíu
+);
+
+96 
+Sñe˘edMíu
+ = 1;
+
+97 
+Sñe˘edMíuBlock
+ = 1;
+
+100 
 	`öôGPIO
 ();
 
-82 
+101 
+	`öôLED
+();
+
+102 
+	`öôJoy°ick
+();
+
+103 
 	`öôTime
 (&
 ˛k
 );
 
-84 
+105 
 	`öôI¡îru±
 ();
 
-86 
+107 
 	`öôA«log
 ();
 
-88 
+109 
 	`I2C_öô
 ();
 
-89 
+110 
 	`I2C_Wrôe
 (
 MMA7660Adªss
 , 0x07, 0x01);
 
-108 
-Àvñ
- = 1;
+111 
+	`öôBuzzî
+();
 
-113 
-Resu…sFromGame
- == 1) {
-
-115 
-Resu…sFromGame
- = 
-	`runGame
-(&
-Àvñ
-, &
-PœyîSc‹e
-);
-
-117 i‡(
-Resu…sFromGame
- == 1) {
+113 
+	`öôLCD
+();
 
 120 
-	`˛rs¸
+JoyI≈ut
+ = 
+	`ªadJoy°ick
 ();
 
-122 
-	`gŸoXY
-(40,40);
+123 i‡(
+E«bÀSñe˘i⁄
+ =1 && (
+JoyI≈ut
+ == 1 || JoyInput == 2)) {
 
-124 
-	`¥ötf
-(" GAME LEVEL COMPLETE! ");
+126 i‡(
+JoyI≈ut
+ == 2) {
 
-126 
-Àvñ
-++;
-
-131 
-	`˛rs¸
-();
-
-133 
-	`gŸoXY
-(40,40);
-
-135 
-	`¥ötf
-(" GAME OVER! ");
-
-136 
-	`gŸoXY
-(40,41);
-
-138 
-	`¥ötf
-(" You∏sc‹êi†%d ", 
-PœyîSc‹e
+129 
+	`Sñe˘
+(
+Sñe˘edMíuBlock
+, 
+DESELECT
+, 
+Sñe˘edMíu
 );
 
+132 
+Sñe˘edMíuBlock
+ = 
+	`Rëu∫NextBlockSñe˘i⁄Numbî
+(
+UP
+, SelectedMenuBlock);
+
+135 
+	`Sñe˘
+(
+Sñe˘edMíuBlock
+, 
+SELECT
+, 
+Sñe˘edMíu
+);
+
+140 i‡(
+JoyI≈ut
+ == 1) {
+
 143 
+	`Sñe˘
+(
+Sñe˘edMíuBlock
+, 
+DESELECT
+, 
+Sñe˘edMíu
+);
+
+146 
+Sñe˘edMíuBlock
+ = 
+	`Rëu∫NextBlockSñe˘i⁄Numbî
+(
+DOWN
+, SelectedMenuBlock);
+
+149 
+	`Sñe˘
+(
+Sñe˘edMíuBlock
+, 
+SELECT
+, 
+Sñe˘edMíu
+);
+
+154 
+E«bÀSñe˘i⁄
+ = 0;
+
+159 i‡(
+JoyI≈ut
+ == 0) {
+
+161 
+E«bÀSñe˘i⁄
+ = 1;
+
+166 i‡(
+E«bÀSñe˘i⁄
+ =1 && 
+JoyI≈ut
+ == 16) {
+
+168 
+	`Upd©eSèã
+(
+Sñe˘edMíu
+, 
+Sñe˘edMíuBlock
+, &SelectedMenu);
+
+169 
+Sñe˘edMíuBlock
+ = 1;
+
+172 
+	`bgcﬁ‹
+(0);
+
+175 
+	`PrötMíu
+(
+Sñe˘edMíu
+, &SelectedMenu);
+
+178 
+E«bÀSñe˘i⁄
+ = 0;
+
+184 
 	}
 }
 
@@ -145107,841 +147905,43 @@ PœyîSc‹e
 	~"GPIO.h
 "
 
-4 
-uöt8_t
- 
-	$ªadJoy°ick
+3 
+	$öôGPIO
 () {
 
 5 
-uöt16_t
- 
-Up
- = (
-GPIOA
+RCC
 ->
-IDR
- & (0x0001 << 4)) >> 4;
-
-6 
-uöt16_t
- 
-Down
- = (
-GPIOB
-->
-IDR
- & (0x0001 << 0)) << 1;
-
-7 
-uöt16_t
- 
-Le·
- = (
-GPIOC
-->
-IDR
- & (0x0001 << 1)) << 1;
+AHBENR
+ |
+RCC_AHBPîùh_GPIOA
+;
 
 8 
-uöt16_t
- 
-Right
- = (
-GPIOC
+RCC
 ->
-IDR
- & (0x0001 << 0)) << 3;
+AHBENR
+ |
+RCC_AHBPîùh_GPIOB
+;
 
-9 
-uöt16_t
- 
-Cíãr
- = (
-GPIOB
+11 
+RCC
 ->
-IDR
- & (0x0001 << 5)) >> 1;
-
-11  
-Up
- + 
-Down
- + 
-Le·
- + 
-Right
- + 
-Cíãr
+AHBENR
+ |
+RCC_AHBPîùh_GPIOC
 ;
 
 12 
 	}
 }
 
-82 
-	$öôGPIO
-() {
-
-84 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_GPIOA
-;
-
-87 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_GPIOB
-;
-
-90 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_GPIOC
-;
-
-91 
-	`öôJoy°ick
-();
-
-93 
-	`öôLED
-();
-
-94 
-	}
-}
-
-96 
-	$öôJoy°ick
-() {
-
-100 
-GPIOA
-->
-MODER
- &= ~((0x00000003) << (4 * 2));
-
-104 
-GPIOA
-->
-PUPDR
- &= ~((0x00000003) << (4 * 2));
-
-108 
-GPIOB
-->
-MODER
- &= ~((0x00000C03) << (0 * 2));
-
-112 
-GPIOB
-->
-PUPDR
- &= ~((0x00000C03) << (0 * 2));
-
-117 
-GPIOC
-->
-MODER
- &= ~((0x0000000F) << (0 * 2));
-
-121 
-GPIOC
-->
-PUPDR
- &= ~((0x0000000F) << (0 * 2));
-
-124 
-	}
-}
-
-126 
-	$öôLED
-() {
-
-129 
-GPIOA
-->
-OSPEEDR
- &= ~((0x00000003) << (9 * 2));
-
-132 
-GPIOA
-->
-OSPEEDR
- |= ((0x00000002) << (9 * 2));
-
-135 
-GPIOA
-->
-OTYPER
- &= ~ ((0x00000001) << (9));
-
-138 
-GPIOA
-->
-OTYPER
- |= ((0x00000000) << (9));
-
-141 
-GPIOA
-->
-MODER
- &= ~((0x00000003) << (9 * 2));
-
-144 
-GPIOA
-->
-MODER
- |= ((0x00000001) << (9 * 2));
-
-148 
-GPIOB
-->
-OSPEEDR
- &= ~((0x00000003) << (4 * 2));
-
-151 
-GPIOB
-->
-OSPEEDR
- |= ((0x00000002) << (4 * 2));
-
-154 
-GPIOB
-->
-OTYPER
- &= ~ ((0x00000001) << (4));
-
-157 
-GPIOB
-->
-OTYPER
- |= ((0x00000000) << (4));
-
-160 
-GPIOB
-->
-MODER
- &= ~((0x00000003) << (4 * 2));
-
-163 
-GPIOB
-->
-MODER
- |= ((0x00000001) << (4 * 2));
-
-168 
-GPIOC
-->
-OSPEEDR
- &= ~((0x00000003) << (7 * 2));
-
-171 
-GPIOC
-->
-OSPEEDR
- |= ((0x00000002) << (7 * 2));
-
-174 
-GPIOC
-->
-OTYPER
- &= ~ ((0x00000001) << (7));
-
-177 
-GPIOC
-->
-OTYPER
- |= ((0x00000000) << (7));
-
-180 
-GPIOC
-->
-MODER
- &= ~((0x00000003) << (7 * 2));
-
-183 
-GPIOC
-->
-MODER
- |= ((0x00000001) << (7 * 2));
-
-184 
-	}
-}
-
-186 
-	$SëLed
-(
-R
-, 
-G
-, 
-B
-) {
-
-188 i‡(
-R
- == 1) {
-
-190 
-GPIOB
-->
-ODR
- &= ~(0x0001 << 4);
-
-193 
-GPIOB
-->
-ODR
- |= (0x0001 << 4);
-
-196 i‡(
-G
- == 1) {
-
-198 
-GPIOC
-->
-ODR
- &= ~(0x0001 << 7);
-
-201 
-GPIOC
-->
-ODR
- |= (0x0001 << 7);
-
-205 i‡(
-B
- == 1) {
-
-207 
-GPIOA
-->
-ODR
- &= ~(0x0001<< 9);
-
-210 
-GPIOA
-->
-ODR
- |= (0x0001 << 9);
-
-215 
-	}
-}
-
-218 
-	$öôA«log
-() {
-
-220 
-GPIOA
-->
-MODER
- &= ~((0x00000003) << (0 * 2));
-
-222 
-GPIOA
-->
-MODER
- |= ((0x00000001) << (0 * 2));
-
-224 
-GPIOA
-->
-PUPDR
- &= ~((0x00000003) << (0 * 2));
-
-227 
-GPIOA
-->
-MODER
- &= ~((0x00000003) << (1 * 2));
-
-229 
-GPIOA
-->
-MODER
- |= ((0x00000001) << (1 * 2));
-
-231 
-GPIOA
-->
-PUPDR
- &= ~((0x00000003) << (1 * 2));
-
-234 
-GPIOA
-->
-MODER
- &= ~((0x00000003) << (7 * 2));
-
-236 
-GPIOA
-->
-MODER
- |= ((0x00000001) << (7 * 2));
-
-238 
-GPIOA
-->
-PUPDR
- &= ~((0x00000003) << (7 * 2));
-
-240 
-RCC
-->
-CFGR2
- &~
-RCC_CFGR2_ADCPRE12
-;
-
-241 
-RCC
-->
-CFGR2
- |
-RCC_CFGR2_ADCPRE12_DIV6
-;
-
-242 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_ADC12
-;
-
-244 
-ADC1
-->
-CR
- = 0x0000000;
-
-245 
-ADC1
-->
-CFGR
- &= 0xFDFFC007;
-
-246 
-ADC1
-->
-SQR1
- &~
-ADC_SQR1_L
-;
-
-248 
-ADC1
-->
-CR
- |= 0x10000000;
-
-249 
-i
- = 0; i < 1000; i++) {}
-
-251 
-ADC1
-->
-CR
- |= 0x80000000;
-
-252 !(
-ADC1
-->
-CR
- & 0x80000000));
-
-253 
-i
- = 0; i < 100; i++) {}
-
-255 
-ADC1
-->
-CR
- |= 0x00000001;
-
-256 !(
-ADC1
-->
-ISR
- & 0x00000001));
-
-257 
-	}
-}
-
-259 
-uöt16_t
- 
-	$ªadA«log
-(
-ch™√l
-) {
-
-260 
-uöt16_t
- 
-™ÆogVÆ
-= 0;
-
-261 
-ch™√l
-) {
-
-263 
-	`ADC_ReguœrCh™√lC⁄fig
-(
-ADC1
-, 
-ADC_Ch™√l_1
-, 1, 
-ADC_Sam∂eTime_1Cy˛es5
-);
-
-266 
-	`ADC_ReguœrCh™√lC⁄fig
-(
-ADC1
-, 
-ADC_Ch™√l_2
-, 1, 
-ADC_Sam∂eTime_1Cy˛es5
-);
-
-269 
-	`ADC_SèπC⁄vîsi⁄
-(
-ADC1
-);
-
-270 
-	`ADC_GëFœgSètus
-(
-ADC1
-, 
-ADC_FLAG_EOC
-) == 0);
-
-271 
-™ÆogVÆ
- = 
-	`ADC_GëC⁄vîsi⁄VÆue
-(
-ADC1
-);
-
-272  
-™ÆogVÆ
-;
-
-273 
-	}
-}
-
-275 
-uöt16_t
- 
-	$™ÆogR™d
-() {
-
-276 
-uöt16_t
- 
-™ÆogVÆ
- = 0;
-
-277 
-	`ADC_ReguœrCh™√lC⁄fig
-(
-ADC1
-, 
-ADC_Ch™√l_7
-, 1, 
-ADC_Sam∂eTime_1Cy˛es5
-);
-
-278 
-	`ADC_SèπC⁄vîsi⁄
-(
-ADC1
-);
-
-279 
-	`ADC_GëFœgSètus
-(
-ADC1
-, 
-ADC_FLAG_EOC
-) == 0);
-
-280 
-™ÆogVÆ
- = 
-	`ADC_GëC⁄vîsi⁄VÆue
-(
-ADC1
-);
-
-281  
-™ÆogVÆ
-;
-
-282 
-	}
-}
-
-284 
-uöt8_t
- 
-	$ªadJoy°ick2
-() {
-
-285 
-uöt16_t
- 
-Up
- = (
-GPIOA
-->
-IDR
- & (0x0001 << 4)) >> 4;
-
-286 
-uöt16_t
- 
-Down
- = (
-GPIOB
-->
-IDR
- & (0x0001 << 0)) << 1;
-
-287 
-uöt16_t
- 
-Le·
- = (
-GPIOC
-->
-IDR
- & (0x0001 << 1)) << 1;
-
-288 
-uöt16_t
- 
-Right
- = (
-GPIOC
-->
-IDR
- & (0x0001 << 0)) << 3;
-
-289 
-uöt16_t
- 
-Cíãr
- = (
-GPIOB
-->
-IDR
- & (0x0001 << 5)) >> 1;
-
-291  
-Up
- + 
-Down
- + 
-Le·
- + 
-Right
- + 
-Cíãr
-;
-
-292 
-	}
-}
-
-294 
-	#MMA7660Adªss
- 0x4C << 1
-
-296 
-öt32_t
- 
-	`ªadRﬁl
-(
-uöt8_t
- 
-Avîage
-, uöt8_à
-Sísôivôy
-Ë{
-
-	)
-
-297 
-öt32_t
- 
-	gavgRﬁl
- = 0;
-
-298 
-öt8_t
- 
-	gIC2_VAL
- = 0;
-
-300 
-uöt8_t
- 
-	gi
- = 0; i < 
-	gAvîage
-; i++) {
-
-301 
-I2C_Ród
-(
-MMA7660Adªss
-, 0x01, &
-IC2_VAL
-, 1);
-
-303 
-	gIC2_VAL
- <<= 2;
-
-304 
-	gavgRﬁl
- +
-IC2_VAL
-;
-
-306 
-	gavgRﬁl
- /
-Avîage
-;
-
-307 
-	gavgRﬁl
- >>
-Sísôivôy
-;
-
-308  
-	gavgRﬁl
-;
-
 	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\HDInitializering.c
 
 1 
 	~"HDInôülizîög.h
 "
-
-5 
-	$InôJoy°ick
-() {
-
-7 
-GPIOA
-->
-MODER
- &= ~((0x00000003) << (4 * 2));
-
-11 
-GPIOA
-->
-PUPDR
- &= ~((0x00000003) << (4 * 2));
-
-15 
-GPIOB
-->
-MODER
- &= ~((0x00000C03) << (0 * 2));
-
-19 
-GPIOB
-->
-PUPDR
- &= ~((0x00000C03) << (0 * 2));
-
-24 
-GPIOC
-->
-MODER
- &= ~((0x0000000F) << (0 * 2));
-
-28 
-GPIOC
-->
-PUPDR
- &= ~((0x0000000F) << (0 * 2));
-
-30 
-	}
-}
-
-32 
-	$HDInôüliz©i⁄
-() {
-
-35 
-	`öô_usb_u¨t
-(115200);
-
-38 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_GPIOA
-;
-
-41 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_GPIOB
-;
-
-44 
-RCC
-->
-AHBENR
- |
-RCC_AHBPîùh_GPIOC
-;
-
-47 
-	`InôJoy°ick
-();
-
-49 
-	`bgcﬁ‹
-(0);
-
-50 
-	}
-}
 
 	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\LCD.c
 
@@ -146162,6 +148162,644 @@ Gøph
 );
 
 95 
+	}
+}
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\accel.c
+
+1 
+	~"ac˚l.h
+"
+
+3 
+	#MMA7660Adªss
+ 0x4C << 1
+
+5 
+öt32_t
+ 
+	`ªadRﬁl
+(
+uöt8_t
+ 
+Avîage
+, uöt8_à
+Sísôivôy
+Ë{
+
+	)
+
+6 
+öt32_t
+ 
+	gavgRﬁl
+ = 0;
+
+7 
+öt8_t
+ 
+	gIC2_VAL
+ = 0;
+
+9 
+uöt8_t
+ 
+	gi
+ = 0; i < 
+	gAvîage
+; i++) {
+
+10 
+I2C_Ród
+(
+MMA7660Adªss
+, 0x01, &
+IC2_VAL
+, 1);
+
+12 
+	gIC2_VAL
+ <<= 2;
+
+13 
+	gavgRﬁl
+ +
+IC2_VAL
+;
+
+15 
+	gavgRﬁl
+ /
+Avîage
+;
+
+16 
+	gavgRﬁl
+ >>
+Sísôivôy
+;
+
+17  
+	gavgRﬁl
+;
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\analog.c
+
+1 
+	~"™Æog.h
+"
+
+4 
+	$öôA«log
+() {
+
+6 
+GPIOA
+->
+MODER
+ &= ~((0x00000003) << (0 * 2));
+
+8 
+GPIOA
+->
+MODER
+ |= ((0x00000001) << (0 * 2));
+
+10 
+GPIOA
+->
+PUPDR
+ &= ~((0x00000003) << (0 * 2));
+
+13 
+GPIOA
+->
+MODER
+ &= ~((0x00000003) << (1 * 2));
+
+15 
+GPIOA
+->
+MODER
+ |= ((0x00000001) << (1 * 2));
+
+17 
+GPIOA
+->
+PUPDR
+ &= ~((0x00000003) << (1 * 2));
+
+20 
+GPIOA
+->
+MODER
+ &= ~((0x00000003) << (7 * 2));
+
+22 
+GPIOA
+->
+MODER
+ |= ((0x00000001) << (7 * 2));
+
+24 
+GPIOA
+->
+PUPDR
+ &= ~((0x00000003) << (7 * 2));
+
+26 
+RCC
+->
+CFGR2
+ &~
+RCC_CFGR2_ADCPRE12
+;
+
+27 
+RCC
+->
+CFGR2
+ |
+RCC_CFGR2_ADCPRE12_DIV6
+;
+
+28 
+RCC
+->
+AHBENR
+ |
+RCC_AHBPîùh_ADC12
+;
+
+30 
+ADC1
+->
+CR
+ = 0x0000000;
+
+31 
+ADC1
+->
+CFGR
+ &= 0xFDFFC007;
+
+32 
+ADC1
+->
+SQR1
+ &~
+ADC_SQR1_L
+;
+
+34 
+ADC1
+->
+CR
+ |= 0x10000000;
+
+35 
+uöt16_t
+ 
+i
+ = 0; i < 1000; i++) {}
+
+37 
+ADC1
+->
+CR
+ |= 0x80000000;
+
+38 !(
+ADC1
+->
+CR
+ & 0x80000000));
+
+39 
+i
+ = 0; i < 100; i++) {}
+
+41 
+ADC1
+->
+CR
+ |= 0x00000001;
+
+42 !(
+ADC1
+->
+ISR
+ & 0x00000001));
+
+44 
+	}
+}
+
+46 
+uöt16_t
+ 
+	$ªadA«log
+(
+ch™√l
+) {
+
+47 
+uöt16_t
+ 
+™ÆogVÆ
+= 0;
+
+48 
+ch™√l
+) {
+
+50 
+	`ADC_ReguœrCh™√lC⁄fig
+(
+ADC1
+, 
+ADC_Ch™√l_1
+, 1, 
+ADC_Sam∂eTime_1Cy˛es5
+);
+
+53 
+	`ADC_ReguœrCh™√lC⁄fig
+(
+ADC1
+, 
+ADC_Ch™√l_2
+, 1, 
+ADC_Sam∂eTime_1Cy˛es5
+);
+
+56 
+	`ADC_SèπC⁄vîsi⁄
+(
+ADC1
+);
+
+57 
+	`ADC_GëFœgSètus
+(
+ADC1
+, 
+ADC_FLAG_EOC
+) == 0);
+
+58 
+™ÆogVÆ
+ = 
+	`ADC_GëC⁄vîsi⁄VÆue
+(
+ADC1
+);
+
+59  
+™ÆogVÆ
+;
+
+60 
+	}
+}
+
+62 
+uöt16_t
+ 
+	$™ÆogR™d
+() {
+
+63 
+uöt16_t
+ 
+™ÆogVÆ
+ = 0;
+
+64 
+	`ADC_ReguœrCh™√lC⁄fig
+(
+ADC1
+, 
+ADC_Ch™√l_7
+, 1, 
+ADC_Sam∂eTime_1Cy˛es5
+);
+
+65 
+	`ADC_SèπC⁄vîsi⁄
+(
+ADC1
+);
+
+66 
+	`ADC_GëFœgSètus
+(
+ADC1
+, 
+ADC_FLAG_EOC
+) == 0);
+
+67 
+™ÆogVÆ
+ = 
+	`ADC_GëC⁄vîsi⁄VÆue
+(
+ADC1
+);
+
+68  
+™ÆogVÆ
+;
+
+69 
+	}
+}
+
+71 
+	$öôDACNoi£
+(){
+
+73 
+RCC
+->
+APB1ENR
+ |
+RCC_APB1Pîùh_DAC
+;
+
+76 
+DAC
+->
+CR
+ &= 0x00000000;
+
+77 
+DAC
+->
+CR
+ |= 0x00000B7D;
+
+78 
+DAC
+->
+DHR8R1
+ &= 0x00000000;
+
+79 
+DAC
+->
+DHR8R1
+ |= 0x000000AB;
+
+80 
+	}
+}
+
+82 
+uöt16_t
+ 
+	$DACR™d
+(){
+
+84 
+DAC
+->
+SWTRIGR
+ |= 0x00000001;
+
+86 
+DAC
+->
+SWTRIGR
+ == 1);
+
+88  (
+uöt16_t
+)(
+DAC
+->
+DOR1
+);
+
+89 
+	}
+}
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\buzzer.c
+
+1 
+	~"buzzî.h
+"
+
+3 
+	#PRESCALER_VALUE
+ 0
+
+	)
+
+5 
+	$öôBuzzî
+(){
+
+7 
+RCC
+->
+APB1ENR
+ |= 0x00000001;
+
+9 
+TIM2
+->
+CR1
+ = 0x0000;
+
+10 
+TIM2
+->
+ARR
+ = 1000;
+
+11 
+TIM2
+->
+PSC
+ = 
+PRESCALER_VALUE
+;
+
+12 
+TIM2
+->
+CR1
+ |= 0x0001;
+
+14 
+TIM2
+->
+CCER
+ &~
+TIM_CCER_CC3P
+;
+
+15 
+TIM2
+->
+CCER
+ |= 0x00000001 << 8;
+
+17 
+TIM2
+->
+CCMR2
+ &~
+TIM_CCMR2_OC3M
+;
+
+18 
+TIM2
+->
+CCMR2
+ &~
+TIM_CCMR2_CC3S
+;
+
+19 
+TIM2
+->
+CCMR2
+ |
+TIM_OCMode_PWM1
+;
+
+21 
+TIM2
+->
+CCMR2
+ &~
+TIM_CCMR2_OC3PE
+;
+
+22 
+TIM2
+->
+CCMR2
+ |
+TIM_OCPªlﬂd_E«bÀ
+;
+
+23 
+TIM2
+->
+CCR3
+ = 500;
+
+25 
+RCC
+->
+AHBENR
+ |
+RCC_AHBENR_GPIOBEN
+;
+
+26 
+GPIOB
+->
+MODER
+ &= ~(0x00000003 << (10 * 2));
+
+27 
+GPIOB
+->
+MODER
+ |= (0x00000002 << (10 * 2));
+
+29 
+	`GPIO_PöAFC⁄fig
+(
+GPIOB
+, 
+GPIO_PöSour˚10
+, 
+GPIO_AF_1
+);
+
+30 
+	}
+}
+
+32 
+	$£tFªq
+(
+uöt16_t
+ 
+‰eq
+) {
+
+33 
+uöt32_t
+ 
+ªlﬂd
+ = 64e6 / 
+‰eq
+ / (
+PRESCALER_VALUE
+ + 1) - 1;
+
+35 
+TIM2
+->
+ARR
+ = 
+ªlﬂd
+;
+
+36 
+TIM2
+->
+CCR3
+ = 
+ªlﬂd
+/2;
+
+38 
+TIM2
+->
+EGR
+ |= 0x01;
+
+39 
+	}
+}
+
+42 
+	$∂aySound
+(
+uöt16_t
+ 
+‰eq
+, 
+uöt8_t
+ 
+duøti⁄
+) {
+
+43 
+	`£tFªq
+(
+‰eq
+);
+
+44 
+	`waô
+(
+duøti⁄
+);
+
+45 
+	`£tFªq
+(0);
+
+46 
 	}
 }
 
@@ -146665,6 +149303,342 @@ CR2
 	}
 }
 
+	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\joystick.c
+
+1 
+	~"joy°ick.h
+"
+
+3 
+	$öôJoy°ick
+() {
+
+7 
+GPIOA
+->
+MODER
+ &= ~((0x00000003) << (4 * 2));
+
+11 
+GPIOA
+->
+PUPDR
+ &= ~((0x00000003) << (4 * 2));
+
+15 
+GPIOB
+->
+MODER
+ &= ~((0x00000C03) << (0 * 2));
+
+19 
+GPIOB
+->
+PUPDR
+ &= ~((0x00000C03) << (0 * 2));
+
+24 
+GPIOC
+->
+MODER
+ &= ~((0x0000000F) << (0 * 2));
+
+28 
+GPIOC
+->
+PUPDR
+ &= ~((0x0000000F) << (0 * 2));
+
+31 
+	}
+}
+
+33 
+uöt8_t
+ 
+	$ªadJoy°ick
+() {
+
+34 
+uöt16_t
+ 
+Up
+ = (
+GPIOA
+->
+IDR
+ & (0x0001 << 4)) >> 4;
+
+35 
+uöt16_t
+ 
+Down
+ = (
+GPIOB
+->
+IDR
+ & (0x0001 << 0)) << 1;
+
+36 
+uöt16_t
+ 
+Le·
+ = (
+GPIOC
+->
+IDR
+ & (0x0001 << 1)) << 1;
+
+37 
+uöt16_t
+ 
+Right
+ = (
+GPIOC
+->
+IDR
+ & (0x0001 << 0)) << 3;
+
+38 
+uöt16_t
+ 
+Cíãr
+ = (
+GPIOB
+->
+IDR
+ & (0x0001 << 5)) >> 1;
+
+40  
+Up
+ + 
+Down
+ + 
+Le·
+ + 
+Right
+ + 
+Cíãr
+;
+
+41 
+	}
+}
+
+	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\led.c
+
+1 
+	~"Àd.h
+"
+
+4 
+	$öôLED
+() {
+
+7 
+GPIOA
+->
+OSPEEDR
+ &= ~((0x00000003) << (9 * 2));
+
+10 
+GPIOA
+->
+OSPEEDR
+ |= ((0x00000002) << (9 * 2));
+
+13 
+GPIOA
+->
+OTYPER
+ &= ~ ((0x00000001) << (9));
+
+16 
+GPIOA
+->
+OTYPER
+ |= ((0x00000000) << (9));
+
+19 
+GPIOA
+->
+MODER
+ &= ~((0x00000003) << (9 * 2));
+
+22 
+GPIOA
+->
+MODER
+ |= ((0x00000001) << (9 * 2));
+
+26 
+GPIOB
+->
+OSPEEDR
+ &= ~((0x00000003) << (4 * 2));
+
+29 
+GPIOB
+->
+OSPEEDR
+ |= ((0x00000002) << (4 * 2));
+
+32 
+GPIOB
+->
+OTYPER
+ &= ~ ((0x00000001) << (4));
+
+35 
+GPIOB
+->
+OTYPER
+ |= ((0x00000000) << (4));
+
+38 
+GPIOB
+->
+MODER
+ &= ~((0x00000003) << (4 * 2));
+
+41 
+GPIOB
+->
+MODER
+ |= ((0x00000001) << (4 * 2));
+
+46 
+GPIOC
+->
+OSPEEDR
+ &= ~((0x00000003) << (7 * 2));
+
+49 
+GPIOC
+->
+OSPEEDR
+ |= ((0x00000002) << (7 * 2));
+
+52 
+GPIOC
+->
+OTYPER
+ &= ~ ((0x00000001) << (7));
+
+55 
+GPIOC
+->
+OTYPER
+ |= ((0x00000000) << (7));
+
+58 
+GPIOC
+->
+MODER
+ &= ~((0x00000003) << (7 * 2));
+
+61 
+GPIOC
+->
+MODER
+ |= ((0x00000001) << (7 * 2));
+
+62 
+	}
+}
+
+64 
+	$SëLed
+(
+R
+, 
+G
+, 
+B
+) {
+
+66 i‡(
+R
+ == 1) {
+
+68 
+GPIOB
+->
+ODR
+ &= ~(0x0001 << 4);
+
+71 
+GPIOB
+->
+ODR
+ |= (0x0001 << 4);
+
+74 i‡(
+G
+ == 1) {
+
+76 
+GPIOC
+->
+ODR
+ &= ~(0x0001 << 7);
+
+79 
+GPIOC
+->
+ODR
+ |= (0x0001 << 7);
+
+83 i‡(
+B
+ == 1) {
+
+85 
+GPIOA
+->
+ODR
+ &= ~(0x0001<< 9);
+
+88 
+GPIOA
+->
+ODR
+ |= (0x0001 << 9);
+
+90 
+	}
+}
+
+92 
+	$Upd©eRGB
+(
+∂ayîHP
+) {
+
+93 
+∂ayîHP
+) {
+
+95 
+	`SëLed
+(0,1,0);
+
+98 
+	`SëLed
+(1,1,0);
+
+101 
+	`SëLed
+(1,0,0);
+
+104 
+	`SëLed
+(0,0,0);
+
+107 
+	}
+}
+
 	@M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\system_stm32f30x.c
 
 102 
@@ -147062,6 +150036,38 @@ RCC_CFGR_SWS_PLL
 "
 
 3 
+	$waô
+(
+uöt32_t
+ 
+dñay
+){
+
+4 
+uöt32_t
+ 
+¥evTime
+ = 
+˛k
+.
+time_h£c⁄ds
+;
+
+5 
+˛k
+.
+time_h£c⁄ds
+ - 
+¥evTime
+ < 
+dñay
+){}
+
+6 
+	}
+}
+
+9 
 	$öôTime
 (vﬁ©ûê
 time
@@ -147069,41 +150075,41 @@ time
 ˛k
 ) {
 
-4 
+10 
 ˛k
 ->
 time_h£c⁄ds
  = 0;
 
-5 
+11 
 ˛k
 ->
 time_£c
  = 0;
 
-6 
+12 
 ˛k
 ->
 time_mö
  = 0;
 
-7 
+13 
 ˛k
 ->
 time_hour
  = 0;
 
-8 
+14 
 ˛k
 ->
 ch™ge
  = 1;
 
-9 
+15 
 	}
 }
 
-11 
+17 
 	$ö¸emítTime
 (vﬁ©ûê
 time
@@ -147111,13 +150117,13 @@ time
 ˛k
 ) {
 
-12 ++
+18 ++
 ˛k
 ->
 time_h£c⁄ds
 ;
 
-13 
+19 
 ˛k
 ->
 time_£c
@@ -147125,7 +150131,7 @@ time_£c
 time_h£c⁄ds
  / 100);
 
-14 
+20 
 ˛k
 ->
 time_mö
@@ -147133,7 +150139,7 @@ time_mö
 time_£c
  / 60);
 
-15 
+21 
 ˛k
 ->
 time_hour
@@ -147141,85 +150147,91 @@ time_hour
 time_mö
  / 60;
 
-16 
+22 
 ˛k
 ->
 ch™ge
  = 1;
-
-17 
-	}
-}
-
-19 
-	$TIM2_IRQH™dÀr
-() {
-
-21 
-	`ö¸emítTime
-(&
-˛k
-);
-
-22 
-TIM2
-->
-SR
- &= ~0x0001;
 
 23 
 	}
 }
 
 25 
+	$TIM1_BRK_TIM15_IRQH™dÀr
+() {
+
+27 
+	`ö¸emítTime
+(&
+˛k
+);
+
+28 
+TIM15
+->
+SR
+ &= ~0x0001;
+
+29 
+	}
+}
+
+31 
 	$öôI¡îru±
 (){
 
-26 
+32 
 RCC
 ->
-APB1ENR
+APB2ENR
  |
-RCC_APB1Pîùh_TIM2
+RCC_APB2Pîùh_TIM15
 ;
 
-27 
-TIM2
+34 
+TIM15
 ->
 CR1
- = 0x00000001;
+ = 0x0000;
 
-28 
-TIM2
+35 
+TIM15
 ->
 ARR
- = 0x0009C3FF;
+ = 63999;
 
-29 
-TIM2
+36 
+TIM15
 ->
 PSC
- = 0x00000000;
+ = 9;
 
-31 
-TIM2
+37 
+TIM15
 ->
 DIER
  |= 0x0001;
 
-32 
+39 
 	`NVIC_SëPri‹ôy
 (
-TIM2_IRQn
+TIM1_BRK_TIM15_IRQn
 , 0);
 
-33 
+40 
 	`NVIC_E«bÀIRQ
 (
-TIM2_IRQn
+TIM1_BRK_TIM15_IRQn
 );
 
-34 
+42 
+TIM15
+->
+CR1
+ |= 0x0001;
+
+43 
 	}
 }
 
@@ -149403,8 +152415,8 @@ __HópLimô
 1
 .
 0
-93
-6171
+105
+6905
 M:\GitHub\ProgrammingProject30010\Reflexball\SPL\inc\stm32f30x_adc.h
 M:\GitHub\ProgrammingProject30010\Reflexball\SPL\inc\stm32f30x_can.h
 M:\GitHub\ProgrammingProject30010\Reflexball\SPL\inc\stm32f30x_comp.h
@@ -149458,6 +152470,7 @@ M:\GitHub\ProgrammingProject30010\Reflexball\cmsis\core_cmInstr.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\30010_io.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\Game.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\Menu.h
+M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\ROM.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\ansi.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\ball.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\bricks.h
@@ -149471,7 +152484,12 @@ M:\GitHub\ProgrammingProject30010\Reflexball\inc\API\vectortrig.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\GPIO.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\HDInitializering.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\LCD.h
+M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\accel.h
+M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\analog.h
+M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\buzzer.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\i2c.h
+M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\joystick.h
+M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\led.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\stm32f30x_conf.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\system_stm32f30x.h
 M:\GitHub\ProgrammingProject30010\Reflexball\inc\HAL\timer.h
@@ -149479,6 +152497,7 @@ M:\GitHub\ProgrammingProject30010\Reflexball\readme.txt
 M:\GitHub\ProgrammingProject30010\Reflexball\src\API\30010_io.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\API\Game.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\API\Menu.c
+M:\GitHub\ProgrammingProject30010\Reflexball\src\API\ROM.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\API\ansi.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\API\ball.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\API\bricks.c
@@ -149492,7 +152511,12 @@ M:\GitHub\ProgrammingProject30010\Reflexball\src\AP\main.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\GPIO.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\HDInitializering.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\LCD.c
+M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\accel.c
+M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\analog.c
+M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\buzzer.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\i2c.c
+M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\joystick.c
+M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\led.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\system_stm32f30x.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\HAL\timer.c
 M:\GitHub\ProgrammingProject30010\Reflexball\src\startup_stm32f30x.S

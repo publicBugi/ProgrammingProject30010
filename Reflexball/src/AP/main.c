@@ -68,7 +68,7 @@ void getSerialInput(char* input){
 int main(void)   {
 
     initDACNoise();
-
+    clearScore();
         // ASCII array.
         char ASCIIARRAYTYPE;
 
@@ -82,7 +82,6 @@ int main(void)   {
 
 
 	// Output Variables
-
 
 
 

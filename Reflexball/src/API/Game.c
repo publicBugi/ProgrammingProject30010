@@ -26,22 +26,28 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
     uint8_t   Columns = (MaxColI-2)/(*brickWidth) ;            // Fill out as many bricks as you can
     uint8_t   center = ((MaxColI-2) % (*brickWidth)) / 2 + 1;  // Center the bricks; Not left align.
 	uint8_t Rows = 1 + *Level;                                         // Rows should also be function of level.
-
 	// Generate bricks in brickarray and draw in gameArray.
-    int index = 7;
-    for (int i = 0; i < Rows; i++){
-        for (int r = 0; r < Columns; r++) {
+
+
+    uint8_t index = 7;
+    for (uint8_t i = 0; i < Rows; i++){
+        for (uint8_t r = 0; r < Columns; r++) {
+
             brickArray[index].posX = center + r*(*brickWidth);
 			brickArray[index].posY = 5 + i*(*brickHeight);
-			brickArray[index].MaxHP = 2*(*Level) + DACRand() % 3;
+			brickArray[index].MaxHP = 2*(*Level) + (uint8_t)(DACRand() % 3);
 			brickArray[index].currHP = brickArray[index].MaxHP;
-			brickArray[index].pwrUP =  DACRand() % 2; // Rand requires stdio.h; Alternative is analogread noise.
+
+			brickArray[index].pwrUP =  (uint8_t)(DACRand() % 2); // Rand requires stdio.h; Alternative is analogread noise.
+
             for (int x = 0; x < (*brickWidth); x++){
                 for(int y = 0; y < (*brickHeight); y++) {
                     gameArray[brickArray[index].posY + y][brickArray[index].posX + x] = index;
                 }
 			}
+
 			index++;
+
         }
     }
 
@@ -55,6 +61,8 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
         }
         value++;
 	}
+
+
 	return index - 7;
 }
 
@@ -73,17 +81,28 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
 
        if (PlayerScore1 > PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
-              PrintFromASCII("PLAYER 1 WINS",60,20);
+              PrintFromASCII("PLAYER 1 WINS",64,20);
+              HighscoreCheck(PlayerScore1);
         }
        else if (PlayerScore1 < PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
-              PrintFromASCII("PLAYER 2 WINS",60,20);
+              PrintFromASCII("PLAYER 2 WINS",63,20);
+              HighscoreCheck(PlayerScore2);
         }
        else if (PlayerScore1 == PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
-              PrintFromASCII("BOTH PLAYERS WIN",60,20);
+              PrintFromASCII("BOTH PLAYERS WIN",51,20);
+              HighscoreCheck(PlayerScore1);
+              HighscoreCheck(PlayerScore2);
         }
         wait(200);
+    }
+    else {
+        PrintFromASCII("GAME OVER", 72, 20);
+        sprintf(str1, "SCORE %04d", PlayerScore1);
+        PrintFromASCII(str1, 73, 30);
+        wait(200);
+        HighscoreCheck(PlayerScore1);
     }
 
 }
@@ -119,7 +138,7 @@ void StartGameLoop(uint8_t MaxPlayer) {
 
         sprintf(str1, "GET READY PLAYER %d", i);
 
-        PrintFromASCII(str1,60,20);
+        PrintFromASCII(str1,50,20);
 
         wait(200);
 
@@ -141,7 +160,7 @@ void StartGameLoop(uint8_t MaxPlayer) {
                 // Write ready text.
                 gotoXY(10,40);
 
-                PrintFromASCII("GAME LEVEL COMPLETED.",60,20);
+                PrintFromASCII("GAME LEVEL COMPLETED.",39,20);
 
                 wait(200);
 
@@ -180,7 +199,6 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 	uint8_t DifficultyTime;
 
     char WhatNextAfterBallCollision = 0;
-
 
     uint16_t BrickCounter;
 
@@ -228,33 +246,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 //    }
 //    gotoXY(0,0);
 
-    // Generate Walls at edges
-    fgcolor(15);
-    for (int i = 0; i < putWidth; i++){
-		putchar(178);
-	}
-	for (int i = 1; i < putHeight; i++){
-		putchar(178);
-		gotoXY(putWidth, i);
-		putchar(178);
-	}
-
-    // Generate bricks.
-	for (int i = 7; i < maxBricks; i++) {
-        if (brickArray[i].currHP != 0){
-            drawBox(&brickArray[i], &brickHeight, &brickWidth);
-        }
-	}
-
-    // Generate striker.
-    fgcolor(8);
-    gotoXY(striker.currpos, putStrikerPos);
-	for (int i = 0; i < striker.strikersize; i++){
-        putchar(223);
-	}
-
-    fgcolor(15);
-    drawBall(&ball1);
+    drawGame(brickArray, &brickHeight, &brickWidth, &striker, &ball1);
 
     uint32_t prevPowerStart = 0;
     uint32_t currTime = clk.time_hseconds, deltaTime = 0, prevTime;
@@ -284,6 +276,7 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
     uint8_t gameEnabled = 1;
 
     while (gameEnabled) {
+
         __disable_irq();
         prevTime = currTime;
         currTime = clk.time_hseconds;
@@ -405,9 +398,49 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
                 drawPowerup(&powerup);
             }
         }
+
+        uint16_t joyinput = readJoystick() & 0x10;
+        if (joyinput == 16){
+            Bosskey();
+            drawGame(brickArray, &brickHeight, &brickWidth, &striker, &ball1);
+        }
+
+
         // Change color to default.
         fgcolor(15);
+
     }
+
+}
+
+void drawGame(struct brick_t brickArray[], uint8_t *brickHeight, uint8_t *brickWidth, struct striker_t *striker, struct ball_t *ball){
+    // Generate Walls at edges
+    fgcolor(15);
+    for (int i = 0; i < putWidth; i++){
+		putchar(178);
+	}
+	for (int i = 1; i < putHeight; i++){
+		putchar(178);
+		gotoXY(putWidth, i);
+		putchar(178);
+	}
+
+    // Generate bricks.
+	for (int i = 7; i < maxBricks; i++) {
+        if (brickArray[i].currHP != 0){
+            drawBox(&brickArray[i], brickHeight, brickWidth);
+        }
+	}
+
+    // Generate striker.
+    fgcolor(15);
+    gotoXY(striker->currpos, putStrikerPos);
+	for (int i = 0; i < striker->strikersize; i++){
+        putchar(223);
+	}
+
+    fgcolor(15);
+    drawBall(ball);
 }
 
 void CountDown(){

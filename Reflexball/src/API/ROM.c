@@ -429,12 +429,12 @@ void PrintScore() {
     sprintf(HighscoreScore2,"%04d",scoreArray[7]);
     sprintf(HighscoreScore3,"%04d",scoreArray[11]);
 
-    PrintFromASCII(HighscorePlayer1,60,20);
-    PrintFromASCII(HighscoreScore1,90,20);
-    PrintFromASCII(HighscorePlayer2,60,30);
-    PrintFromASCII(HighscoreScore2,90,30);
-    PrintFromASCII(HighscorePlayer3,60,40);
-    PrintFromASCII(HighscoreScore3,90,40);
+    PrintFromASCII(HighscorePlayer1,73,20);
+    PrintFromASCII(HighscoreScore1,103,20);
+    PrintFromASCII(HighscorePlayer2,73,30);
+    PrintFromASCII(HighscoreScore2,103,30);
+    PrintFromASCII(HighscorePlayer3,73,40);
+    PrintFromASCII(HighscoreScore3,103,40);
     wait(500);
 }
 
@@ -447,14 +447,24 @@ void Bosskey() {
     for (uint16_t i = 0; i < 941; i++) {
         printf("%c", BOSSKEY_BSOD[i]);
     }
-    while (readJoystick > 15) {}
+    wait(50);
+    uint16_t joyinput = readJoystick() & 0x10;
+    while (joyinput != 16) {
+        joyinput = readJoystick() & 0x10;
+    }
     bgcolor(0);
+    gotoXY(0,0);
+    clrscr();
 }
 
-void HighscoreCheck (uint16_t score) {
-    if(score >= *(uint16_t *)(0x0800F816)){
-        if (score >= *(uint16_t *)(0x0800F80E)) {
-            if (score >= *(uint16_t *)(0x0800F806)) {
+void HighscoreCheck (uint16_t score)
+{
+    if(score >= *(uint16_t *)(0x0800F816))
+    {
+        if (score >= *(uint16_t *)(0x0800F80E))
+        {
+            if (score >= *(uint16_t *)(0x0800F806))
+            {
                 SubmitHighscore(0, score);
                 return 0;
             }
@@ -464,41 +474,66 @@ void HighscoreCheck (uint16_t score) {
         SubmitHighscore(2, score);
         return 0;
     }
-    PrintFromASCII("TRY AGAIN",75,23);
+    clrscr();
+    PrintFromASCII("TRY AGAIN",71,23);
+    wait(200);
+    clrscr();
 }
 
-void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score) {
-clrscr();
-uint16_t HighscoreArray[12] = {0};
-switch (HighscoreLevel) {
+void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score)
+{
+    clrscr();
+    PrintFromASCII("NEW HIGHSCORE", 60, 10);
+    uint16_t HighscoreArray[12] = {0};
+    switch (HighscoreLevel)
+    {
     case 0:
-    for (uint8_t i = 0; i < 12; i++) {
-    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2-8);
-    }
-    break;
+        for (uint8_t i = 0; i < 12; i++)
+        {
+            HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2-8);
+        }
+        break;
     case 1:
-    for (uint8_t i = 0; i < 4; i++) {
-    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
-    }
-    for (uint8_t i = 8; i < 12; i++) {
-    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2-8);
-    }
-    break;
+        for (uint8_t i = 0; i < 4; i++)
+        {
+            HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
+        }
+        for (uint8_t i = 8; i < 12; i++)
+        {
+            HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2-8);
+        }
+        break;
     case 2:
-    for (uint8_t i = 0; i < 8; i++) {
-    HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
+        for (uint8_t i = 0; i < 8; i++)
+        {
+            HighscoreArray[i] = ReadFromFlash (0x0800F800+i*2);
+        }
     }
+
+    uint8_t location = 0;
+    for (uint8_t i = HighscoreLevel*4; i < HighscoreLevel*4+3; i++)
+    {
+        HighscoreArray[i] = CharSelect(85+10*location,23);
+        location++;
+        wait(30);
+    }
+    HighscoreArray[HighscoreLevel*4+3] = score;
+    InitFlash();
+    WriteToFlash(HighscoreArray, (0x0800F800));
+    FLASH_Unlock();
+    FLASH_ProgramHalfWord(0x0800F81A, 0);
+    FLASH_Lock();
 }
 
-uint8_t location = 0;
-for (uint8_t i = HighscoreLevel*4; i < HighscoreLevel*4+3; i++) {
-    HighscoreArray[i] = CharSelect(85+10*location,23);
-    location++;
-    wait(30);
-}
-HighscoreArray[HighscoreLevel*4+3] = score;
-InitFlash();
-WriteToFlash(HighscoreArray, (0x0800F800));
+void clearScore(){
+    if(ReadFromFlash(0x0800F81A) != 0) {
+    InitFlash();
+    uint16_t tempArray[12] = {65, 65, 65, 0, 66, 66, 66, 0, 67, 67, 67, 0};
+    WriteToFlash(tempArray, ADDRESS);
+    }
+    FLASH_Unlock();
+    FLASH_ProgramHalfWord(0x0800F81A, 0);
+    FLASH_Lock();
 }
 
 char CharSelect(uint8_t xPos, uint8_t yPos) {

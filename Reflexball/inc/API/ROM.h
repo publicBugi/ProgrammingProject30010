@@ -26,5 +26,5 @@ void Bosskey();
 void HighscoreCheck (uint16_t score);
 void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score);
 char CharSelect(uint8_t xPos, uint8_t yPos);
-
+void clearScore();
  #endif

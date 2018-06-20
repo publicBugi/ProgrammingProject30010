@@ -75,15 +75,15 @@ void initDACNoise(){
     // ENABLE DAC Noise Generation.
     DAC->CR &= 0x00000000;
     DAC->CR |= 0x00000B7D;          // Configure DAC: Mask = 1011 (All bits) ; Wave = Noise (01); Trigger = Software (111); Trigger enabled (1); Buffer disabled (0); DAC Channel Enable (1).
-    DAC->DHR8R1 &= 0x00000000;
-    DAC->DHR8R1 |= 0x000000AB;      // Random Data.
+    DAC->DHR8R1 &= 0x00000000;      // Keep this register 0! Joystick no longer functions otherwise (We do not know why)
+    //DAC->DHR8R1 |= 0x000000AB;      // Random Data.
 }
 
 uint16_t DACRand(){
-    uint16_t Random;
+
     DAC->SWTRIGR |= 0x00000001;     // Set Software trigger (Generate Random Value)
 
     while (DAC->SWTRIGR == 1);      // Wait until Trigger flag resets (Hardware Reset)
 
-    return Random = DAC->DOR1;      // Return Random data from DOR1 Register.
+    return (uint16_t)(DAC->DOR1);      // Return Random data from DOR1 Register.
 }

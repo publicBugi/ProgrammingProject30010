@@ -22,10 +22,10 @@
 
 
 
-uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth);
+uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[100], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth);
 
 void StartGameLoop(uint8_t MaxPlayer);
 uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LCDData[4][128]);
-
+void drawGame(struct brick_t brickArray[], uint8_t *brickHeight, uint8_t *brickWidth, struct striker_t *striker, struct ball_t *ball);
 void CountDown();
  #endif
