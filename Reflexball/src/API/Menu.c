@@ -191,6 +191,11 @@ char ChangeSelection(char Up, char SelectionIndex, char MaxSelection) {
 
 }
 
+/**
+  * Descripton:
+  * Argument:  
+  * Return value:
+  */
 // Print the menu options.
 void PrintMenu(int state, int *Newmenu) {
 
@@ -244,6 +249,11 @@ void PrintMenu(int state, int *Newmenu) {
 
 }
 
+/**
+  * Descripton: This functions change and draw the menu. The state argument selects menu state.
+  * Argument:  state: Menu state
+  * Return value: None.
+  */
 // Print the menu options.
 void GotoMenuState(int state ) {
 
@@ -322,6 +332,11 @@ char GetNextMenuBlockSelection(bool Up, char SelectionIndex, char MaxSelection) 
 
 }
 
+/**
+  * Descripton: This function return the next block selection number.
+  * Argument:  Up: Up selection, CurrentBlockSelectionNumer: Current block selection number.
+  * Return value: Next block selection number.
+  */
 uint8_t ReturnNextBlockSelectionNumber(uint8_t Up, int8_t CurrentBlockSelectionNumer) {
 
     if (Up == 1) {
@@ -343,6 +358,11 @@ uint8_t ReturnNextBlockSelectionNumber(uint8_t Up, int8_t CurrentBlockSelectionN
 
 }
 
+/**
+  * Descripton: This function deselect and select menu blocks..
+  * Argument:  selection: Selection menu number, highlight: deselect/select, state: Menu state
+  * Return value: None.
+  */
 void Select(int  selection,  int  highlight, int state) {
     if(highlight == 1){
     fgcolor(1);
