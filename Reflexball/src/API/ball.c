@@ -24,7 +24,7 @@ void updateBall(struct ball_t *ball, uint8_t velMod) {
     ball->PrevPos = ball->NextPos;
     // Calculate next x position using direction vector (velMod divedes)
     ball->NextPos.x = ball->PrevPos.x + (ball->DirVec.x >> velMod);
-    
+
     ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
 
 
@@ -165,7 +165,7 @@ char DirectionOfBallAttack(uint8_t gameArray[putHeight][putWidth], struct ball_t
   * Return value: The reflection angle.
   */
 int32_t GetDegree(uint8_t Up, int32_t Factor, int16_t DegreeIndex){
-    int32_t Rand = (DACRand() % 64)-32;
+    int32_t Rand = (DACRand() % 32)-16;
     // Two formulas for calculating new ball angle.
     if (Up == 1) {
         return (( (128 * ( (3 << 14) + (Factor)) ) - ( (DegreeIndex & 0x1FF) * Factor ) ) >> 14) + Rand;

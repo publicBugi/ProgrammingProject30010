@@ -18,7 +18,7 @@ extern const char BOSSKEY_BSOD[943];
 
 
 void InitFlash();
-void WriteToFlash(uint16_t SCOREARRAY, uint32_t address);
+void WriteToFlash(uint16_t SCOREARRAY);
 uint16_t ReadFromFlash(uint32_t address);
 void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY);
 void PrintScore();

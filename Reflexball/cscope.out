@@ -1,4 +1,4 @@
-cscope 15 M:\GitHub\ProgrammingProject30010\Reflexball"               0000949591
+cscope 15 M:\GitHub\ProgrammingProject30010\Reflexball"               0000952816
 	@M:\GitHub\ProgrammingProject30010\Reflexball\SPL\inc\stm32f30x_adc.h
 
 30 #i‚de‡
@@ -141595,19 +141595,13 @@ Rows
 Levñ
 ;
 
-29 
-JoyI≈ut
- = 
-	`ªadJoy°ick
-();
-
-33 
+32 
 uöt8_t
  
 ödex
  = 7;
 
-34 
+33 
 uöt8_t
  
 i
@@ -141615,7 +141609,7 @@ i
 Rows
 ; i++){
 
-35 
+34 
 uöt8_t
  
 r
@@ -141623,7 +141617,7 @@ r
 Cﬁumns
 ;Ñ++) {
 
-37 
+36 
 brickAºay
 [
 ödex
@@ -141637,7 +141631,7 @@ r
 brickWidth
 );
 
-38 
+37 
 brickAºay
 [
 ödex
@@ -141649,7 +141643,21 @@ i
 brickHeight
 );
 
-40 
+38 
+brickAºay
+[
+ödex
+].
+MaxHP
+ = 2*(*
+Levñ
+Ë+ (
+uöt8_t
+)(
+	`DACR™d
+() % 3);
+
+39 
 brickAºay
 [
 ödex
@@ -141659,19 +141667,31 @@ cuºHP
 MaxHP
 ;
 
-44 
+41 
+brickAºay
+[
+ödex
+].
+pwrUP
+ = (
+uöt8_t
+)(
+	`DACR™d
+() % 2);
+
+43 
 x
  = 0; x < (*
 brickWidth
 ); x++){
 
-45 
+44 
 y
  = 0; y < (*
 brickHeight
 ); y++) {
 
-46 
+45 
 gameAºay
 [
 brickAºay
@@ -141687,17 +141707,11 @@ posX
 x
 ] = index;
 
-50 
+49 
 ödex
 ++;
 
-52 
-JoyI≈ut
- = 
-	`ªadJoy°ick
-();
-
-57 
+55 
 Såikî
 ->
 cuºpos
@@ -141707,13 +141721,13 @@ putWidth
 °rikîsize
 /2);
 
-59 
+57 
 uöt8_t
  
 vÆue
  = 2;
 
-60 
+58 
 uöt8_t
  
 i
@@ -141725,7 +141739,7 @@ Såikî
 °rikîöc
 ){
 
-61 
+59 
 uöt8_t
  
 s
@@ -141735,7 +141749,7 @@ Såikî
 °rikîöc
 ; s++){
 
-62 
+60 
 gameAºay
 [
 putSåikîPos
@@ -141751,19 +141765,19 @@ s
 vÆue
 ;
 
-64 
+62 
 vÆue
 ++;
 
-68  
+66  
 ödex
  - 7;
 
-69 
+67 
 	}
 }
 
-72 
+74 
 	$PrötVi˘‹y
 (
 uöt8_t
@@ -141777,117 +141791,121 @@ PœyîSc‹e1
 PœyîSc‹e2
 ) {
 
-73 
+75 
 °r1
 [19];
 
-76 
+78 
 	`˛rs¸
 ();
 
-78 
+80 
 	`gŸoXY
 (20,40);
 
-79 
+81 
 	`fgcﬁ‹
 (15);
 
-82 i‡(
+84 i‡(
 MaxPœyî
  == 2) {
 
-84 i‡(
+86 i‡(
 PœyîSc‹e1
  > 
 PœyîSc‹e2
 ) {
 
-86 
+88 
 	`PrötFromASCII
-("PLAYER 1 WINS",60,20);
+("PLAYER 1 WINS",64,20);
 
-87 
+89 
 	`Highsc‹eCheck
 (
 PœyîSc‹e1
 );
 
-89 i‡(
+91 i‡(
 PœyîSc‹e1
  < 
 PœyîSc‹e2
 ) {
 
-91 
+93 
 	`PrötFromASCII
-("PLAYER 2 WINS",60,20);
+("PLAYER 2 WINS",63,20);
 
-92 
+94 
 	`Highsc‹eCheck
 (
 PœyîSc‹e2
 );
 
-94 i‡(
+96 i‡(
 PœyîSc‹e1
  =
 PœyîSc‹e2
 ) {
 
-96 
+98 
 	`PrötFromASCII
-("BOTH PLAYERS WIN",60,20);
+("BOTH PLAYERS WIN",51,20);
 
-97 
+99 
 	`Highsc‹eCheck
 (
 PœyîSc‹e1
 );
 
-98 
+100 
 	`Highsc‹eCheck
 (
 PœyîSc‹e2
 );
 
-100 
+102 
 	`waô
 (200);
-
-103 
-	`PrötFromASCII
-("GAME OVER", 60, 20);
-
-104 
-	`•rötf
-(
-°r1
-, "SCORE: %04d", 
-PœyîSc‹e1
-);
 
 105 
 	`PrötFromASCII
-(
-°r1
-, 60, 30);
+("GAME OVER", 72, 20);
 
 106 
+	`•rötf
+(
+°r1
+, "SCORE %04d", 
+PœyîSc‹e1
+);
+
+107 
+	`PrötFromASCII
+(
+°r1
+, 73, 30);
+
+108 
 	`waô
 (200);
 
-107 
+109 
 	`Highsc‹eCheck
 (
 PœyîSc‹e1
 );
 
-110 
+112 
+	`waô
+(300);
+
+113 
 	}
 }
 
-112 
+119 
 	$SèπGameLo›
 (
 uöt8_t
@@ -141895,71 +141913,71 @@ uöt8_t
 MaxPœyî
 ) {
 
-113 
+120 
 Gøph
 [512] = {0};
 
-114 
+121 
 LCDD©a
 [4][128] = { {0} };
 
-117 
+124 
 °r1
 [19];
 
-119 
+126 
 uöt8_t
  
 Àvñ
 ;
 
-120 
+127 
 uöt16_t
  
 PœyîSc‹e
  = 0;
 
-121 
+128 
 uöt16_t
  
 PœyîSc‹e1
  = 0;
 
-122 
+129 
 uöt16_t
  
 PœyîSc‹e2
  = 0;
 
-123 
+130 
 uöt8_t
  
 Resu…sFromGame
  = 1;
 
-125 
+132 
 Àvñ
  = 1;
 
-132 
+139 
 i
  = 1; i <
 MaxPœyî
 ; i++) {
 
-134 
+141 
 	`˛rs¸
 ();
 
-136 
+143 
 	`fgcﬁ‹
 (15);
 
-139 
+146 
 	`gŸoXY
 (10,40);
 
-141 
+148 
 	`•rötf
 (
 °r1
@@ -141967,21 +141985,21 @@ MaxPœyî
 i
 );
 
-143 
+150 
 	`PrötFromASCII
 (
 °r1
-,60,20);
+,50,20);
 
-145 
+152 
 	`waô
 (200);
 
-148 
+155 
 Resu…sFromGame
  == 1) {
 
-150 
+157 
 Resu…sFromGame
  = 
 	`runGame
@@ -141995,63 +142013,63 @@ Gøph
 LCDD©a
 );
 
-155 i‡(
+162 i‡(
 Resu…sFromGame
  == 1) {
 
-158 
+165 
 	`˛rs¸
 ();
 
-160 
+167 
 	`fgcﬁ‹
 (15);
 
-163 
+170 
 	`gŸoXY
 (10,40);
 
-165 
+172 
 	`PrötFromASCII
-("GAME LEVEL COMPLETED.",60,20);
+("GAME LEVEL COMPLETED.",39,20);
 
-167 
+174 
 	`waô
 (200);
 
-170 
+177 
 Àvñ
 ++;
 
-176 
+183 
 Resu…sFromGame
  = 1;
 
-179 i‡(
+186 i‡(
 i
  == 1) {
 
-180 
+187 
 PœyîSc‹e1
  = 
 PœyîSc‹e
 ;
 
-182 i‡(
+189 i‡(
 i
  == 2) {
 
-183 
+190 
 PœyîSc‹e2
  = 
 PœyîSc‹e
 ;
 
-186 
+193 
 PœyîSc‹e
  = 0;
 
-191 
+198 
 	`PrötVi˘‹y
 (
 MaxPœyî
@@ -142061,11 +142079,11 @@ PœyîSc‹e1
 PœyîSc‹e2
 );
 
-192 
+199 
 	}
 }
 
-197 
+209 
 uöt8_t
  
 	$runGame
@@ -142083,7 +142101,7 @@ Gøph
 LCDD©a
 [4][128]) {
 
-199 
+211 
 brick_t
  
 brickAºay
@@ -142091,7 +142109,7 @@ brickAºay
 maxBricks
 ] = { };
 
-200 
+212 
 uöt8_t
  
 gameAºay
@@ -142101,61 +142119,61 @@ putHeight
 putWidth
 ] = { { } };
 
-201 
+213 
 uöt8_t
  
 Difficu…yTime
 ;
 
-203 
+215 
 Wh©NextA·îBÆlCﬁlisi⁄
  = 0;
 
-205 
+217 
 uöt16_t
  
 BrickCou¡î
 ;
 
-207 
+219 
 uöt8_t
  
 brickHeight
  = 6;
 
-208 
+220 
 uöt8_t
  
 brickWidth
  = 30;
 
-209 
+221 
 °r1
 [128];
 
-211 
+223 
 pwrUp
  
 powîup
 ;
 
-212 
+224 
 bÆl_t
  
 bÆl1
 ;
 
-213 
+225 
 °rikî_t
  
 °rikî
 ;
 
-214 * 
+226 * 
 Cﬁlisi⁄De˘e˘Rëu∫Addr
 ;
 
-215 
+227 
 °rikî
 .
 °rikîsize
@@ -142163,7 +142181,7 @@ Cﬁlisi⁄De˘e˘Rëu∫Addr
 putWidth
 /10;
 
-216 
+228 
 °rikî
 .
 °rikîöc
@@ -142171,29 +142189,29 @@ putWidth
 °rikîsize
 /5;
 
-219 
+231 
 uöt8_t
  
 cuºítHó…h
  = 3;
 
-220 
+232 
 	`Upd©eRGB
 (
 cuºítHó…h
 );
 
-222 
+234 
 	`öôPowîup
 (&
 powîup
 );
 
-225 
+237 
 	`˛rs¸
 ();
 
-235 
+247 
 BrickCou¡î
  = 
 	`öôGameAºay
@@ -142213,7 +142231,7 @@ brickHeight
 brickWidth
 );
 
-237 
+249 
 	`öôBÆl
 (&
 bÆl1
@@ -142223,7 +142241,7 @@ putWidth
 putSåikîPos
  - 10, -1, -1);
 
-251 
+263 
 	`døwGame
 (
 brickAºay
@@ -142237,13 +142255,13 @@ brickWidth
 bÆl1
 );
 
-253 
+265 
 uöt32_t
  
 ¥evPowîSèπ
  = 0;
 
-254 
+266 
 uöt32_t
  
 cuºTime
@@ -142257,45 +142275,45 @@ dñèTime
 ¥evTime
 ;
 
-256 
+268 
 	`PrötBrickCou¡î
 (&
 BrickCou¡î
 );
 
-258 
+270 
 uöt8_t
  
 bÆlDifficu…yMod
  = 5;
 
-259 
+271 
 bÆlDifficu…yMod
  -bÆlDifficu…yMod - *
 Àvñ
  > 0 ? 1 : 0;
 
-261 
+273 
 	`gŸoXY
 (90,80);
 
-262 
+274 
 	`¥ötf
 ("Levñ %d ", *
 Àvñ
 );
 
-264 
+276 
 LCDHóπs
 [7] = {0x7F, 0x80, 0x7F, 0x80, 0x7F, 0x80, 0x00};
 
-266 
+278 
 	`CÀ¨LöeD©a
 (
 LCDD©a
 );
 
-267 
+279 
 	`LCDWrôe
 (
 LCDD©a
@@ -142303,7 +142321,7 @@ LCDD©a
 LCDHóπs
 , 0);
 
-268 
+280 
 	`•rötf
 (
 °r1
@@ -142311,7 +142329,7 @@ LCDHóπs
 BrickCou¡î
 );
 
-269 
+281 
 	`LCDWrôe
 (
 LCDD©a
@@ -142319,7 +142337,7 @@ LCDD©a
 °r1
 , 1);
 
-270 
+282 
 	`•rötf
 (
 °r1
@@ -142327,7 +142345,7 @@ LCDD©a
 PœyîSc‹e
 );
 
-271 
+283 
 	`LCDWrôe
 (
 LCDD©a
@@ -142335,7 +142353,7 @@ LCDD©a
 °r1
 , 2);
 
-272 
+284 
 	`lcd_upd©e
 (
 Gøph
@@ -142343,37 +142361,37 @@ Gøph
 LCDD©a
 );
 
-275 
+287 
 	`døwBÆl
 (&
 bÆl1
 );
 
-276 
+288 
 	`Cou¡Down
 ();
 
-278 
+290 
 uöt8_t
  
 gameE«bÀd
  = 1;
 
-280 
+292 
 gameE«bÀd
 ) {
 
-282 
+294 
 	`__dißbÀ_úq
 ();
 
-283 
+295 
 ¥evTime
  = 
 cuºTime
 ;
 
-284 
+296 
 cuºTime
  = 
 ˛k
@@ -142381,7 +142399,7 @@ cuºTime
 time_h£c⁄ds
 ;
 
-285 
+297 
 dñèTime
  = 
 cuºTime
@@ -142389,11 +142407,11 @@ cuºTime
 ¥evTime
 ;
 
-286 
+298 
 	`__íabÀ_úq
 ();
 
-288 i‡((
+300 i‡((
 cuºTime
  % 
 bÆlDifficu…yMod
@@ -142401,13 +142419,13 @@ bÆlDifficu…yMod
 ¥evTime
 ) {
 
-291 
+303 
 	`upd©eBÆl
 (&
 bÆl1
 , 0);
 
-294 
+306 
 Cﬁlisi⁄De˘e˘Rëu∫Addr
  = 
 	`Cﬁlisi⁄Dëe˘
@@ -142417,11 +142435,11 @@ gameAºay
 bÆl1
 );
 
-297 i‡(
+309 i‡(
 Cﬁlisi⁄De˘e˘Rëu∫Addr
  != 0) {
 
-300 
+312 
 Wh©NextA·îBÆlCﬁlisi⁄
  = ((
 	`uöt16_t
@@ -142445,19 +142463,19 @@ PœyîSc‹e
 powîup
 );
 
-309 
+321 
 Wh©NextA·îBÆlCﬁlisi⁄
 ) {
 
-314 i‡(
+326 i‡(
 cuºítHó…h
  > 1){
 
-315 
+327 
 cuºítHó…h
 --;
 
-316 
+328 
 uöt8_t
  
 i
@@ -142465,19 +142483,19 @@ i
 cuºítHó…h
 ; i--){
 
-317 
+329 
 LCDHóπs
 [2*
 i
  - 2] = 0x20;
 
-318 
+330 
 LCDHóπs
 [2*
 i
  - 1] = 0x20;
 
-320 
+332 
 	`LCDWrôe
 (
 LCDD©a
@@ -142485,7 +142503,7 @@ LCDD©a
 LCDHóπs
 , 0);
 
-321 
+333 
 	`lcd_upd©e
 (
 Gøph
@@ -142493,13 +142511,13 @@ Gøph
 LCDD©a
 );
 
-322 
+334 
 	`Upd©eRGB
 (
 cuºítHó…h
 );
 
-323 
+335 
 	`gŸoXY
 (
 bÆl1
@@ -142511,11 +142529,11 @@ x
 y
  >> 14);
 
-325 
+337 
 	`putch¨
 (32);
 
-326 
+338 
 	`öôBÆl
 (&
 bÆl1
@@ -142525,39 +142543,39 @@ putWidth
 putSåikîPos
  - 10, -1, -1);
 
-327 
+339 
 	`døwBÆl
 (&
 bÆl1
 );
 
-328 
+340 
 	`Cou¡Down
 ();
 
-332 
+344 
 cuºítHó…h
 --;
 
-333 
+345 
 	`Upd©eRGB
 (
 cuºítHó…h
 );
 
-334 
+346 
 	`CÀ¨LöeD©a
 (
 LCDD©a
 );
 
-335 
+347 
 	`LCDWrôe
 (
 LCDD©a
 , "YouÜose!", 0);
 
-336 
+348 
 	`•rötf
 (
 °r1
@@ -142565,7 +142583,7 @@ LCDD©a
 PœyîSc‹e
 );
 
-337 
+349 
 	`LCDWrôe
 (
 LCDD©a
@@ -142573,13 +142591,13 @@ LCDD©a
 °r1
 , 1);
 
-338 
+350 
 	`LCDWrôe
 (
 LCDD©a
 , "Insert coinÅo continue", 2);
 
-339 
+351 
 	`lcd_upd©e
 (
 Gøph
@@ -142587,15 +142605,15 @@ Gøph
 LCDD©a
 );
 
-340 
+352 
 gameE«bÀd
  = 0;
 
-350 
+362 
 	`∂aySound
 (800, 5);
 
-358 
+370 
 	`•rötf
 (
 °r1
@@ -142603,7 +142621,7 @@ gameE«bÀd
 BrickCou¡î
 );
 
-359 
+371 
 	`LCDWrôe
 (
 LCDD©a
@@ -142611,7 +142629,7 @@ LCDD©a
 °r1
 , 1);
 
-360 
+372 
 	`•rötf
 (
 °r1
@@ -142619,7 +142637,7 @@ LCDD©a
 PœyîSc‹e
 );
 
-361 
+373 
 	`LCDWrôe
 (
 LCDD©a
@@ -142627,7 +142645,7 @@ LCDD©a
 °r1
 , 2);
 
-362 
+374 
 	`lcd_upd©e
 (
 Gøph
@@ -142635,23 +142653,23 @@ Gøph
 LCDD©a
 );
 
-364 
+376 
 	`∂aySound
 (1200, 5);
 
-376 
+388 
 	`døwBÆl
 (&
 bÆl1
 );
 
-379 i‡(
+391 i‡(
 cuºTime
  % 2 =0 && cuºTimê!
 ¥evTime
 ) {
 
-380 
+392 
 	`upd©eSåikî
 (
 gameAºay
@@ -142659,7 +142677,7 @@ gameAºay
 °rikî
 );
 
-383 i‡(
+395 i‡(
 cuºTime
  - 
 ¥evPowîSèπ
@@ -142669,21 +142687,21 @@ powîup
 íabÀ
 ) {
 
-384 
+396 
 ¥evPowîSèπ
  = 0;
 
-385 
+397 
 powîup
 .
 íabÀ
  = 0;
 
-386 
+398 
 bÆlDifficu…yMod
 --;
 
-389 i‡(
+401 i‡(
 powîup
 .
 Æive
@@ -142693,13 +142711,13 @@ cuºTime
 ¥evTime
 ) {
 
-391 
+403 
 	`upd©ePowîup
 (&
 powîup
 );
 
-392 i‡(
+404 i‡(
 gameAºay
 [
 powîup
@@ -142711,7 +142729,7 @@ posX
 íabÀ
  == 0) {
 
-393 
+405 
 	`gŸoXY
 (
 powîup
@@ -142721,27 +142739,27 @@ posX
 posY
 -1);
 
-394 
+406 
 	`putch¨
 (32);
 
-395 
+407 
 powîup
 .
 íabÀ
  = 1;
 
-396 
+408 
 bÆlDifficu…yMod
 ++;
 
-397 
+409 
 ¥evPowîSèπ
  = 
 cuºTime
 ;
 
-399 i‡(
+411 i‡(
 gameAºay
 [
 powîup
@@ -142751,13 +142769,13 @@ posY
 posX
 ] == 0 && gameArray[powerup.posY - 1][powerup.posX] == 0) {
 
-400 
+412 
 	`døwPowîup
 (&
 powîup
 );
 
-404 
+416 
 uöt16_t
  
 joyöput
@@ -142765,15 +142783,15 @@ joyöput
 	`ªadJoy°ick
 () & 0x10;
 
-405 i‡(
+417 i‡(
 joyöput
  == 16){
 
-406 
+418 
 	`Bosskey
 ();
 
-407 
+419 
 	`døwGame
 (
 brickAºay
@@ -142787,15 +142805,15 @@ brickWidth
 bÆl1
 );
 
-412 
+424 
 	`fgcﬁ‹
 (15);
 
-416 
+428 
 	}
 }
 
-418 
+430 
 	$døwGame
 (
 brick_t
@@ -142817,31 +142835,31 @@ bÆl_t
 bÆl
 ){
 
-420 
+432 
 	`fgcﬁ‹
 (15);
 
-421 
+433 
 i
  = 0; i < 
 putWidth
 ; i++){
 
-422 
+434 
 	`putch¨
 (178);
 
-424 
+436 
 i
  = 1; i < 
 putHeight
 ; i++){
 
-425 
+437 
 	`putch¨
 (178);
 
-426 
+438 
 	`gŸoXY
 (
 putWidth
@@ -142849,17 +142867,17 @@ putWidth
 i
 );
 
-427 
+439 
 	`putch¨
 (178);
 
-431 
+443 
 i
  = 7; i < 
 maxBricks
 ; i++) {
 
-432 i‡(
+444 i‡(
 brickAºay
 [
 i
@@ -142867,7 +142885,7 @@ i
 cuºHP
  != 0){
 
-433 
+445 
 	`døwBox
 (&
 brickAºay
@@ -142879,11 +142897,11 @@ brickHeight
 brickWidth
 );
 
-438 
+450 
 	`fgcﬁ‹
 (15);
 
-439 
+451 
 	`gŸoXY
 (
 °rikî
@@ -142893,7 +142911,7 @@ cuºpos
 putSåikîPos
 );
 
-440 
+452 
 i
  = 0; i < 
 °rikî
@@ -142901,75 +142919,75 @@ i
 °rikîsize
 ; i++){
 
-441 
+453 
 	`putch¨
 (223);
 
-444 
+456 
 	`fgcﬁ‹
 (15);
 
-445 
+457 
 	`døwBÆl
 (
 bÆl
 );
 
-446 
+458 
 	}
 }
 
-448 
+460 
 	$Cou¡Down
 (){
 
-449 
+461 
 uöt8_t
  
 i
  = 3; i > 0; i--) {
 
-450 
+462 
 i
 ) {
 
-452 
+464 
 	`PrötFromASCII
 ("3",97,40);
-
-455 
-	`PrötFromASCII
-(" ",97,40);
-
-456 
-	`PrötFromASCII
-("2",97,40);
-
-459 
-	`PrötFromASCII
-(" ",97,40);
-
-460 
-	`PrötFromASCII
-("1",97,40);
-
-463 
-	`∂aySound
-(600,5);
-
-464 
-	`waô
-(100);
-
-466 
-	`∂aySound
-(1200,5);
 
 467 
 	`PrötFromASCII
 (" ",97,40);
 
 468 
+	`PrötFromASCII
+("2",97,40);
+
+471 
+	`PrötFromASCII
+(" ",97,40);
+
+472 
+	`PrötFromASCII
+("1",97,40);
+
+475 
+	`∂aySound
+(600,5);
+
+476 
+	`waô
+(100);
+
+478 
+	`∂aySound
+(1200,5);
+
+479 
+	`PrötFromASCII
+(" ",97,40);
+
+480 
 	}
 }
 
@@ -143166,14 +143184,302 @@ t
 (){
 
 152 
-	`¥ötf
-("HELP YOURSELF! :)");
+	`fgcﬁ‹
+(15);
 
 153 
+	`gŸoXY
+(75,13);
+
+154 
+	`¥ötf
+("ToÇavigateÅhe menu, useÅhe joystickÅo highlight");
+
+155 
+	`gŸoXY
+(75,14);
+
+156 
+	`¥ötf
+("menu itemsándÖressÅhe joystickÅo selectá menu.");
+
+157 
+	`gŸoXY
+(75,15);
+
+158 
+	`¥ötf
+("When inÅheÖlay menu, selectÉither singleÖlayer");
+
+159 
+	`gŸoXY
+(75,16);
+
+160 
+	`¥ötf
+("orÖlayer vsÖlayer. TheÖlayer vsÖlayer mode will");
+
+161 
+	`gŸoXY
+(75,17);
+
+162 
+	`¥ötf
+("startÅhe game forÖlayer 1 where,áfterÖlayer one");
+
+163 
+	`gŸoXY
+(75,18);
+
+164 
+	`¥ötf
+("hasÜost,Ölayer 2Ölays his game. AfterÅhe game, ");
+
+165 
+	`gŸoXY
+(75,19);
+
+166 
+	`¥ötf
+("theÖlayer(s) withÅhe mostÖoints win,ánd ifÉligible, ");
+
+167 
+	`gŸoXY
+(75,20);
+
+168 
+	`¥ötf
+("will beÅakenÅoÅhe highscore submission menu. ");
+
+169 
+	`gŸoXY
+(75,21);
+
+170 
+	`¥ötf
+("EnteringÅhe highscore menu will showÅhe current ");
+
+171 
+	`gŸoXY
+(75,22);
+
+172 
+	`¥ötf
+("highscores for 5 secondándÅhenÑeturnÅoÅhe main menu. ");
+
+173 
+	`gŸoXY
+(75,23);
+
+174 
+	`¥ötf
+("The game will doá short countdown beforeÜaunchingÅhe ball. ");
+
+175 
+	`gŸoXY
+(75,24);
+
+176 
+	`¥ötf
+("WhenÖlayingÅhe game, haveÅhe USB cableÖointedáway ");
+
+177 
+	`gŸoXY
+(75,25);
+
+178 
+	`¥ötf
+("from youándÅiltÅhe microcontroller from");
+
+179 
+	`gŸoXY
+(75,26);
+
+180 
+	`¥ötf
+("leftÅoÑightÅo moveÅhe striker.");
+
+181 
+	`gŸoXY
+(75,27);
+
+182 
+	`¥ötf
+("To getá high score, keepÅhe ball inÅheáir for");
+
+183 
+	`gŸoXY
+(75,28);
+
+184 
+	`¥ötf
+("aÜongÅimeándÑemoveás many bricksásÖossible.");
+
+185 
+	`gŸoXY
+(75,29);
+
+186 
+	`¥ötf
+("EachÅimeÅhe ballÑeachesÅhe bottom ofÅhe screen,");
+
+187 
+	`gŸoXY
+(75,30);
+
+188 
+	`¥ötf
+("theÖlayer willÜoseáÜife. AfterállÜifes");
+
+189 
+	`gŸoXY
+(75,31);
+
+190 
+	`¥ötf
+("have beenÜost,Åhe gameÉnds.");
+
+191 
+	`gŸoXY
+(75,32);
+
+192 
+	`¥ötf
+("Should youÑemoveá brickáÖowerup hasá chanceÅo spawn");
+
+193 
+	`gŸoXY
+(75,33);
+
+194 
+	`¥ötf
+("and catching it withÅhe striker, will slow");
+
+195 
+	`gŸoXY
+(75,34);
+
+196 
+	`¥ötf
+("the balls speed for 10 seconds.");
+
+197 
+	`gŸoXY
+(75,35);
+
+198 
+	`¥ötf
+("OnÅhe LCD display you will find informationábout");
+
+199 
+	`gŸoXY
+(75,36);
+
+200 
+	`¥ötf
+("your current gameándÅhe LED color will indicate your");
+
+201 
+	`gŸoXY
+(75,37);
+
+202 
+	`¥ötf
+("currentámount of HP. InÅhe highscore submission menu,");
+
+203 
+	`gŸoXY
+(75,38);
+
+204 
+	`¥ötf
+("useÅheÜeftÖotentiometerÅo selectÉach character.");
+
+205 
+	`gŸoXY
+(75,39);
+
+206 
+	`¥ötf
+("When you wantÅo selectÅhat character,");
+
+207 
+	`gŸoXY
+(75,40);
+
+208 
+	`¥ötf
+("pressÅhe joystick button.");
+
+209 
+	`gŸoXY
+(75,41);
+
+210 
+	`¥ötf
+("Should you feelÅheÇeedÅoÖauseÅhe game or");
+
+211 
+	`gŸoXY
+(75,42);
+
+212 
+	`¥ötf
+("switcháway fromÅhe game quick,");
+
+213 
+	`gŸoXY
+(75,43);
+
+214 
+	`¥ötf
+("useÅhe boss key whileÖlayingÅhe game.");
+
+215 
+	`gŸoXY
+(75,44);
+
+216 
+	`¥ötf
+("The boss key can beáctivated byÖressing");
+
+217 
+	`gŸoXY
+(75,45);
+
+218 
+	`¥ötf
+("the joystick button whileá game isÑunning.");
+
+219 
+	`gŸoXY
+(75,46);
+
+220 
+	`¥ötf
+("WhenÖressingÅhe boss key,Åhe screen will be covered");
+
+221 
+	`gŸoXY
+(75,47);
+
+222 
+	`¥ötf
+("withá blue screen of death similarÜayout.");
+
+223 
+	`gŸoXY
+(75,48);
+
+224 
+	`¥ötf
+("ToÑesume,ÖressÅhe joystick buttonágain.");
+
+225 
 	}
 }
 
-156 
+228 
 	$CÀ¨Löes
 (
 uöt8_t
@@ -143183,7 +143489,7 @@ LöeFrom
 LöeTo
 ) {
 
-158 
+230 
 i
  = 
 LöeFrom
@@ -143191,21 +143497,21 @@ LöeFrom
 LöeTo
 ; i++) {
 
-161 
+233 
 	`gŸoXY
 (0,
 i
 );
 
-164 
+236 
 	`˛ªﬁ
 ();
 
-169 
+241 
 	}
 }
 
-172 
+244 
 	$Ch™geSñe˘i⁄
 (
 Up
@@ -143215,47 +143521,47 @@ Sñe˘i⁄Index
 MaxSñe˘i⁄
 ) {
 
-175 i‡(
+247 i‡(
 Up
  == 1) {
 
-176 
+248 
 Sñe˘i⁄Index
 ++;
 
-179 
+251 
 Sñe˘i⁄Index
 --;
 
-182 i‡(
+254 i‡(
 Sñe˘i⁄Index
  > 
 MaxSñe˘i⁄
 ) {
 
-183 
+255 
 Sñe˘i⁄Index
  = 1;
 
-185 i‡(
+257 i‡(
 Sñe˘i⁄Index
  < 1) {
 
-186 
+258 
 Sñe˘i⁄Index
  = 
 MaxSñe˘i⁄
 ;
 
-189  
+261  
 Sñe˘i⁄Index
 ;
 
-192 
+264 
 	}
 }
 
-195 
+272 
 	$PrötMíu
 (
 °©e
@@ -143263,193 +143569,209 @@ Sñe˘i⁄Index
 Newmíu
 ) {
 
-198 
+275 
 °©e
 ) {
 
-201 
+278 
 	`˛rs¸
 ();
 
-202 
+279 
 	`fgcﬁ‹
 (15);
 
-203 
+280 
 	`CÀ¨Löes
 (20,45);
 
-204 
+281 
 	`GŸoMíuSèã
 (1);
 
-208 
+285 
 	`CÀ¨Löes
 (20,45);
 
-209 
+286 
 	`GŸoMíuSèã
 (2);
 
-213 
+290 
 	`˛rs¸
 ();
 
-214 
+291 
 	`fgcﬁ‹
 (15);
 
-215 
+292 
 	`PrötFromASCII
 ("REFLEXBALL",69,7);
 
-216 
+293 
 	`PrötSc‹e
 ();
 
-217 
+294 
 	`˛rs¸
 ();
 
-218 *
+295 *
 Newmíu
  = 1;
 
-219 
+296 
 	`GŸoMíuSèã
 (1);
 
-223 
+300 
 	`CÀ¨Löes
 (20,45);
 
-224 
+301 
 	`PrötHñp
 ();
 
-228 
-	`SèπGameLo›
-(1);
+302 
+	`waô
+(500);
 
-231 
+303 
 	`˛rs¸
 ();
 
-232 *
+304 *
 Newmíu
  = 1;
 
-233 
+305 
 	`GŸoMíuSèã
 (1);
 
-237 
+309 
+	`SèπGameLo›
+(1);
+
+312 
+	`˛rs¸
+();
+
+313 *
+Newmíu
+ = 1;
+
+314 
+	`GŸoMíuSèã
+(1);
+
+318 
 	`SèπGameLo›
 (2);
 
-240 
+321 
 	`˛rs¸
 ();
 
-241 *
+322 *
 Newmíu
  = 1;
 
-242 
+323 
 	`GŸoMíuSèã
 (1);
 
-247 
+328 
 	}
 }
 
-250 
+336 
 	$GŸoMíuSèã
 (
 °©e
  ) {
 
-253 
+339 
 °©e
 ) {
 
-257 
+343 
 	`˛rs¸
 ();
 
-258 
+344 
 	`fgcﬁ‹
 (15);
 
-259 
+345 
 	`PrötFromASCII
 ("REFLEXBALL",69,7);
 
-262 
+348 
 	`Sñe˘
 (1, 
 SELECT
 , 1);
 
-265 
+351 
 	`Sñe˘
 (2, 
 DESELECT
 , 1);
 
-268 
+354 
 	`Sñe˘
 (3, 
 DESELECT
 , 1);
 
-273 
+359 
 	`˛rs¸
 ();
 
-274 
+360 
 	`fgcﬁ‹
 (15);
 
-275 
+361 
 	`PrötFromASCII
 ("REFLEXBALL",69,7);
 
-278 
+364 
 	`Sñe˘
 (1, 
 SELECT
 , 2);
 
-281 
+367 
 	`Sñe˘
 (2, 
 DESELECT
 , 2);
 
-284 
+370 
 	`Sñe˘
 (3, 
 DESELECT
 , 2);
 
-289 
+375 
 	`CÀ¨Löes
 (20,30);
 
-295 
+381 
 	`CÀ¨Löes
 (20,30);
 
-296 
+382 
 	`¥ötf
 ("HELP YOUR SELF! :)");
 
-302 
+388 
 	}
 }
 
-305 
+391 
 	$GëNextMíuBlockSñe˘i⁄
 (
 boﬁ
@@ -143461,47 +143783,47 @@ Sñe˘i⁄Index
 MaxSñe˘i⁄
 ) {
 
-308 i‡(
+394 i‡(
 Up
  == 1) {
 
-309 
+395 
 Sñe˘i⁄Index
 ++;
 
-312 
+398 
 Sñe˘i⁄Index
 --;
 
-315 i‡(
+401 i‡(
 Sñe˘i⁄Index
  > 
 MaxSñe˘i⁄
 ) {
 
-316 
+402 
 Sñe˘i⁄Index
  = 1;
 
-318 i‡(
+404 i‡(
 Sñe˘i⁄Index
  < 1) {
 
-319 
+405 
 Sñe˘i⁄Index
  = 
 MaxSñe˘i⁄
 ;
 
-322  
+408  
 Sñe˘i⁄Index
 ;
 
-325 
+411 
 	}
 }
 
-327 
+418 
 uöt8_t
  
 	$Rëu∫NextBlockSñe˘i⁄Numbî
@@ -143515,43 +143837,43 @@ Up
 CuºítBlockSñe˘i⁄Numî
 ) {
 
-329 i‡(
+420 i‡(
 Up
  == 1) {
 
-330 
+421 
 CuºítBlockSñe˘i⁄Numî
 ++;
 
-333 
+424 
 CuºítBlockSñe˘i⁄Numî
 --;
 
-337 i‡(
+428 i‡(
 CuºítBlockSñe˘i⁄Numî
  > 3) {
 
-338 
+429 
 CuºítBlockSñe˘i⁄Numî
  = 1;
 
-340 i‡(
+431 i‡(
 CuºítBlockSñe˘i⁄Numî
  < 1) {
 
-341 
+432 
 CuºítBlockSñe˘i⁄Numî
  = 3;
 
-344  
+435  
 CuºítBlockSñe˘i⁄Numî
 ;
 
-346 
+437 
 	}
 }
 
-348 
+444 
 	$Sñe˘
 (
 £À˘i⁄
@@ -143561,75 +143883,75 @@ highlight
 °©e
 ) {
 
-349 if(
+445 if(
 highlight
  == 1){
 
-350 
+446 
 	`fgcﬁ‹
 (1);
 
-353 
+449 
 	`fgcﬁ‹
 (15);
 
-355 
+451 
 °©e
 ) {
 
-357 
+453 
 £À˘i⁄
 ) {
 
-359 
+455 
 	`PrötFromASCII
 ("PLAY",86,20);
 
-362 
+458 
 	`PrötFromASCII
 ("HIGHSCORE",72,30);
 
-365 
+461 
 	`PrötFromASCII
 ("HELP",88,40);
 
-370 
+466 
 £À˘i⁄
 ) {
 
-372 
+468 
 	`PrötFromASCII
 ("SINGLE PLAYER",62,20);
 
-375 
+471 
 	`PrötFromASCII
 ("PLAYER VS PLAYER",53,30);
 
-378 
+474 
 	`PrötFromASCII
 ("RETURN",81,40);
 
-383 
+479 
 £À˘i⁄
 ) {
 
-384 
+480 
 	`PrötSc‹e
 ();
 
-389 
+485 
 	`fgcﬁ‹
 (15);
 
-390 
+486 
 	`¥ötf
 ("HELP YOURSELF! :)");
 
-393 
+489 
 	}
 }
 
-396 
+492 
 	$Upd©eSèã
 (
 °©e
@@ -143639,47 +143961,47 @@ highlight
 Newmíu
 ) {
 
-397 
+493 
 °©e
 ) {
 
-399 
+495 
 £À˘i⁄
 ) {
 
-401 *
+497 *
 Newmíu
  = 2;
 
-404 *
+500 *
 Newmíu
  = 3;
 
-407 *
+503 *
 Newmíu
  = 4;
 
-413 
+509 
 £À˘i⁄
 ) {
 
-415 *
+511 *
 Newmíu
  = 5;
 
-418 *
+514 *
 Newmíu
  = 6;
 
-421 *
+517 *
 Newmíu
  = 1;
 
-437 
+533 
 	}
 }
 
-439 
+535 
 	$PrötEnd
 (
 ASCIIEnd
@@ -143689,7 +144011,7 @@ tôÀX
 tôÀY
 ) {
 
-441 
+537 
 	`PrötOutTextAºay
 (
 ASCIIEnd
@@ -143699,7 +144021,7 @@ tôÀX
 tôÀY
 -10, 5, 9);
 
-443 
+539 
 	}
 }
 
@@ -144017,37 +144339,37 @@ sc‹eAºay
 	`PrötFromASCII
 (
 Highsc‹ePœyî1
-,60,20);
+,73,20);
 
 433 
 	`PrötFromASCII
 (
 Highsc‹eSc‹e1
-,90,20);
+,103,20);
 
 434 
 	`PrötFromASCII
 (
 Highsc‹ePœyî2
-,60,30);
+,73,30);
 
 435 
 	`PrötFromASCII
 (
 Highsc‹eSc‹e2
-,90,30);
+,103,30);
 
 436 
 	`PrötFromASCII
 (
 Highsc‹ePœyî3
-,60,40);
+,73,40);
 
 437 
 	`PrötFromASCII
 (
 Highsc‹eSc‹e3
-,90,40);
+,103,40);
 
 438 
 	`waô
@@ -144181,7 +144503,7 @@ sc‹e
 
 478 
 	`PrötFromASCII
-("TRY AGAIN",75,23);
+("TRY AGAIN",71,23);
 
 479 
 	`waô
@@ -144213,7 +144535,7 @@ sc‹e
 
 486 
 	`PrötFromASCII
-("NEW HIGHSCORE", 70, 10);
+("NEW HIGHSCORE", 60, 10);
 
 487 
 uöt16_t
@@ -145179,7 +145501,7 @@ DúVec
 vñMod
 );
 
-29 
+28 
 bÆl
 ->
 NextPos
@@ -145193,11 +145515,11 @@ DúVec
 vñMod
 );
 
-36 
+31 
 	}
 }
 
-39 
+34 
 	$upd©eBÆlS≥ed
 (
 bÆl_t
@@ -145209,55 +145531,55 @@ bÆl
 vñMod
 ) {
 
-40 i‡(
+35 i‡(
 vñMod
  < 0) {
+
+36 
+bÆl
+->
+DúVec
+.
+x
+ >>
+vñMod
+;
+
+37 
+bÆl
+->
+DúVec
+.
+y
+ >>
+vñMod
+;
+
+40 
+bÆl
+->
+DúVec
+.
+x
+ <<
+vñMod
+;
 
 41 
 bÆl
 ->
 DúVec
 .
-x
- >>
-vñMod
-;
-
-42 
-bÆl
-->
-DúVec
-.
-y
- >>
-vñMod
-;
-
-45 
-bÆl
-->
-DúVec
-.
-x
- <<
-vñMod
-;
-
-46 
-bÆl
-->
-DúVec
-.
 y
  <<
 vñMod
 ;
 
-48 
+43 
 	}
 }
 
-68 
+77 
 	$Dúe˘i⁄OfBÆlAâack
 (
 uöt8_t
@@ -145273,7 +145595,7 @@ bÆl_t
 bÆl
 ) {
 
-71 
+80 
 uöt16_t
  
 xPos
@@ -145285,7 +145607,7 @@ PªvPos
 x
  >> 14;
 
-72 
+81 
 uöt16_t
  
 yPos
@@ -145297,7 +145619,7 @@ PªvPos
 y
  >> 14;
 
-74 
+83 
 ve˘‹_t
  
 T›
@@ -145305,7 +145627,7 @@ T›
 BŸtom
 ;
 
-75 
+84 
 ve˘‹_t
  
 Le·
@@ -145313,7 +145635,7 @@ Le·
 Right
 ;
 
-76 
+85 
 uöt16_t
  
 GameD©aT›
@@ -145325,7 +145647,7 @@ GameD©aLe·
 GameD©aRight
 ;
 
-80 
+89 
 T›
 .
 x
@@ -145333,7 +145655,7 @@ x
 xPos
 ;
 
-81 
+90 
 T›
 .
 y
@@ -145341,7 +145663,7 @@ y
 yPos
  - 1 >= 0 ? yPos - 1 : 0;
 
-84 
+93 
 BŸtom
 .
 x
@@ -145349,7 +145671,7 @@ x
 xPos
 ;
 
-85 
+94 
 BŸtom
 .
 y
@@ -145359,7 +145681,7 @@ yPos
 putHeight
  ? yPos + 1 :ÖutHeight - 1;
 
-88 
+97 
 Le·
 .
 x
@@ -145367,7 +145689,7 @@ x
 xPos
  - 1 >= 0 ? xPos - 1 : 0;
 
-89 
+98 
 Le·
 .
 y
@@ -145375,7 +145697,7 @@ y
 yPos
 ;
 
-92 
+101 
 Right
 .
 x
@@ -145385,7 +145707,7 @@ xPos
 putWidth
  ? xPos + 1 :0;
 
-93 
+102 
 Right
 .
 y
@@ -145393,7 +145715,7 @@ y
 yPos
 ;
 
-97 
+106 
 GameD©aT›
  = 
 gameAºay
@@ -145405,7 +145727,7 @@ y
 x
 ];
 
-98 
+107 
 GameD©aBŸtom
  = 
 gameAºay
@@ -145417,7 +145739,7 @@ y
 x
 ];
 
-99 
+108 
 GameD©aRight
  = 
 gameAºay
@@ -145429,7 +145751,7 @@ y
 x
 ];
 
-100 
+109 
 GameD©aLe·
  = 
 gameAºay
@@ -145441,7 +145763,7 @@ y
 x
 ];
 
-108 i‡(
+117 i‡(
 GameD©aRight
  =0 && 
 GameD©aLe·
@@ -145451,7 +145773,7 @@ GameD©aT›
 GameD©aBŸtom
  == 0) {
 
-113 i‡(
+122 i‡(
 GameD©aRight
  =0 && 
 GameD©aLe·
@@ -145461,7 +145783,7 @@ GameD©aT›
 GameD©aBŸtom
  != 0) {
 
-118 i‡(
+127 i‡(
 GameD©aRight
  !0 && 
 GameD©aLe·
@@ -145471,7 +145793,7 @@ GameD©aT›
 GameD©aBŸtom
  == 0) {
 
-123 i‡(
+132 i‡(
 GameD©aRight
  =0 && 
 GameD©aLe·
@@ -145481,7 +145803,7 @@ GameD©aT›
 GameD©aBŸtom
  == 0) {
 
-128 i‡(
+137 i‡(
 GameD©aRight
  =0 && 
 GameD©aLe·
@@ -145491,7 +145813,7 @@ GameD©aT›
 GameD©aBŸtom
  == 0) {
 
-133 i‡(
+142 i‡(
 GameD©aRight
  !0 && 
 GameD©aLe·
@@ -145501,7 +145823,7 @@ GameD©aT›
 GameD©aBŸtom
  == 0) {
 
-138 i‡(
+147 i‡(
 GameD©aRight
  =0 && 
 GameD©aLe·
@@ -145511,7 +145833,7 @@ GameD©aT›
 GameD©aBŸtom
  != 0) {
 
-143 i‡(
+152 i‡(
 GameD©aRight
  !0 && 
 GameD©aLe·
@@ -145521,11 +145843,11 @@ GameD©aT›
 GameD©aBŸtom
  != 0) {
 
-149 
+158 
 	}
 }
 
-151 
+167 
 öt32_t
  
 	$GëDegªe
@@ -145543,7 +145865,7 @@ Fa˘‹
 DegªeIndex
 ){
 
-152 
+168 
 öt32_t
  
 R™d
@@ -145551,11 +145873,11 @@ R™d
 	`DACR™d
 () % 64)-32;
 
-154 i‡(
+170 i‡(
 Up
  == 1) {
 
-155  (–(128 * ( (3 << 14Ë+ (
+171  (–(128 * ( (3 << 14Ë+ (
 Fa˘‹
 )ËË- ( (
 DegªeIndex
@@ -145563,7 +145885,7 @@ DegªeIndex
 R™d
 ;
 
-159  ((
+174  ((
 Fa˘‹
  * (256 - (
 DegªeIndex
@@ -145571,11 +145893,11 @@ DegªeIndex
 R™d
 ;
 
-161 
+176 
 	}
 }
 
-165 
+186 
 	$CheckAngÀ
 (
 Dúe˘i⁄OfBÆlAâack
@@ -145585,7 +145907,7 @@ Dúe˘i⁄OfBÆlAâack
 AngÀs
 ) {
 
-174 
+195 
 öt32_t
  
 AngÀ
@@ -145593,55 +145915,55 @@ AngÀ
 AngÀs
  & 0x1FF;
 
-176 
+197 
 Dúe˘i⁄OfBÆlAâack
 ) {
 
-179 i‡(
+200 i‡(
 THIRD_QUADRANT
  || 
 FOURT_QUADRANT
 ) {
 
-185 i‡(
+206 i‡(
 FIRST_QUADRANT
  || 
 SECOND_QUADRANT
 ) {
 
-191 i‡(
+212 i‡(
 SECOND_QUADRANT
  || 
 THIRD_QUADRANT
 ) {
 
-197 i‡(
+218 i‡(
 FIRST_QUADRANT
  || 
 FOURT_QUADRANT
 ) {
 
-203 i‡(
+224 i‡(
 FOURT_QUADRANT
 ) {
 
-209 i‡(
+230 i‡(
 THIRD_QUADRANT
 ) {
 
-215 i‡(
+236 i‡(
 FIRST_QUADRANT
 ) {
 
-221 i‡(
+242 i‡(
 SECOND_QUADRANT
 ) {
 
-230 
+251 
 	}
 }
 
-232 
+259 
 	$Upd©eBÆlAngÀ
 (
 bÆl_t
@@ -145659,11 +145981,11 @@ putWidth
 Ty≥OfHô
 ) {
 
-233 
+260 
 Dúe˘i⁄OfBÆlAâack_V¨
 ;
 
-236 
+263 
 uöt8_t
  
 FromI
@@ -145671,53 +145993,53 @@ FromI
 ToI
 ;
 
-237 
+264 
 öt32_t
  
 Fa˘‹
  = 0b00000000000000000100000000000000;
 
-238 
+265 
 öt32_t
  
 AngÀ
 ;
 
-247 
+274 
 uöt8_t
  
 RunTime
  = 0;
 
-250 
+277 
 Ty≥OfHô
 ) {
 
-254 
+281 
 Fa˘‹
  = 0b00000000000000000100000000000000;
 
-259 
+286 
 Fa˘‹
  = 0b00000000000000000001010101010101;
 
-264 
+291 
 Fa˘‹
  = 0b00000000000000000010101010101010;
 
-269 
+296 
 Fa˘‹
  = 0b00000000000000000100000000000000;
 
-274 
+301 
 Fa˘‹
  = 0b00000000000000000110000000000000;
 
-280 
+307 
 Fa˘‹
  = 0b00000000000000001100000000000000;
 
-285 
+312 
 Dúe˘i⁄OfBÆlAâack_V¨
  = 
 	`Dúe˘i⁄OfBÆlAâack
@@ -145727,35 +146049,35 @@ gameAºay
 bÆl
 );
 
-287 
+314 
 Dúe˘i⁄OfBÆlAâack_V¨
 ) {
 
-290 
+317 
 FromI
  = 0;
 
-291 
+318 
 ToI
  = 0;
 
-295 
+322 
 FromI
  = 1;
 
-296 
+323 
 ToI
  = 1;
 
-300 
+327 
 FromI
  = 0;
 
-301 
+328 
 ToI
  = 1;
 
-305 
+332 
 i
  = 
 FromI
@@ -145763,7 +146085,7 @@ FromI
 ToI
 ; i ++) {
 
-309 
+336 
 bÆl
 ->
 DegªeIndex
@@ -145775,7 +146097,7 @@ i
 Fa˘‹
 , ball->DegreeIndex) : GetDegree(0, Factor, ball->DegreeIndex);
 
-313 i‡(–(
+340 i‡(–(
 FromI
  =0 && 
 ToI
@@ -145791,7 +146113,7 @@ bÆl
 DegªeIndex
 ) == 1 ) {
 
-320 
+347 
 bÆl
 ->
 DúVec
@@ -145803,7 +146125,7 @@ x
 DegªeIndex
 );
 
-321 
+348 
 bÆl
 ->
 DúVec
@@ -145815,23 +146137,23 @@ y
 DegªeIndex
 );
 
-332 
+359 
 	`gŸoXY
 (150,100);
 
-333 
+360 
 	`¥ötf
-("BÆ»™gÀ: %d ", ((
+("BÆ»™gÀ: %d degªe(sË ", ((
 bÆl
 ->
 DegªeIndex
  & 0x1FF)*360)/512);
 
-334 
+361 
 	`gŸoXY
 (40,100);
 
-336 
+363 
 bÆl
 ->
 NextPos
@@ -145843,7 +146165,7 @@ PªvPos
 DúVec
 .y);
 
-337 
+364 
 bÆl
 ->
 NextPos
@@ -145855,11 +146177,11 @@ PªvPos
 DúVec
 .x);
 
-340 
+367 
 	}
 }
 
-343 
+370 
 	$døwBÆl
 (
 bÆl_t
@@ -145867,7 +146189,7 @@ bÆl_t
 bÆl
 ){
 
-345 
+372 
 	`gŸoXY
 (
 bÆl
@@ -145879,11 +146201,11 @@ x
 y
  >> 14);
 
-347 
+374 
 	`putch¨
 (32);
 
-349 
+376 
 	`gŸoXY
 (
 bÆl
@@ -145895,11 +146217,11 @@ x
 y
  >> 14);
 
-351 
+378 
 	`putch¨
 (111);
 
-352 
+379 
 	}
 }
 
@@ -146067,7 +146389,7 @@ brickWidth
 	~"cﬁlisi⁄.h
 "
 
-7 
+11 
 uöt16_t
  
 	$BÆlHôWÆl
@@ -146105,15 +146427,15 @@ pwrUp
 powîup
 ) {
 
-9 
+13 
 	`gŸoXY
 (40,100);
 
-10 
+14 
 	`¥ötf
 ("Last ball hit: The wall ");
 
-11 
+15 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146121,11 +146443,11 @@ bÆl1
 gameAºay
 , 1);
 
-15 
+19 
 	}
 }
 
-18 
+28 
 uöt16_t
  
 	$BÆlHôBrick
@@ -146163,15 +146485,15 @@ pwrUp
 powîup
 ) {
 
-21 
+31 
 	`gŸoXY
 (40,100);
 
-22 
+32 
 	`¥ötf
 ("Last ball hit: A brick ");
 
-25 
+35 
 uöt16_t
  
 Bricködex
@@ -146187,7 +146509,7 @@ y
 x
 ) >> 14];
 
-28 
+38 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146195,7 +146517,7 @@ bÆl1
 gameAºay
 , 1);
 
-31 i‡(
+41 i‡(
 brickAºay
 [
 Bricködex
@@ -146203,7 +146525,7 @@ Bricködex
 cuºHP
  > 0) {
 
-34 
+44 
 brickAºay
 [
 Bricködex
@@ -146211,7 +146533,7 @@ Bricködex
 cuºHP
 --;
 
-37 
+47 
 	`døwBox
 (&
 brickAºay
@@ -146223,7 +146545,7 @@ brickHeight
 brickWidth
 );
 
-43 i‡(
+53 i‡(
 brickAºay
 [
 Bricködex
@@ -146231,11 +146553,11 @@ Bricködex
 cuºHP
  == 0) {
 
-46 (*
+56 (*
 BrickCou¡î
 )--;
 
-49 (*
+59 (*
 PœyîSc‹e
 Ë+
 brickAºay
@@ -146245,7 +146567,7 @@ Bricködex
 MaxHP
 ;
 
-52 
+62 
 	`KûlBrick
 (
 Bricködex
@@ -146259,13 +146581,13 @@ brickHeight
 brickWidth
 );
 
-55 
+65 
 	`PrötBrickCou¡î
 (
 BrickCou¡î
 );
 
-58 i‡(
+68 i‡(
 brickAºay
 [
 Bricködex
@@ -146279,7 +146601,7 @@ powîup
 íabÀ
  == 0) {
 
-59 
+69 
 	`•awnPowîup
 (
 powîup
@@ -146293,15 +146615,15 @@ brickHeight
 brickWidth
 );
 
-66 i‡((*
+76 i‡((*
 BrickCou¡î
 ) == 0) {
 
-73 
+83 
 	}
 }
 
-75 
+90 
 uöt16_t
  
 	$BÆlHôSåickî1
@@ -146339,15 +146661,15 @@ pwrUp
 powîup
 ){
 
-76 
+91 
 	`gŸoXY
 (40,100);
 
-78 
+93 
 	`¥ötf
 ("Last ball hit: StrikerÜeftÉnd ");
 
-79 
+94 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146355,11 +146677,11 @@ bÆl1
 gameAºay
 , 2);
 
-82 
+97 
 	}
 }
 
-84 
+104 
 uöt16_t
  
 	$BÆlHôSåickî2
@@ -146397,11 +146719,11 @@ pwrUp
 powîup
 ){
 
-85 
+105 
 	`gŸoXY
 (40,100);
 
-86 
+106 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146409,15 +146731,15 @@ bÆl1
 gameAºay
 , 3);
 
-87 
+107 
 	`¥ötf
 ("Last ball hit: StrikerÜeft medium ");
 
-90 
+110 
 	}
 }
 
-92 
+117 
 uöt16_t
  
 	$BÆlHôSåickî3
@@ -146455,11 +146777,11 @@ pwrUp
 powîup
 ){
 
-93 
+118 
 	`gŸoXY
 (40,100);
 
-94 
+119 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146467,15 +146789,15 @@ bÆl1
 gameAºay
 , 4);
 
-95 
+120 
 	`¥ötf
 ("Last ball hit: Striker central ");
 
-98 
+123 
 	}
 }
 
-100 
+130 
 uöt16_t
  
 	$BÆlHôSåickî4
@@ -146513,11 +146835,11 @@ pwrUp
 powîup
 ){
 
-101 
+131 
 	`gŸoXY
 (40,100);
 
-102 
+132 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146525,15 +146847,15 @@ bÆl1
 gameAºay
 , 5);
 
-103 
+133 
 	`¥ötf
 ("Last ball hit: StrikerÑight medium");
 
-106 
+136 
 	}
 }
 
-108 
+143 
 uöt16_t
  
 	$BÆlHôSåickî5
@@ -146571,11 +146893,11 @@ pwrUp
 powîup
 ){
 
-109 
+144 
 	`gŸoXY
 (40,100);
 
-110 
+145 
 	`Upd©eBÆlAngÀ
 (
 bÆl1
@@ -146583,15 +146905,15 @@ bÆl1
 gameAºay
 , 6);
 
-111 
+146 
 	`¥ötf
 ("Last ball hit: StrikerÑightÉnd ");
 
-114 
+149 
 	}
 }
 
-118 
+157 
 uöt16_t
  
 	$BÆlOutOfBound¨y
@@ -146629,19 +146951,19 @@ pwrUp
 powîup
 ){
 
-119 
+158 
 	`gŸoXY
 (40,100);
 
-121 
+160 
 	`¥ötf
 ("END GAME! ");
 
-125 
+164 
 	}
 }
 
-137 * 
+181 * 
 	$Cﬁlisi⁄Dëe˘
 (
 uöt8_t
@@ -146657,7 +146979,7 @@ bÆl_t
 bÆl
 ) {
 
-140 
+184 
 uöt8_t
  
 xPos
@@ -146669,7 +146991,7 @@ NextPos
 x
  >> 14;
 
-141 
+185 
 uöt8_t
  
 yPos
@@ -146681,7 +147003,7 @@ NextPos
 y
  >> 14;
 
-144 
+188 
 uöt8_t
  
 gameD©a
@@ -146693,35 +147015,35 @@ yPos
 xPos
 ];
 
-147 
+191 
 gameD©a
 ) {
 
-148 1:  
+192 1:  
 BÆlHôWÆl
 ;
 
-149 2:  
+193 2:  
 BÆlHôSåickî1
 ;
 
-150 3:  
+194 3:  
 BÆlHôSåickî2
 ;
 
-151 4:  
+195 4:  
 BÆlHôSåickî3
 ;
 
-152 5:  
+196 5:  
 BÆlHôSåickî4
 ;
 
-153 6:  
+197 6:  
 BÆlHôSåickî5
 ;
 
-157 i‡((
+201 i‡((
 yPos
  < 
 putSåikîPos
@@ -146729,7 +147051,7 @@ putSåikîPos
 gameD©a
  == 0)) {
 
-160 i‡((
+204 i‡((
 yPos
  >
 putSåikîPos
@@ -146737,15 +147059,15 @@ putSåikîPos
 gameD©a
  == 0)) {
 
-161  
+205  
 BÆlOutOfBound¨y
 ;
 
-164  
+208  
 BÆlHôBrick
 ;
 
-166 
+210 
 	}
 }
 
@@ -147977,7 +148299,7 @@ _¨øy
 	}
 }
 
-12 
+16 
 	$LCDWrôe
 (
 LCDD©a
@@ -147987,11 +148309,11 @@ Text
 Löe
 ) {
 
-14 
+18 
 Loˇti⁄
  = 0;
 
-16 
+20 
 j
 =0; j < 
 	`°æí
@@ -147999,7 +148321,7 @@ j
 Text
 ); j++) {
 
-18 
+22 
 uöt8_t
  
 t
@@ -148009,17 +148331,17 @@ Text
 j
 ];
 
-20 
+24 
 i
 =0; i<5; i++) {
 
-21 i‡((
+25 i‡((
 Loˇti⁄
 +
 i
 ) < 128) {
 
-22 
+26 
 LCDD©a
 [
 Löe
@@ -148033,15 +148355,15 @@ ch¨a˘î_d©a
 t
 -0x20][i];
 
-25 
+29 
 Loˇti⁄
  += 5;
 
-27 
+31 
 	}
 }
 
-29 
+38 
 	$CﬁÀ˘Gøph
 (*
 Gøph
@@ -148049,15 +148371,15 @@ Gøph
 LCDD©a
 [4][128]){
 
-31 
+40 
 i
 =0; i<4; i++) {
 
-32 
+41 
 j
 =0; j<128; j++) {
 
-33 
+42 
 Gøph
 [(
 i
@@ -148067,25 +148389,25 @@ j
 LCDD©a
 [i][j];
 
-37 
+46 
 	}
 }
 
-39 
+48 
 	$CÀ¨LöeD©a
 (
 LCDD©a
 [4][128]) {
 
-41 
+50 
 i
 =0; i<4; i++) {
 
-42 
+51 
 j
 =0; j<128; j++) {
 
-43 
+52 
 LCDD©a
 [
 i
@@ -148093,11 +148415,11 @@ i
 j
 ] = 0;
 
-46 
+55 
 	}
 }
 
-70 
+79 
 	$Shi·
 (
 LCDD©a
@@ -148107,7 +148429,7 @@ uöt8_t
 Löe
 ) {
 
-71 
+80 
 Fú°EÀmít
  = 
 LCDD©a
@@ -148115,11 +148437,11 @@ LCDD©a
 Löe
 ][0];
 
-72 
+81 
 i
  = 0; i < 127; i++){
 
-73 
+82 
 LCDD©a
 [
 Löe
@@ -148127,7 +148449,7 @@ Löe
 i
 ] = LCDData[Line][i+1];
 
-75 
+84 
 LCDD©a
 [
 Löe
@@ -148135,11 +148457,11 @@ Löe
 Fú°EÀmít
 ;
 
-76 
+85 
 	}
 }
 
-87 
+101 
 	$lcd_upd©e
 (*
 Gøph
@@ -148147,7 +148469,7 @@ Gøph
 LCDD©a
 [4][128]) {
 
-92 
+106 
 	`CﬁÀ˘Gøph
 (
 Gøph
@@ -148155,13 +148477,13 @@ Gøph
 LCDD©a
 );
 
-93 
+107 
 	`lcd_push_buf„r
 (
 Gøph
 );
 
-95 
+109 
 	}
 }
 
@@ -148544,12 +148866,6 @@ DAC
 ->
 DHR8R1
  &= 0x00000000;
-
-79 
-DAC
-->
-DHR8R1
- |= 0x000000AB;
 
 80 
 	}
@@ -149353,13 +149669,13 @@ PUPDR
 	}
 }
 
-33 
+37 
 uöt8_t
  
 	$ªadJoy°ick
 () {
 
-34 
+38 
 uöt16_t
  
 Up
@@ -149369,7 +149685,7 @@ GPIOA
 IDR
  & (0x0001 << 4)) >> 4;
 
-35 
+39 
 uöt16_t
  
 Down
@@ -149379,7 +149695,7 @@ GPIOB
 IDR
  & (0x0001 << 0)) << 1;
 
-36 
+40 
 uöt16_t
  
 Le·
@@ -149389,7 +149705,7 @@ GPIOC
 IDR
  & (0x0001 << 1)) << 1;
 
-37 
+41 
 uöt16_t
  
 Right
@@ -149399,7 +149715,7 @@ GPIOC
 IDR
  & (0x0001 << 0)) << 3;
 
-38 
+42 
 uöt16_t
  
 Cíãr
@@ -149409,7 +149725,7 @@ GPIOB
 IDR
  & (0x0001 << 5)) >> 1;
 
-40  
+44  
 Up
  + 
 Down
@@ -149421,7 +149737,7 @@ Right
 Cíãr
 ;
 
-41 
+45 
 	}
 }
 

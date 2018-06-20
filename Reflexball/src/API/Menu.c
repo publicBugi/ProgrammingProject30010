@@ -149,8 +149,79 @@ void PrintTitle(char TITLEASCIIARRAYTYPE) {
 //}
 // Help menu.
 void PrintHelp(){
-    gotoXY(75,20);
-  printf("To navigate the menu, use the joystick to highlight menu items and press the joystick to select a menu. When in the play menu, select either single player or player vs player. The player vs player mode will start the game first for player 1 where, after player one has lost, player 2 plays his game. After the game the player(s) with the most points win, and if eligible, will be submitted to highscore. Entering the highscore menu will show the current highscores for 5 second and then return to the main menu. ");
+    fgcolor(15);
+    gotoXY(75,13);
+  printf("To navigate the menu, use the joystick to highlight");
+  gotoXY(75,14);
+   printf("menu items and press the joystick to select a menu.");
+   gotoXY(75,15);
+   printf("When in the play menu, select either single player");
+   gotoXY(75,16);
+   printf("or player vs player. The player vs player mode will");
+   gotoXY(75,17);
+   printf("start the game for player 1 where, after player one");
+   gotoXY(75,18);
+   printf("has lost, player 2 plays his game. After the game, ");
+   gotoXY(75,19);
+   printf("the player(s) with the most points win, and if eligible, ");
+   gotoXY(75,20);
+   printf("will be taken to the highscore submission menu. ");
+   gotoXY(75,21);
+   printf("Entering the highscore menu will show the current ");
+   gotoXY(75,22);
+   printf("highscores for 5 second and then return to the main menu. ");
+   gotoXY(75,23);
+   printf("The game will do a short countdown before launching the ball. ");
+   gotoXY(75,24);
+   printf("When playing the game, have the USB cable pointed away ");
+   gotoXY(75,25);
+   printf("from you and tilt the microcontroller from");
+   gotoXY(75,26);
+   printf("left to right to move the striker.");
+   gotoXY(75,27);
+   printf("To get a high score, keep the ball in the air for");
+   gotoXY(75,28);
+   printf("a long time and remove as many bricks as possible.");
+   gotoXY(75,29);
+   printf("Each time the ball reaches the bottom of the screen,");
+   gotoXY(75,30);
+   printf("the player will lose a life. After all lifes");
+   gotoXY(75,31);
+   printf("have been lost, the game ends.");
+   gotoXY(75,32);
+   printf("Should you remove a brick a powerup has a chance to spawn");
+   gotoXY(75,33);
+   printf("and catching it with the striker, will slow");
+   gotoXY(75,34);
+   printf("the balls speed for 10 seconds.");
+   gotoXY(75,35);
+   printf("On the LCD display you will find information about");
+   gotoXY(75,36);
+   printf("your current game and the LED color will indicate your");
+   gotoXY(75,37);
+   printf("current amount of HP. In the highscore submission menu,");
+   gotoXY(75,38);
+   printf("use the left potentiometer to select each character.");
+   gotoXY(75,39);
+   printf("When you want to select that character,");
+   gotoXY(75,40);
+   printf("press the joystick button.");
+   gotoXY(75,41);
+   printf("Should you feel the need to pause the game or");
+   gotoXY(75,42);
+   printf("switch away from the game quick,");
+   gotoXY(75,43);
+   printf("use the boss key while playing the game.");
+   gotoXY(75,44);
+   printf("The boss key can be activated by pressing");
+   gotoXY(75,45);
+   printf("the joystick button while a game is running.");
+   gotoXY(75,46);
+   printf("When pressing the boss key, the screen will be covered");
+   gotoXY(75,47);
+   printf("with a blue screen of death similar layout.");
+   gotoXY(75,48);
+   printf("To resume, press the joystick button again.");
 }
 
 // Clear menu Lines.
@@ -194,7 +265,7 @@ char ChangeSelection(char Up, char SelectionIndex, char MaxSelection) {
 
 /**
   * Descripton:
-  * Argument:  
+  * Argument:
   * Return value:
   */
 // Print the menu options.

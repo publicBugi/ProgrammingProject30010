@@ -397,10 +397,10 @@ void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY) {
     gotoXY(0,0);
 }
 
-void WriteToFlash(uint16_t SCOREARRAY, uint32_t address) {
+void WriteToFlash(uint16_t SCOREARRAY) {
     FLASH_Unlock();
     for (uint8_t i = 0; i < 12; i++) {
-        FLASH_ProgramHalfWord(address+i*2, data[i]);
+        FLASH_ProgramHalfWord(ADDRESS+i*2, data[i]);
     }
     FLASH_Lock();
 }
@@ -519,7 +519,7 @@ void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score)
     }
     HighscoreArray[HighscoreLevel*4+3] = score;
     InitFlash();
-    WriteToFlash(HighscoreArray, (0x0800F800));
+    WriteToFlash(HighscoreArray);
     FLASH_Unlock();
     FLASH_ProgramHalfWord(0x0800F81A, 0);
     FLASH_Lock();
@@ -529,7 +529,7 @@ void clearScore(){
     if(ReadFromFlash(0x0800F81A) != 0) {
     InitFlash();
     uint16_t tempArray[12] = {65, 65, 65, 0, 66, 66, 66, 0, 67, 67, 67, 0};
-    WriteToFlash(tempArray, ADDRESS);
+    WriteToFlash(tempArray);
     }
     FLASH_Unlock();
     FLASH_ProgramHalfWord(0x0800F81A, 0);
