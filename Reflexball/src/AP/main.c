@@ -97,13 +97,8 @@ int main(void)   {
     SelectedMenu = 1;
     SelectedMenuBlock = 1;
 
-        // Score data, we need to do this once
-        uint16_t tempArray[12] = {0x41,0x42,0x43,1234,0x44,0x45,0x46,123,0x47,0x48,0x49,12};
-        InitFlash();
-        WriteToFlash(tempArray);
 
-
-    	initGPIO();			   	// Enable GPIO Pins.
+   	initGPIO();			   	// Enable GPIO Pins.
     initLED();
     initJoystick();
     initTime(&clk);			// Reset global time.
