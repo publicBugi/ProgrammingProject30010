@@ -57,7 +57,11 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 	}
 	return index - 7;
 }
-
+/**
+  * Descripton: Determines which player won.
+  * Argument:  MaxPlayer: Number of players, PlayerScore1: Player one score, PlayerScore2: Player two socre
+  * Return value: None.
+  */
 // Print end status.
 void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore2) {
     char str1[19];
@@ -68,8 +72,12 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
     gotoXY(20,40);
     fgcolor(15);
 
+		// If one player.
+		if (MaxPlayer == 1) {
+			PrintFromASCII("PLAYER 1 WINS",60,20);
+		}
     // If two player.
-    if (MaxPlayer == 2) {
+    else if (MaxPlayer == 2) {
 
        if (PlayerScore1 > PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
@@ -83,11 +91,15 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
             //sprintf(str1, "GET READY PLAYER %d", i);
               PrintFromASCII("BOTH PLAYERS WIN",60,20);
         }
-        wait(200);
+        wait(300);
     }
 
 }
-
+/**
+  * Descripton: Keeps track of player score and controlles creation of new levels with increasing degree of difficulty.
+  * Argument:  MaxPlayer: Number of players.
+  * Return value: None.
+  */
 void StartGameLoop(uint8_t MaxPlayer) {
   	char Graph[512] = {0};						// Graph: Pixel graph to push to LCD Screen (Redundant?)
 	char LCDData[4][128] = { {0} };					// LCDData: Four lines of 128 Pixel lines. LCD Screen.
@@ -169,7 +181,12 @@ void StartGameLoop(uint8_t MaxPlayer) {
     // Print victory.
     PrintVictory(MaxPlayer, PlayerScore1, PlayerScore2);
 }
-
+/**
+  * Descripton: This function is the game kernel. This function calculate ball position, calls collision detection,
+	*							update LCD, generate game world, update powerup.
+  * Argument:  level: Level of game world, PlayerScore: Score of player, Graph[512]: LCD 512 bytes data, LCDData[4][128]: LCD Line array.
+  * Return value: Return 0 (player died) or 1 (player completed level)
+  */
 // Run game. Return
 // 0: If player died
 // 1: If complete level.
