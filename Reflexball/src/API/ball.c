@@ -9,6 +9,11 @@
 #define FOURT_QUADRANT (Angle > 0 && Angle < 128)
 
 // Initialize ball vectors.
+/* Developer    : Hørdur Andreasen
+ * Description  : Initialize instance of ball at position given by Arguments, with given speed by arguments.
+ * Argument     : Ball, Position, Velocity.
+ * Return value : Void
+ */
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy) {
     ball->DegreeIndex = 320;
     initVector(&ball->PrevPos, XPos, YPos);
@@ -18,6 +23,11 @@ void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32
 }
 
 // Update ball next XY-position.
+/* Developer    : Hørdur Andreasen
+ * Description  : Update ball position; Set new to previous. Calculate new.
+ * Argument     : Ball, VelMod.
+ * Return value : Void
+ */
 void updateBall(struct ball_t *ball, uint8_t velMod) {
 
     // Set next positions to next position.
@@ -28,18 +38,6 @@ void updateBall(struct ball_t *ball, uint8_t velMod) {
     ball->NextPos.y = ball->PrevPos.y + (ball->DirVec.y >> velMod);
 
 
-}
-
-// Update the velocity of the ball
-void updateBallSpeed(struct ball_t *ball, int8_t velMod) {
-	if (velMod < 0) {
-		ball->DirVec.x >>= velMod;
-		ball->DirVec.y >>= velMod;
-	}
-	else {
-		ball->DirVec.x <<= velMod;
-		ball->DirVec.y <<= velMod;
-	}
 }
 
 
@@ -172,6 +170,7 @@ int32_t GetDegree(uint8_t Up, int32_t Factor, int16_t DegreeIndex){
     }
     else {
         return ((Factor * (256 -  (DegreeIndex & 0x1FF) ) )  >> 14) + Rand;
+          //return ( (256 -  (Factor * (DegreeIndex & 0x1FF)) )  >> 14) + Rand;
     }
 }
 
@@ -262,7 +261,6 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
    // int32_t DegreeRef[2] = {128, 128};
     uint8_t FromI, ToI;
     int32_t Factor = 0b00000000000000000100000000000000;
-    int32_t Angle;
     //TypeOfHit:
     // 0:
     // 1: Brick
@@ -271,8 +269,6 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
     // 4: Striker 3 central
     // 5: Striker 4 right medium
     // 6: Striker 4 right end
-    uint8_t RunTime = 0;
-
 
       switch(TypeOfHit) {
                 // Brick
@@ -367,6 +363,11 @@ void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth]
 }
 
 // Draw ball in the PuTTY terminal.
+/* Developer    : Hørdur Andreasen
+ * Description  : Draw Ball; Remove old position, draw new position.
+ * Argument     : Ball
+ * Return value : Void
+ */
 void drawBall(struct ball_t *ball){
     // Goto previous xy position (shift 14 bit to the left as 18.14 type)
     gotoXY(ball->PrevPos.x >> 14, ball->PrevPos.y >> 14);
