@@ -112,6 +112,7 @@
 		<Unit filename="inc\HAL\joystick.h" />
 		<Unit filename="inc\HAL\LCD.h" />
 		<Unit filename="inc\HAL\led.h" />
+		<Unit filename="inc\HAL\ROM.h" />
 		<Unit filename="inc\HAL\stm32f30x_conf.h" />
 		<Unit filename="inc\HAL\system_stm32f30x.h" />
 		<Unit filename="inc\HAL\timer.h" />
@@ -237,9 +238,6 @@
 		<Unit filename="src\API\powerup.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\API\ROM.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src\API\striker.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -271,6 +269,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\led.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\HAL\ROM.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\HAL\system_stm32f30x.c">

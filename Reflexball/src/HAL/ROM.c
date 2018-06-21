@@ -1,14 +1,14 @@
 #include "ROM.h"
 
 const char ASCII_table[43][4][11] = {
+    // This array contains ASCII data for all large characters and numbers
+
     // { // NULL
         // {0,0,0,0,0,0,0,0,0,0,0},
         // {0,0,0,0,0,0,0,0,0,0,0},
         // {0,0,0,0,0,0,0,0,0,0,0},
         // {0,0,0,0,0,0,0,0,0,0,0}
-    // ,0x20}
-
-    //Watch out for ",", "'", "<"
+    // }
 
     {   // 0
         {0x20,0x20,0x5F,0x5F,0x20,0x20,0x20,0,0,0,0},
@@ -270,6 +270,9 @@ const char ASCII_table[43][4][11] = {
     }
 };
 
+/* This array is char array that we use
+ * as a string to print to the PuTTy
+ * terminal when pressing the boss key */
 const char BOSSKEY_BSOD[943] = {
 0x41,0x20,0x70,0x72,0x6F,0x62,0x6C,0x65,0x6D,0x20,0x68,0x61,0x73,
 0x20,0x62,0x65,0x65,0x6E,0x20,0x64,0x65,0x74,0x65,0x63,0x74,0x65,
@@ -346,28 +349,7 @@ const char BOSSKEY_BSOD[943] = {
 0x69,0x73,0x74,0x61,0x6E,0x63,0x65,0x2E
 };
 
-//const uint32_t char_location[43] = {
-//  0x0800F000, 0x0800F018, 0x0800F024, 0x0800F038, 0x0800F04C,
-//  0x0800F064, 0x0800F078, 0x0800F08C, 0x0800F0A4, 0x0800F0B8,
-//
-//  0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-//  0x00000000, 0x00000000,
-//
-//  0x0800F800, 0x0800F81C, 0x0800F830, 0x0800F848, 0x0800F860,
-//  0x0800F874, 0x0800F888, 0x0800F8A0, 0x0800F8B8, 0x0800F8CC,
-//  0x0800F8E4, 0x0800F8FC, 0x0800F914, 0x0800F934, 0x0800F94C,
-//  0x0800F968, 0x0800F97C, 0x0800F998, 0x0800F9AC, 0x0800F9C0,
-//  0x0800F9DC, 0x0800F9F8, 0x0800FA14, 0x0800FA3C, 0x0800FA54,
-//  0x0800FA70};
-
-//const uint8_t char_width[43] = {
-//  6, 3, 5, 5, 6, 5, 5, 6, 5, 5,
-//
-//  0, 0, 0, 0, 0, 0, 0,
-//
-//  7, 5, 6, 6, 5, 5, 6, 6, 5, 6, 6, 6, 8,
-//  6, 7, 5, 7, 5, 5, 7, 7, 7, 10, 6, 7, 5};
-
+// Clears the memory at highscore location
 void InitFlash() {
     FLASH_Unlock(); //Unlock the flash
     FLASH_ClearFlag( FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPERR );
@@ -375,18 +357,19 @@ void InitFlash() {
     FLASH_Lock(); //Lock the flash
 }
 
+// Uses the ASCII_table array to print the ASCII characters
 void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY) {
     char tempChar = 0x20;
     for (uint8_t i = 0; i < 4; i++) {
-        gotoXY(drawX,drawY+i);
+        gotoXY(drawX,drawY+i); // Go to print location
         for (uint8_t j = 0; j < strlen(text); j++) {
             for (uint8_t k = 0; k < 11; k++) {
                 uint8_t l;
-                l = text[j]-0x30;
+                l = text[j]-0x30; // The current letter that we read
                 if(text[j]==0x20){
-                    l = 10;
+                    l = 10; // set to print a space
                 }
-                if(ASCII_table[l][i][k] == 0){
+                if(ASCII_table[l][i][k] == 0){ // When reading a zero, move on to next character
                     break;
                 }
                 tempChar = ASCII_table[l][i][k];
@@ -397,22 +380,24 @@ void PrintFromASCII(char* text, uint8_t drawX, uint8_t drawY) {
     gotoXY(0,0);
 }
 
+// Used to print data to the ROM
 void WriteToFlash(uint16_t SCOREARRAY) {
     FLASH_Unlock();
     for (uint8_t i = 0; i < 12; i++) {
-        FLASH_ProgramHalfWord(ADDRESS+i*2, data[i]);
+        FLASH_ProgramHalfWord(ADDRESS+i*2, data[i]); // Print data sequentially
     }
     FLASH_Lock();
 }
+
+// Read data at specified address
 uint16_t ReadFromFlash(uint32_t address) {
     uint16_t data;
     data = *(uint16_t *)(address);
     return data;
 }
 
+// Prints the score menu
 void PrintScore() {
-
-
  fgcolor(15);
     uint16_t scoreArray[12] = {};
     for (uint8_t i = 0; i < 12; i++) {
@@ -438,6 +423,7 @@ void PrintScore() {
     wait(500);
 }
 
+// Prints the boss key
 void Bosskey() {
     bgcolor(4);
     for (uint16_t i = 0; i < 100; i++) {
@@ -457,6 +443,7 @@ void Bosskey() {
     clrscr();
 }
 
+// Checks if score is eligible to be written to highscore
 void HighscoreCheck (uint16_t score)
 {
     if(score >= *(uint16_t *)(0x0800F816))
@@ -480,6 +467,7 @@ void HighscoreCheck (uint16_t score)
     clrscr();
 }
 
+// Prints the score to highscore and moves other data out of the way
 void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score)
 {
     clrscr();
@@ -525,6 +513,7 @@ void SubmitHighscore(uint8_t HighscoreLevel, uint16_t score)
     FLASH_Lock();
 }
 
+// Sets default score values if no score is found in memory
 void clearScore(){
     if(ReadFromFlash(0x0800F81A) != 0) {
     InitFlash();
@@ -536,6 +525,7 @@ void clearScore(){
     FLASH_Lock();
 }
 
+// Prints the selected character from the potentiometer input
 char CharSelect(uint8_t xPos, uint8_t yPos) {
     char valDraw[2]={0,0};
     char switchVal = 0;
