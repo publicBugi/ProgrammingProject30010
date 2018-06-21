@@ -32,91 +32,54 @@
 
 #define ESC 0x1B
 
-int binary_conversion(int num)
-{
-    if (num == 0)
-    {
-        return 0;
-    }
-    else
-    {
-        return (num % 2) + 10 * binary_conversion(num / 2);
-    }
-}
-
-
-
-void getSerialInput(char* input){
-    int i;
-    for (i=0; i < 6; i++) {
-        input[i] = 0x00;
-    }
-    for (i=0; i < 6; i++) {
-        char inputchar = uart_getc();
-        if (inputchar == 0x0D ) {
-            break;
-        }
-        else {
-        input[i] = inputchar;
-        }
-    }
-}
-
-
 #define MMA7660Adress 0x4C << 1
+
+
 
 int main(void)   {
 
-    initDACNoise();
+    //// INITIALIZE ////
+
+    globalTime = 0; // Set global Time to zero.
 
     // Uncomment to clear highscore
     //InitFlash();
 
+    clearScore();   // If Score is noise, Set to ZERO; Else keep as is.
 
-    clearScore();
-        // ASCII array.
-        char ASCIIARRAYTYPE;
+    initGPIO();			   	// Enable GPIO Clock Pins.
 
-    int JoyInput, SelectedMenu;
-    int SelectedMenuBlock;
-    char EnableSelection = 1;
-    char MenuState = 1;
+    initDACNoise();         // Enable DAC Noise generation.
 
+    I2C_init();             // Enable I2C Communication
 
+    // INPUTS
+    I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
+    initAnalog();			// Enable ADC Potentiometers
+    initJoystick();         // Enable joystick input.
 
+    // OUTPUTS
+    initBuzzer();
+    initLCD();			    // Enable LCD Screen
+    initLED();              // Enable LED
 
+    initInterrupt();		// Enable 100 Hz Interrupt: globalTime increments.
 
-	// Output Variables
+    // ASCII array.
+    char ASCIIARRAYTYPE;
 
+    // MENU VARIABLES
+    uint8_t SelectedMenu = 1;
+    uint8_t SelectedMenuBlock = 1;
+    uint16_t JoyInput;
+    uint8_t EnableSelection = 1;
 
-
-	// Initialize functions
+    // ENABLE PuTTy Connection
 	init_usb_uart(115200); 	// Initialize USB serial at 115200 baud
 
-    fgcolor(15);
-
     // Print main menu.
+    fgcolor(15); // white
     PrintMenu(1, &SelectedMenu);
-
-    SelectedMenu = 1;
-    SelectedMenuBlock = 1;
-
-
-   	initGPIO();			   	// Enable GPIO Pins.
-    initLED();
-    initJoystick();
-    initTime(&clk);			// Reset global time.
-
-    initInterrupt();		// void getStrikerPosition(struct striker_t *striker)Enable Interrupt (1/100 sec Interrupt)
-
-    initAnalog();			// Enable ADC Potentiometers
-
-    I2C_init();              // Enable I2C Communication
-    I2C_Write(MMA7660Adress, 0x07, 0x01); // Configure 3-Axis Accelerometer (Standard mode)
-    initBuzzer();
-
-    initLCD();			// Enable LCD Screen
-
 
          // MAIN LOOP.
         while(1){
@@ -184,6 +147,4 @@ int main(void)   {
             }
 
         }
-
-
 }

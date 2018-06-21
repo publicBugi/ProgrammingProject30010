@@ -17,14 +17,17 @@ void KillBrick(uint16_t Brickindex, uint8_t gameArray[putHeight][putWidth], stru
 
 // Print brick counter
 void PrintBrickCounter(uint16_t *BrickCounter) {
-    uint16_t k = *BrickCounter;
    // Change color to default.
     fgcolor(15);
     gotoXY(10,80);
     printf("Brick counter: %d  ", *BrickCounter);
 }
 
-
+/* Developer    : Hørdur Andreasen
+ * Description  : Draw a brick; Color depending on it's HP. No HP Sets it to black.
+ * Argument     : brick, brickHeight, brickWidth.
+ * Return value : Void
+ */
 void drawBox(struct brick_t *brick, uint8_t *brickHeight, uint8_t *brickWidth){
         fgcolor(brick->currHP);
 

@@ -1,9 +1,16 @@
+
+#ifndef _VECTORTRIG_H_
+#define _VECTORTRIG_H_
+
 #include "lut.h"
 #include "30010_io.h"
 #include "ansi.h"
 
-#ifndef _VECTORTRIG_H_
-#define _VECTORTRIG_H_
+/* Developer    : Hørdur Andreasen
+ * Description  : Vector and Trigonomic functions
+ *
+ *
+ */
 
 struct vector_t  {
     int32_t x, y;

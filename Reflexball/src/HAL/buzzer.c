@@ -2,6 +2,11 @@
 
 #define PRESCALER_VALUE 0
 
+/* Developer    : Hørdur Andreasen
+ * Description  : Configure TIMER 2 to Square wave with 50% duty cycle. Used for Piezo Buzzer
+ * Argument     : None
+ * Return value : Void
+ */
 void initBuzzer(){
 
     RCC->APB1ENR |= 0x00000001; // Enable clock line to timer 2;
@@ -29,6 +34,11 @@ void initBuzzer(){
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_1);
 }
 
+/* Developer    : Hørdur Andreasen
+ * Description  : Set frequency of piezo.
+ * Argument     : Frequency
+ * Return value : Void
+ */
 void setFreq(uint16_t freq) {
     uint32_t reload = 64e6 / freq / (PRESCALER_VALUE + 1) - 1;
 
@@ -38,7 +48,11 @@ void setFreq(uint16_t freq) {
     TIM2->EGR |= 0x01;
 }
 
-
+/* Developer    : Hørdur Andreasen
+ * Description  : Play a given frequency, for the given duration.
+ * Argument     : Frequency, Duration
+ * Return value : Void
+ */
 void playSound(uint16_t freq, uint8_t duration) {
     setFreq(freq);
     wait(duration);

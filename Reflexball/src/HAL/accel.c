@@ -1,7 +1,13 @@
 #include "accel.h"
 
+/* Developer    : Hørdur Andreasen
+ * Description  : Read the ROLL (X? Register) from the 3-Axis Accelerometer MMA7660.
+ * Argument     : Average = How often to average (Keep low), Sensitivity = Reduce controller sensitivity)
+ * Return value : uint32_t Average Roll.
+ */
+
 #define MMA7660Adress 0x4C << 1 // I2C Address of MM7660 3-Axis Accelerometer
-// Get ROLL data from Accelerometer
+
 int32_t readRoll(uint8_t Average, uint8_t Sensitivity) {
     int32_t avgRoll = 0;
     int8_t IC2_VAL = 0;

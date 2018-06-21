@@ -16,14 +16,31 @@ struct ball_t {
 };
 
 // Initialize
+/* Developer    : Hørdur Andreasen
+ * Description  : Initialize instance of ball at position given by Arguments, with given speed by arguments.
+ * Argument     : Ball, Position, Velocity.
+ * Return value : Void
+ */
 void initBall(struct ball_t *ball, int32_t XPos, int32_t YPos, int32_t Vx, int32_t Vy);
 
 // Update functions
+/* Developer    : Hørdur Andreasen
+ * Description  : Update ball position; Set new to previous. Calculate new.
+ * Argument     : Ball, VelMod.
+ * Return value : Void
+ */
 void updateBall(struct ball_t *ball, uint8_t velMod);
-void updateBallSpeed(struct ball_t *ball, int8_t velMod);
+
+
 void UpdateBallAngle(struct ball_t *ball, uint8_t gameArray[putHeight][putWidth], uint8_t TypeOfHit);
 
 // VISUAL
+
+/* Developer    : Hørdur Andreasen
+ * Description  : Draw Ball; Remove old position, draw new position.
+ * Argument     : Ball
+ * Return value : Void
+ */
 void drawBall(struct ball_t *ball);
 
 #endif

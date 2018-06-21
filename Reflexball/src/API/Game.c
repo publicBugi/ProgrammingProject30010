@@ -1,7 +1,12 @@
 #include "Game.h"
 
-//// GAME LOOP AND INITI ///
-uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[100], struct striker_t *Striker, uint8_t *Level, uint8_t *DifficultyTime, uint8_t *brickHeight, uint8_t *brickWidth) {
+
+/* Developer    : Hørdur Andreasen
+ * Description  : Generate level; Random Bricks, Collision Array (gameArray) and set striker.
+ * Argument     : gameArray (Collision), brickArray (Brick Instances), Striker (Striker Instance), level (Difficulty Modifier), BrickHeight and BrickWidth = Box size.
+ * Return value : Void
+ */
+uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t brickArray[100], struct striker_t *Striker, uint8_t *Level, uint8_t *brickHeight, uint8_t *brickWidth) {
 	// Size of Screen
 	const int MaxColI = putWidth;
 	const int MaxRowI = putHeight;
@@ -14,10 +19,6 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 	for (int i = 0; i < MaxColI; i++){
 		gameArray[0][i] = 1;
 	}
-
-	// Set Speed level of time (Define TimeConst)
-	const int TimeConst = 500;
-	*DifficultyTime = TimeConst >> *Level;
 
 	// Brick Values
 	*brickHeight -= *Level;  // Brick size as function of Level! Increase difficulty!
@@ -32,7 +33,7 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
     uint8_t index = 7;
     for (uint8_t i = 0; i < Rows; i++){
         for (uint8_t r = 0; r < Columns; r++) {
-
+            if (index < maxBricks){
             brickArray[index].posX = center + r*(*brickWidth);
 			brickArray[index].posY = 5 + i*(*brickHeight);
 			brickArray[index].MaxHP = 2*(*Level) + (uint8_t)(DACRand() % 3);
@@ -47,7 +48,7 @@ uint8_t initGameArray(uint8_t gameArray[putHeight][putWidth], struct brick_t bri
 			}
 
 			index++;
-
+            }
         }
     }
 
@@ -200,44 +201,53 @@ void StartGameLoop(uint8_t MaxPlayer) {
     // Print victory.
     PrintVictory(MaxPlayer, PlayerScore1, PlayerScore2);
 }
-/**
-  * Descripton: This function is the game kernel. This function calculate ball position, calls collision detection,
-	*							update LCD, generate game world, update powerup.
-  * Argument:  level: Level of game world, PlayerScore: Score of player, Graph[512]: LCD 512 bytes data, LCDData[4][128]: LCD Line array.
-  * Return value: Return 0 (player died) or 1 (player completed level)
-  */
 // Run game. Return
 // 0: If player died
 // 1: If complete level.
+/* Developer    : Hørdur Andreasen & Frederik Skov
+ * Description  : run a level of the game: Generates a game and loops until level is over.
+ * Argument     : level, Score, Graph and LCD Data
+ * Return value : Void
+ */
 uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LCDData[4][128]) {
     // Local Game Data
+
+    // LEVEL DATA
     struct brick_t brickArray[maxBricks] = { };			// Maintain control of all Bricks. (Position, Health and Powerup)
 	uint8_t gameArray[putHeight][putWidth] = { { } };	// Matrix "Image" of data. Used for collision Detection. Init to zero.
-	uint8_t DifficultyTime;
 
-    char WhatNextAfterBallCollision = 0;
-
-    uint16_t BrickCounter;
-
-    uint8_t brickHeight = 6;
-    uint8_t brickWidth = 30;
-    char str1[128];
-	// Game Instances
-	struct pwrUp powerup;
+    // GAME INSTANCES
+	struct pwrUp powerup;                           // Powerup (Only one)
 	struct ball_t ball1;							// Ball	(Possibly multiple)
 	struct striker_t striker;                       // Striker (Only one)
-	char* CollisionDectectReturnAddr;
-    striker.strikersize = putWidth/10;
-    striker.strikerinc = striker.strikersize/5;
+
+    // LCD
+    char str1[128];
+
+    // GAME VARIABLES
+    char WhatNextAfterBallCollision = 0;
+    char* CollisionDectectReturnAddr;
+
+    uint8_t gameEnabled = 1;            // Game Enable
+
+    uint8_t brickHeight = 6;            // Brick Size
+    uint8_t brickWidth = 30;            // Brick Size
 
 
-    uint8_t currentHealth = 3;
-    UpdateRGB(currentHealth);
+    uint8_t currentHealth = 3;          // Set Health to 3
+    uint16_t BrickCounter;              // Count bricks // 0 Bricks = New Level
 
-    initPowerup(&powerup);
+    // TIME
+    uint32_t prevPowerStart = 0;        // When did Powerup begin`?
+    uint32_t currTime = globalTime, prevTime = 0; // Maintain time. Update only once per 1/100th second.
 
-    // Clear screen.
-    clrscr();
+    uint8_t ballDifficultyMod = 5;
+    ballDifficultyMod -= ballDifficultyMod - *level > 0 ? 1 : 0;
+    if (ballDifficultyMod < 0){
+        ballDifficultyMod = 1;          // Prevents Modulo 0.
+    }
+
+    // Initialize
 
     // Game Array for Collision purposes.
 	// Values in Array:
@@ -245,37 +255,32 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
 	// 1 	= Wall / Collision.
 	// 2-6 	= Striker Segments
 	// 7-256= Brick in BrickArray.
-
     // Generate map for current level (Used for collision detection). Return numbers of bricks created.
-	BrickCounter = initGameArray(gameArray, brickArray, &striker, level, &DifficultyTime, &brickHeight, &brickWidth);
-
+	BrickCounter = initGameArray(gameArray, brickArray, &striker, level, &brickHeight, &brickWidth);
+    // Reset Powerup
+    initPowerup(&powerup);
+    // Set RGB Green
+    UpdateRGB(currentHealth);
+    // Set Striker size
+    striker.strikersize = putWidth/10;
+    striker.strikerinc = striker.strikersize/5;
+    // Reset Ball
     initBall(&ball1, putWidth/2, putStrikerPos - 10, -1, -1);
 
 
-	// Draw gameArray index
-//	for (uint8_t i = 0; i < putHeight; i++){
-//		for (uint8_t r = 0; r < putWidth; r++){
-//			printf("%d", gameArray[i][r] % 10);
-//		}
-//		if (i != putHeight -1) {
-//		      printf("\r\n");
-//		}
-//    }
-//    gotoXY(0,0);
+    // Clear screen.
+    clrscr();
 
+    // Initial Map Draw
     drawGame(brickArray, &brickHeight, &brickWidth, &striker, &ball1);
 
-    uint32_t prevPowerStart = 0;
-    uint32_t currTime = clk.time_hseconds, deltaTime = 0, prevTime;
     // Print brick counter;
     PrintBrickCounter(&BrickCounter);
-
-    uint8_t ballDifficultyMod = 5;
-    ballDifficultyMod -= ballDifficultyMod - *level > 0 ? 1 : 0;
 
     gotoXY(90,80);
     printf("Level %d  ", *level);
 
+    // Draw LCD
     char LCDHearts[7] = {0x7F, 0x80, 0x7F, 0x80, 0x7F, 0x80, 0x00};
     // Update LCD.
     ClearLineData(LCDData);
@@ -287,20 +292,17 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
     lcd_update(Graph, LCDData);
 
     //// START GAME ////
-    drawBall(&ball1);
-    CountDown();
 
-    uint8_t gameEnabled = 1;
+    CountDown();
 
     while (gameEnabled) {
 
-        __disable_irq();
-        prevTime = currTime;
-        currTime = clk.time_hseconds;
-        deltaTime = currTime - prevTime;
-        __enable_irq();
+        __disable_irq();            // Prevent time from being changed
+        prevTime = currTime;        // Set Previous Time
+        currTime = globalTime;      // Get Current time
+        __enable_irq();             // Return Time Interrupt
 	    // Control ball speed.
-        if ((currTime % ballDifficultyMod) == 0 && currTime != prevTime) {
+        if ((currTime % ballDifficultyMod) == 0 && currTime != prevTime) {      // Update ball (Variable Speed)
 
             // Calculate and update ball next XY-position.
             updateBall(&ball1, 0);
@@ -391,17 +393,18 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
             drawBall(&ball1);
 
 	    }
-	    if (currTime % 2 == 0 && currTime != prevTime) {
+
+	    if (currTime % 2 == 0 && currTime != prevTime) {                        // Update Striker   (Every 2 1/100th of second)
             updateStriker(gameArray, &striker);
 	    }
 
-        if (currTime - prevPowerStart > 1000 && powerup.enable) {
+        if (currTime - prevPowerStart > 1000 && powerup.enable) {               // Turn off Powerup.
             prevPowerStart = 0;
             powerup.enable = 0;
             ballDifficultyMod--;
         }
 
-        if (powerup.alive == 1 && currTime % 10 == 0 && currTime != prevTime) {
+        if (powerup.alive == 1 && currTime % 10 == 0 && currTime != prevTime) { // Update Powerup // Every 10 1/100th second.
 
             updatePowerup(&powerup);
             if (gameArray[powerup.posY][powerup.posX] > 1 && gameArray[powerup.posY][powerup.posX] < 7 && powerup.enable == 0) {
@@ -416,20 +419,27 @@ uint8_t runGame(uint8_t *level, uint16_t *PlayerScore, char Graph[512] , char LC
             }
         }
 
-        uint16_t joyinput = readJoystick() & 0x10;
-        if (joyinput == 16){
-            Bosskey();
-            drawGame(brickArray, &brickHeight, &brickWidth, &striker, &ball1);
+        if (currTime != prevTime){  // Boss key (Once per 1/100th second.
+            uint16_t joyinput = readJoystick() & 0x10;
+            if (joyinput == 16 ){
+                Bosskey();
+                drawGame(brickArray, &brickHeight, &brickWidth, &striker, &ball1);
+            }
         }
-
 
         // Change color to default.
         fgcolor(15);
 
     }
 
+
 }
 
+/* Developer    : Hørdur Andreasen
+ * Description  : Initial Draw of game.
+ * Argument     : brickArray (Brick Instances), Striker (Striker Instance), BrickHeight and BrickWidth = Box size.
+ * Return value : Void
+ */
 void drawGame(struct brick_t brickArray[], uint8_t *brickHeight, uint8_t *brickWidth, struct striker_t *striker, struct ball_t *ball){
     // Generate Walls at edges
     fgcolor(15);
