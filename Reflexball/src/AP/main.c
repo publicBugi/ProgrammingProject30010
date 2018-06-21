@@ -68,6 +68,11 @@ void getSerialInput(char* input){
 int main(void)   {
 
     initDACNoise();
+
+    // Uncomment to clear highscore
+    //InitFlash();
+
+
     clearScore();
         // ASCII array.
         char ASCIIARRAYTYPE;

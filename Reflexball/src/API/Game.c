@@ -86,16 +86,19 @@ void PrintVictory(uint8_t MaxPlayer, uint16_t PlayerScore1, uint16_t PlayerScore
        if (PlayerScore1 > PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
               PrintFromASCII("PLAYER 1 WINS",64,20);
+              wait(300);
               HighscoreCheck(PlayerScore1);
         }
        else if (PlayerScore1 < PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
               PrintFromASCII("PLAYER 2 WINS",63,20);
+              wait(300);
               HighscoreCheck(PlayerScore2);
         }
        else if (PlayerScore1 == PlayerScore2) {
             //sprintf(str1, "GET READY PLAYER %d", i);
               PrintFromASCII("BOTH PLAYERS WIN",51,20);
+              wait(300);
               HighscoreCheck(PlayerScore1);
               HighscoreCheck(PlayerScore2);
         }
